@@ -60,6 +60,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetOperation(s.thop)
 		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
 	elseif sel==2 then
+		e:SetCode(EVENT_BATTLE_DAMAGE)
+		e:SetCondition(s.pencon)
 		e:SetOperation(s.penop)
 		s.pentg(e,tp,eg,ep,ev,re,r,rp,1)
 	else
@@ -80,6 +82,10 @@ Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup()and tc:IsControler(1-tp) and tc:GetAttack()>0 then
 		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 end
+end
+function s.pencon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x1bc) and tc~=e:GetHandler()
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 if chk==0 then return Duel.GetFlagEffect(tp,id+1)==0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
