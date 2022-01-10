@@ -22,7 +22,7 @@ function s.schfilter(c)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
-	local g2=
+	local g2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0   
 	local b1=g1
 	local b2=g2   
 	if chk==0 then return b1 or b2 end
@@ -33,7 +33,6 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=(op==1 and g1 or g2)
 end	
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	if e:GetLabel()==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -44,6 +43,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	else
+		local c=e:GetHandler()
+		if not c:IsRelateToEffect(e) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
