@@ -21,7 +21,7 @@ function s.schfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
+	local g2=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
 	
 	local b1=g1
 	local b2=g2   
