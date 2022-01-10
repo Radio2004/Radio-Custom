@@ -36,8 +36,7 @@ function s.thfilter(c)
 	end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
-	local g2=s.pentg(e,tp,eg,ep,ev,re,r,rp,0)
-	Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local g2=s.pencon(e,tp,eg,ep,ev,re,r,rp,0)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -61,9 +60,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
 	elseif sel==2 then
 		e:SetCode(EVENT_BATTLE_DAMAGE)
-		e:SetCondition(s.pencon)
+		e:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+		e:SetTarget(s.pentg)
 		e:SetOperation(s.penop)
-		s.pentg(e,tp,eg,ep,ev,re,r,rp,1)
+		s.pencon(e,tp,eg,ep,ev,re,r,rp,1)
 	else
 		e:SetCategory(0)
 		e:SetOperation(nil)
