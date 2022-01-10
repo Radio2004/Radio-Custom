@@ -22,7 +22,7 @@ function s.schfilter(c)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
-	
+	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0   
 	local b1=g1
 	local b2=g2   
 	if chk==0 then return b1 or b2 end
