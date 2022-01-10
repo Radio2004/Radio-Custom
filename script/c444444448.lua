@@ -36,7 +36,7 @@ function s.thfilter(c)
 	end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
-	local g2=s.pencon(e,tp,eg,ep,ev,re,r,rp,0)
+	local g2=s.pentg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -61,9 +61,9 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif sel==2 then
 		e:SetCode(EVENT_BATTLE_DAMAGE)
 		e:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-		e:SetTarget(s.pentg)
+		e:SetCondition(s.pencon)
 		e:SetOperation(s.penop)
-		s.pencon(e,tp,eg,ep,ev,re,r,rp,1)
+		s.pentg(e,tp,eg,ep,ev,re,r,rp,1)
 	else
 		e:SetCategory(0)
 		e:SetOperation(nil)
@@ -84,15 +84,15 @@ Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 end
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetFirst()
+	local tc=eg:GetFirst()
 	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x1bc) and tc~=e:GetHandler()
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 if chk==0 then return Duel.GetFlagEffect(tp,id+1)==0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
