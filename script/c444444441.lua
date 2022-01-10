@@ -31,11 +31,12 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,0)})
 	e:SetLabel(op)
 	local g=(op==1 and g1 or g2)
-end	
+end 
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 		e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 		e1:SetTarget(s.exstg)
