@@ -10,11 +10,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.destg)
-	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_16)
+	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_16)
+	c:RegisterEffect(e2)
 	--Limit battle target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -36,33 +35,63 @@ function s.thfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 	end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil)
-	local g2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local g1=s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
+	local g2=s.pentg(e,tp,eg,ep,ev,re,r,rp,0)
+	Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
-	local op=aux.SelectEffect(tp,
-		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,1)})
-	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
+	local ops={}
+	local opval={}
+	local off=1
+	if b1 then
+		ops[off]=aux.Stringid(id,0)
+		opval[off-1]=1
+		off=off+1
+	end
+	if b2 then
+		ops[off]=aux.Stringid(id,1)
+		opval[off-1]=2
+		off=off+1
+	end
+	local op=Duel.SelectOption(tp,table.unpack(ops))
+	local sel=opval[op]
+	if sel==1 then
+		e:SetOperation(s.thop)
+		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
+	elseif sel==2 then
+		e:SetOperation(s.penop)
+		s.pentg(e,tp,eg,ep,ev,re,r,rp,1)
+	else
+		e:SetCategory(0)
+		e:SetOperation(nil)
+	end
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==1 then
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+if not e:GetHandler():IsRelateToEffect(e) then return end
+Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetAttack())
 	local tc=Duel.GetFirstTarget(tp,0)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup()and tc:IsControler(1-tp) and tc:GetAttack()>0 then
 		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 end
-	else
+end
+function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
+if chk==0 then return Duel.GetFlagEffect(tp,id+1)==0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+end
+function s.penop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
 end
 
