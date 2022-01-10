@@ -84,7 +84,7 @@ Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 end
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
+	local tc=e:GetFirst()
 	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x1bc) and tc~=e:GetHandler()
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
