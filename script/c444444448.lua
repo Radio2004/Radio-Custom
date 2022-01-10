@@ -1,0 +1,68 @@
+--Myra, Novella Girl
+local s,id=GetID()
+function s.initial_effect(c)
+  -- Effects
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_RECOVER)
+	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.destg)
+	e1:SetOperation(s.desop)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_16)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_16)
+	--Limit battle target
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e3:SetCondition(s.atcon)
+	e3:SetValue(aux.imval1)
+	c:RegisterEffect(e3)
+	end
+	s.listed_series={0x1BC}
+	function s.atcon(e)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+end
+function s.filter(c)
+	return c:IsFaceup() and c:GetAttack()>0 
+end
+function s.thfilter(c)
+	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	end
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g1=Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil)
+	local g2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local b1=g1
+	local b2=g2
+	if chk==0 then return b1 or b2 end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	e:SetLabel(op)
+	local g=(op==1 and g1 or g2)
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetLabel()==1 then
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetAttack())
+	local tc=Duel.GetFirstTarget(tp,0)
+	if tc:IsRelateToEffect(e) and tc:IsFaceup()and tc:IsControler(1-tp) and tc:GetAttack()>0 then
+		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
+end
+	else
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
+end
+end
+
