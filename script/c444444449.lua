@@ -94,7 +94,7 @@ function s.ssop(c)
 			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
 		   
-			table.remove(desc,desc[i+1])
+			
 		end
 	end
 end
