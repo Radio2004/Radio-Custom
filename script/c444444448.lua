@@ -62,7 +62,7 @@ end
 		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e2:SetCode(EVENT_BATTLE_DAMAGE)
-		e2:SetCountLimit(1,id)
+		e2:SetCountLimit(1,{id,1})
 		e2:SetCondition(s.thcon)
 		e2:SetTarget(s.thtg)
 		e2:SetOperation(s.thop)
