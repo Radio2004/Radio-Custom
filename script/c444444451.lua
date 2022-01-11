@@ -101,7 +101,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
-	local g2=Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,0,1,nil)and Duel.IsPlayerCanDraw(tp,2)
+	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil)and Duel.IsPlayerCanDraw(tp,2)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -121,7 +121,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Recover(p,rec,REASON_EFFECT)
 	else
-		local k=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		local k=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,k,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 		local tc=Duel.GetFirstTarget()
