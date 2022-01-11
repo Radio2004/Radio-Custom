@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.sscost(c))
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop(c))
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_16)
 end
 
 function s.lcheck(g,lc,sumtype,tp)
