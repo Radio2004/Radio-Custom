@@ -129,4 +129,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-end
