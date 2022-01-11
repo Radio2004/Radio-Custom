@@ -1,4 +1,5 @@
 --Shizuka Tiba, Novella Girl
+Duel.LoadScript("customutility.lua")
 	local s,id=GetID()
 	function s.initial_effect(c)
 		--effect
@@ -11,7 +12,7 @@
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.tg)  
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_16)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_NOVELLA)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)

@@ -1,4 +1,5 @@
 --Myra Emerald, Novella Girl
+Duel.LoadScript("customutility.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_NOVELLA)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_NOVELLA)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x1BC}
 s.listed_names={444444447}
