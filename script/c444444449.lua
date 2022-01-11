@@ -21,7 +21,25 @@ end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x1bc,lc,sumtype,tp)
 end
-
+function merge(t1, t2, filter)
+	filter=filter or false
+	if filter==true then
+		local dup=false
+		for _, i in ipairs(t2) do
+			for _, j in ipairs(t1) do
+				dup = (i == j)
+				if dup then break end
+			end
+			if not dup then
+				table.insert(t1, i)
+			end
+		end
+	else
+		for _, i in ipairs(t2) do
+			table.insert(t1, i)
+		end
+	end
+end
 --SS
 
 function s.filter(c,e,tp)
@@ -78,25 +96,6 @@ function s.ssop(c)
 			op(e,tp,eg,ep,ev,re,r,rp)
 			table.remove(acteffs,eff)
 			table.remove(desc,desc[i+1])
-		end
-	end
-end
-function merge(t1, t2, filter)
-	filter=filter or false
-	if filter==true then
-		local dup=false
-		for _, i in ipairs(t2) do
-			for _, j in ipairs(t1) do
-				dup = (i == j)
-				if dup then break end
-			end
-			if not dup then
-				table.insert(t1, i)
-			end
-		end
-	else
-		for _, i in ipairs(t2) do
-			table.insert(t1, i)
 		end
 	end
 end
