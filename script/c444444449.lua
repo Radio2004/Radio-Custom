@@ -2,8 +2,6 @@
 Duel.LoadScript("customutility.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
-	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1BC),1,1)
 	--SS
 	local e1=Effect.CreateEffect(c)
