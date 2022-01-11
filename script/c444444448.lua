@@ -62,7 +62,7 @@ end
 		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e2:SetCode(EVENT_BATTLE_DAMAGE)
-		e1:SetCountLimit(1,id)
+		e2:SetCountLimit(1,id)
 		e2:SetCondition(s.thcon)
 		e2:SetTarget(s.thtg)
 		e2:SetOperation(s.thop)
@@ -72,7 +72,7 @@ end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x1bc) 
+	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x1bc) and tc~=e:GetHandler()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
