@@ -31,7 +31,7 @@ local c=e:GetHandler()
 	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	local g2=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_SZONE,1,nil)
+		and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_SZONE,1,nil)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -57,7 +57,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_SZONE,1,ct,nil)
-	Duel.HintSelection(g)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 		 end
 	end
