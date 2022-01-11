@@ -19,13 +19,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
-	e2:SetRange(LOCATION_MZONE)	
+	e2:SetRange(LOCATION_MZONE) 
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_16)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3)
+	c:RegisterEffect(e3,false,REGISTER_FLAG_16)
 end
 s.listed_series={0x1BC}
 s.listed_names={444444447}
