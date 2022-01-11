@@ -1,4 +1,4 @@
-REGISTER_FLAG_SOS=16
+REGISTER_FLAG_NOVELLA=16
 local regeff2=Card.RegisterEffect
 function Card.RegisterEffect(c,e,forced,...)
     if c:IsStatus(STATUS_INITIALIZING) and not e then

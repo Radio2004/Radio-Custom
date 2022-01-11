@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_SOS)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_NOVELLA)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_SOS)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x1BC}
 function s.schfilter(c)
