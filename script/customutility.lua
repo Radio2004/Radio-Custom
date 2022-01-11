@@ -1,3 +1,4 @@
+REGISTER_FLAG_WHATEVER_NAME_YOU_WANT=16
 local regeff2=Card.RegisterEffect
 function Card.RegisterEffect(c,e,forced,...)
     if c:IsStatus(STATUS_INITIALIZING) and not e then
@@ -7,7 +8,7 @@ function Card.RegisterEffect(c,e,forced,...)
     --2 == 511001692 - access to Cardian Summoning conditions/effects
     --4 ==  12081875 - access to Thunder Dragon effects that activate by discarding
     --8 == 511310036 - access to Allure Queen effects that activate by sending themselves to GY
-    --16 == 444444449- access to Saber Hunter Ly, Novella Girl to filter for "EVENT_" effects
+    --16 ==444444449 - access to Saber Hunter Ly, Novella Girl to filter for "EVENT_" effects
     local reg_e=regeff2(c,e,forced)
     if not reg_e then
         return nil
