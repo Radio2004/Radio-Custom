@@ -1,5 +1,6 @@
 REGISTER_FLAG_WHATEVER_NAME_YOU_WANT=16
 local regeff2=Card.RegisterEffect
+REGISTER_FLAG_WHATEVER_NAME_YOU_WANT=16
 function Card.RegisterEffect(c,e,forced,...)
     if c:IsStatus(STATUS_INITIALIZING) and not e then
         error("Parameter 2 expected to be Effect, got nil instead.",2)
@@ -43,3 +44,4 @@ function Card.RegisterEffect(c,e,forced,...)
     end
     return reg_e
 end
+REGISTER_FLAG_WHATEVER_NAME_YOU_WANT=16
