@@ -7,7 +7,7 @@ function Card.RegisterEffect(c,e,forced,...)
     --2 == 511001692 - access to Cardian Summoning conditions/effects
     --4 ==  12081875 - access to Thunder Dragon effects that activate by discarding
     --8 == 511310036 - access to Allure Queen effects that activate by sending themselves to GY
-    --16 == 300001010 - access to Effulgence Congregater Zalatiel to filter for "EVENT_" effects
+    --16 == 444444449- access to Saber Hunter Ly, Novella Girl to filter for "EVENT_" effects
     local reg_e=regeff2(c,e,forced)
     if not reg_e then
         return nil
