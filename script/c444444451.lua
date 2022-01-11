@@ -124,10 +124,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local k=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,k,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-		local tc=Duel.GetFirstMatchingCard()
-		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			Duel.BreakEffect()
-			Duel.Destroy(tc,REASON_EFFECT)
+			Duel.Destroy(k,REASON_EFFECT)
 			Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
