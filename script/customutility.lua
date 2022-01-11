@@ -29,7 +29,7 @@ function Card.RegisterEffect(c,e,forced,...)
         elseif val==8 then
             e2:SetCode(511310036)
         elseif val==16 then
-            e2:SetCode(300001010)
+            e2:SetCode(444444449)
         end
         e2:SetLabelObject(e)
         e2:SetLabel(c:GetOriginalCode())
