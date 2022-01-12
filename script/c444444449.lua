@@ -94,7 +94,7 @@ function s.ssop(c)
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 			local op=eff:GetOperation()
-		   tc:ReleaseEffectRelation(eff)
+			op:ReleaseEffectRelation(eff)
 			for etc in aux.Next(g) do
 			etc:ReleaseEffectRelation(eff)
 end
