@@ -75,7 +75,7 @@ function s.ssop(c)
 		local g=c:GetMaterial():FilterSelect(tp,s.filter,e:GetLabel(),e:GetLabel(),nil,e,tp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		local effs,acteffs={},{}
-		local desc={},{}
+		local desc={{}}
 		for tc in aux.Next(g) do
 			merge(effs,{tc:GetCardEffect(id)},true)
 		end
