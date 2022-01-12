@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	
+	e1:SetCost(s.sscost(c))
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop(c))
 	c:RegisterEffect(e1)
