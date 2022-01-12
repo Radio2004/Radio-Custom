@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.sscost(c))
+	
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop(c))
 	c:RegisterEffect(e1)
@@ -88,13 +88,13 @@ function s.ssop(c)
 		end
 		while #acteffs>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) do
 			local i=Duel.SelectOption(tp,table.unpack(desc))
-			local eff=acteffs[i+0]
+			local eff=acteffs[i+1]
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
 			table.remove(acteffs,eff)
-			table.remove(desc,desc[i+0])
+			table.remove(desc,desc[i+1])
 		end
 	end
 end
