@@ -1,5 +1,5 @@
 --Saber Hunter Ly, Novella Girl--
-Duel.LoadScript("customutility.lua")
+
 local s,id=GetID()
 function s.initial_effect(c)
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1BC),1,1)
