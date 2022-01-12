@@ -96,7 +96,7 @@ end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
-			table.remove(acteffs,1)
-			table.remove(desc,1)
+			table.remove(acteffs,eff)
+			table.remove(desc,desc[i+1])
 		end
 	end
