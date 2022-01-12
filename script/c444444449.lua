@@ -97,7 +97,7 @@ function s.ssop(c)
 		   tc:ReleaseEffectRelation(eff)
 			for etc in aux.Next(g) do
 			etc:ReleaseEffectRelation(eff)
-
+end
 		end
 	end
 end
