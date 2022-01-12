@@ -87,7 +87,7 @@ function s.ssop(c)
 			end
 		end
 		if #acteffs>0 then
-			local i=Duel.SelectOption(tp,aux.Stringid(desc))
+			local i=Duel.SelectOption(tp,aux,Stringid(desc))
 			local eff=acteffs[i+1]
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
