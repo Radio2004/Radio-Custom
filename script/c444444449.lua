@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.sscost(c))
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop(c))
-	c:RegisterEffect(e1,false,REGISTER_FLAG_NOVELLA)
+	c:RegisterEffect(e1)
 end
 
 function s.lcheck(g,lc,sumtype,tp)
@@ -93,8 +93,8 @@ function s.ssop(c)
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
-			table.remove(acteffs,eff)
-			table.remove(desc,desc[i+1])
+			table.insert(acteffs,eff:GetLabelObject())
+			table.insert(desc,eff:GetLabelObject():GetDescription())
 		end
 	end
 end
