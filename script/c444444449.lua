@@ -89,12 +89,12 @@ function s.ssop(c)
 		if #acteffs>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 			local i=Duel.SelectOption(tp,table.unpack(desc))
-			local eff=acteffs[i+1]
+			local eff=acteffs(i+1)
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
-			table.remove(eff)
+			table.remove(acteffs,eff)
 			table.remove(desc,eff)
 		end
 	end
