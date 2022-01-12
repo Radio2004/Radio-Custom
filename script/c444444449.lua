@@ -91,7 +91,7 @@ function s.ssop(c)
 			local eff=acteffs[i+1]
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
-			local op=acteffs:GetOperation()
+			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
 			table.remove(acteffs)
 			table.remove(desc)
