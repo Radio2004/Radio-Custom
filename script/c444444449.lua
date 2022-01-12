@@ -74,7 +74,7 @@ function s.ssop(c)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=c:GetMaterial():FilterSelect(tp,s.filter,e:GetLabel(),e:GetLabel(),nil,e,tp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		local effs,acteffs,desc={},{},{}
+		local effs,acteffs,desc={},{},{}+{}
 		for tc in aux.Next(g) do
 			merge(effs,{tc:GetCardEffect(id)},true)
 		end
@@ -83,7 +83,7 @@ function s.ssop(c)
 			con,tg=eff:GetCondition(),eff:GetTarget()
 			if (not con or con(e,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0)) and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) then
 				table.insert(acteffs,eff:GetLabelObject())
-				table.insert(desc,eff:GetLabelObject():GetDescription(2))
+				table.insert(desc,eff:GetLabelObject():GetDescription())
 			end
 		end
 		while #acteffs>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) do
