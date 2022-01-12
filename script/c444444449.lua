@@ -100,4 +100,3 @@ end
 			table.remove(desc,1)
 		end
 	end
-end
