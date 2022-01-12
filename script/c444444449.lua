@@ -86,7 +86,7 @@ function s.ssop(c)
 				table.insert(desc,eff:GetLabelObject():GetDescription())
 			end
 		end
-		while #acteffs>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) do
+		if #acteffs>0 then
 			local i=Duel.SelectOption(tp,table.unpack(desc))
 			local eff=acteffs[i+1]
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
