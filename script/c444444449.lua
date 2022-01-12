@@ -86,17 +86,16 @@ function s.ssop(c)
 				table.insert(desc,eff:GetLabelObject():GetDescription())
 			end
 		end
-	if #acteffs==1 then eff=acteffs[1] elseif #acteffs>1 then
+		if #acteffs>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-			i=Duel.SelectOption(tp,table.unpack(desc))
-			i=i+1
-			eff=acteffs[i]
-end
+			local i=Duel.SelectOption(tp,table.unpack(desc))
+			local eff=acteffs[i+1]
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
-			table.remove(acteffs,eff)
-			table.remove(desc,desc[i+1])
+			table.remove(acteffs,1)
+			table.remove(desc,1)
 		end
 	end
+end
