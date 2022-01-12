@@ -93,7 +93,7 @@ function s.ssop(c)
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 			local op=eff:GetOperation()
 			op(e,tp,eg,ep,ev,re,r,rp)
-			table.remove(acteffs)
+			table.remove(eff)
 			table.remove(desc)
 		end
 	end
