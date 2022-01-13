@@ -76,7 +76,7 @@ function s.ssop(c)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		local effs,acteffs={},{}
 		local dess={}
-		local desc=dess+1
+		local desc=dess
 		for tc in aux.Next(g) do
 			merge(effs,{tc:GetCardEffect(id)},true)
 		end
