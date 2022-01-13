@@ -30,7 +30,7 @@ function merge(t1, t2, filter)
 				if dup then break end
 			end
 			if not dup then
-				table.insert(t1, )
+				table.insert(t1, i, i)
 			end
 		end
 	else
