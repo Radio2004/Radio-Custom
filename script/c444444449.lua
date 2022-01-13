@@ -88,7 +88,7 @@ function s.ssop(c)
 			end
 		end
 		while #acteffs>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) do
-			local i=Duel.SelectOption(tp,table.unpack(desc))
+			local i=Duel.SelectOption(tp,table.unpack(desc),table.unpack(desc))
 			local eff=acteffs[i+1]
 			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
