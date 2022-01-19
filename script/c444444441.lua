@@ -1,4 +1,5 @@
 --Bella von Meller, Novella Girl--
+Duel.LoadScript("customutility.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--effect
@@ -14,37 +15,29 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_NOVELLA)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_16)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x1BC}
 function s.schfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then
-		local sel=0
-		if Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) then sel=sel+2 end
-		e:SetLabel(sel)
-		return sel~=0
-	end
-	local sel=e:GetLabel()
-	if sel==2 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-		sel=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))+1
-	elseif sel==1 then
-		Duel.SelectOption(tp,aux.Stringid(id,1))
-	else
-		Duel.SelectOption(tp,aux.Stringid(id,2))
-	end
-	e:SetLabel(sel)
-end
+	local g2=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
+	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0   
+	local b1=g1
+	local b2=g2   
+	if chk==0 then return b1 or b2 end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	e:SetLabel(op)
+	local g=(op==1 and g1 or g2)
+end 
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local sel=e:GetLabel()
-	if sel==1 then
+	if e:GetLabel()==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 		e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 		e1:SetTarget(s.exstg)
