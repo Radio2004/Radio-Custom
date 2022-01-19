@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(44444450) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(444444450) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.thfilter(c)
-	return c:IsCode(44444451) or c:IsCode(44444452)or c:IsCode(44444453)  and c:IsAbleToHand()
+	return c:IsCode(444444451) or c:IsCode(444444452)or c:IsCode(444444453)  and c:IsAbleToHand()
 	end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
