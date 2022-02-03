@@ -84,4 +84,3 @@ function s.ssop(c)
 			table.remove(acteffs)
 			table.remove(desc)
 		end
-	end
