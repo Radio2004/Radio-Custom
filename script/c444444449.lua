@@ -85,4 +85,3 @@ function s.ssop(c)
 			table.remove(desc)
 		end
 	end
-end
