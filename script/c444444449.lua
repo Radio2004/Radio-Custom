@@ -57,28 +57,49 @@ function s.ssop(c)
 	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		local effs,acteffs,desc={},{},{}
-		for tc in aux.Next(g) do
-			merge(effs,{tc:GetCardEffect(id)},true)
-		end
-		local cost,con,tg
-		for _,eff in ipairs(effs) do
-			con,tg=eff:GetCondition(),eff:GetTarget()
-			if (not con or con(e,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0)) and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) then
-				table.insert(acteffs,eff:GetLabelObject())
-				table.insert(desc,eff:GetLabelObject():GetDescription())
+		local eff={tc:GetCardEffect(id)}
+		local te=nil
+		local acd={}
+		local ac={}
+		for _,teh in ipairs(eff) do
+			local temp=teh:GetLabelObject()
+			local con=temp:GetCondition()
+			local tg=temp:GetTarget()
+			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) 
+				and (not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
+				table.insert(ac,teh)
+				table.insert(acd,temp:GetDescription())
 			end
 		end
-		while #acteffs>0 do
-			local i=Duel.SelectOption(tp,table.unpack(desc))
-			local eff=acteffs[i+1]
-			if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
-			if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
-			local op=eff:GetOperation()
-			op(e,tp,eg,ep,ev,re,r,rp)
-			table.remove(acteffs)
-			table.remove(desc)
+		if #ac==1 then te=ac[1] elseif #ac>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
+			op=Duel.SelectOption(tp,table.unpack(acd))
+			op=op+1
+			te=ac[op]
 		end
-end
-end
+		if not te then return end
+		Duel.ClearTargetCard()
+		local teh=te
+		te=teh:GetLabelObject()
+		local tg=te:GetTarget()
+		local op=te:GetOperation()
+		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
+		Duel.BreakEffect()
+		tc:CreateEffectRelation(te)
+		Duel.BreakEffect()
+		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+		if g then
+			for etc in aux.Next(g) do
+				etc:CreateEffectRelation(te)
+			end
+		end
+		if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
+		tc:ReleaseEffectRelation(te)
+		if g then
+			for etc in aux.Next(g) do
+				etc:ReleaseEffectRelation(te)
+			end
+		end
+	end
+	Group.DeleteGroup(e:GetLabelObject())
 end
