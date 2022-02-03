@@ -106,3 +106,4 @@ function s.ssop(c)
 	Group.DeleteGroup(e:GetLabelObject())
 end
 end
+end
