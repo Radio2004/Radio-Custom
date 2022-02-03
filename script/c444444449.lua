@@ -35,7 +35,7 @@ function merge(t1, t2, filter)
 		end
 	else
 		for _, i in ipairs(t2) do
-			table.insert(t1,t2, i)
+			table.insert(t1, i)
 		end
 	end
 end
