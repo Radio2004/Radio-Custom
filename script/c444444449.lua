@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.sscost(c))
+	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop(c))
 	c:RegisterEffect(e1)
@@ -44,35 +44,22 @@ end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x1BC)and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_GRAVE)
 end
-
-function s.sscost(c)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local ctm,dtg,drem,mz=c:GetMaterial():FilterCount(s.filter,nil,e,tp),Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_DECK,0,nil),Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_DECK,0,nil),Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if chk==0 then 
-			if ctm==0 then return false end
-			return ctm>0 and #dtg>=ctm and #drem>=ctm and mz>0
-		end
-		local ct=math.min(ctm,#dtg,#drem,mz)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local tg=dtg:Select(tp,1,ct,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rem=drem:Select(tp,#tg,#tg,tg)
-		Duel.SendtoGrave(tg,REASON_COST)
-		Duel.Remove(rem,POS_FACEUP,REASON_COST)
-		e:SetLabel(#tg)
-	end
+function s.sfilter(c,e,tp)
+	return c:IsSetCard(0x1BC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
-
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,e:GetLabel(),tp,LOCATION_GRAVE)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end   
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
-
 function s.ssop(c)
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		if c:GetMaterial():IsExists(aux.NOT(s.filter),1,nil,e,tp) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=c:GetMaterial():FilterSelect(tp,s.filter,e:GetLabel(),e:GetLabel(),nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		local effs,acteffs={},{}
 		local desc={}
