@@ -56,10 +56,9 @@ function s.ssop(c)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-   
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) 
 		for tc in aux.Next(g) do
-	 local eff={tc:GetCardEffect(id)}
+		local eff={tc:GetCardEffect(id)}
 		local te=nil
 		local acd={}
 		local ac={}
@@ -103,7 +102,6 @@ function s.ssop(c)
 			end
 		end
 	end
-	Group.DeleteGroup(e:GetLabelObject())
-end
+  
 end
 end
