@@ -35,15 +35,11 @@ function merge(t1, t2, filter)
 		end
 	else
 		for _, i in ipairs(t2) do
-			table.insert(t2, i)
+			table.insert(t1,t2, i)
 		end
 	end
 end
 --SS
-
-function s.filter(c,e,tp)
-	return c:IsSetCard(0x1BC)and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_GRAVE)
-end
 function s.sfilter(c,e,tp)
 	return c:IsSetCard(0x1BC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
