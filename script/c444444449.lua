@@ -102,6 +102,6 @@ function s.ssop(c)
 			end
 		end
 	end
-  
+  end
 end
 end
