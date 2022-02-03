@@ -11,7 +11,7 @@
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.tg)  
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_NOVELLA)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
@@ -47,7 +47,7 @@ if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) a
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)		   
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)		  
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if ft>2 then ft=2 end
