@@ -57,8 +57,7 @@ function s.ssop(c)
 	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		local effs,acteffs={},{}
-		local desc={}
+		local effs,acteffs,desc={},{},{}
 		for tc in aux.Next(g) do
 			merge(effs,{tc:GetCardEffect(id)},true)
 		end
