@@ -10,7 +10,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsCode(40044918) and c:IsAbleToRemove()
+	return c:IsCode(40044918) and c:IsAbleToRemove() and aux.SpElimFilter(c)
+
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_DECK+LOCATION_HAND,1,nil) end
