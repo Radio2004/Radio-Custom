@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	--Reveal
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	
+	e1:SetRange(LOCATION_MZONE)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
