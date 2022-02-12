@@ -37,6 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	   if #g>0 and ct>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	   Duel.Damage(p,g*200,REASON_EFFECT)
 end
+end
 
 
  
