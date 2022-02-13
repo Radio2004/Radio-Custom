@@ -38,12 +38,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetLabelObject()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local ct=Duel.GetFieldGroup(p,LOCATION_HAND,0)
 	Duel.ConfirmCards(1-p,ct)
 	if ct==1 then return end
 		Duel.BreakEffect()
-	   local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
 	   if #g>=0 and ct>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	   Duel.Damage(p,g*200,REASON_EFFECT)
 end
