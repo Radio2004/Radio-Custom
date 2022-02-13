@@ -34,10 +34,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(p)
 	if ct==1 then return end
 		Duel.BreakEffect()
-	   local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
-	   local g1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
+	   local g=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_HAND,0,nil)
 	   if #g>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-	   Duel.Damage(p,g1*200,REASON_EFFECT)
+	   Duel.Damage(p,g*200,REASON_EFFECT)
 end
 end
 
