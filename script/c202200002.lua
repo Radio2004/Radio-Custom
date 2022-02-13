@@ -40,10 +40,15 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
 	return c:IsType(TYPE_SPIRIT) and c:IsPreviousControler(tp)
-		and c:IsReason(REASON_RETURN) and rc==c
+		and c:IsReason(REASON_EFFECT) and rc==c
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return true end 
+	if chk==0 then return true end
+Duel.SetTargetCard(eg)
+Duel.SetChainLimit(s.chainlm)
+end
+function s.chainlm(e,rp,tp)
+	return tp==rp
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
  if not e:GetHandler():IsRelateToEffect(e) then return end
