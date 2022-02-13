@@ -35,9 +35,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct==1 then return end
 		Duel.BreakEffect()
 	   local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
-	   local g1=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.filter),tp,LOCATION_HAND,0,nil)
 	   if #g>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-	   Duel.Damage(p,g1*200,REASON_EFFECT)
+	   Duel.Damage(p,ct*200,REASON_EFFECT)
 end
 end
 
