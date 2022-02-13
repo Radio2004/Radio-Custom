@@ -43,7 +43,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	   local f=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_HAND,0,nil)
 	   Duel.Damage(1-p,f*200,REASON_EFFECT)
 end
-if #g>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+local g1=Duel.GetMatchingGroup(s.schfilter,tp,LOCATION_DECK,0,nil,tp)
+if #g>=3 and #g1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local k=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #k>0 then
