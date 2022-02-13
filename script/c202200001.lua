@@ -26,7 +26,6 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsExistingMatchingCard(Card.IsPublic,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.SetTargetPlayer(tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -36,8 +35,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct==1 then return end
 		Duel.BreakEffect()
 	   local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
+	   local g1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
 	   if #g>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-	   Duel.Damage(p,g*200,REASON_EFFECT)
+	   Duel.Damage(p,g1*200,REASON_EFFECT)
 end
 end
 
