@@ -35,11 +35,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local re=aux.SpiritReturnCondition(e,tp,eg,ep,ev,re,r,rp)
-	if not re then return false end
-	local rc=re:GetHandler()
+	local c=e:GetHandler()
 	return c:IsType(TYPE_SPIRIT) and c:IsPreviousControler(tp)
-		and rc==c
+		and aux.SpiritReturnCondition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
