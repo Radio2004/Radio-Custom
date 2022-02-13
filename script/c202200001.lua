@@ -21,6 +21,9 @@ end
 function s.filter(c)
 	return c:IsType(TYPE_SPIRIT)
 end
+function s.schfilter(c)
+	return c:IsSetCard(0x1e61) and not c:IsCode(id) and c:IsAbleToHand()
+end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and e:GetHandler():GetFlagEffect(id)==0
 end
@@ -39,6 +42,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	   if #g>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	   local f=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_HAND,0,nil)
 	   Duel.Damage(1-p,f*200,REASON_EFFECT)
+end
+if #g>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local k=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if #k>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+end
 end
 end
 
