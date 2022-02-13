@@ -37,7 +37,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsType(TYPE_SPIRIT) and c:IsPreviousControler(tp)
-		and aux.SpiritReturnCondition(e,tp,eg,ep,ev,re,r,rp)
+		and aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
