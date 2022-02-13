@@ -31,6 +31,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local ct=Duel.GetFieldGroup(p,LOCATION_HAND,0)
+	Duel.ConfirmCards(1-p,ct)
 	if ct==1 then return end
 		Duel.BreakEffect()
 	   local g=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
