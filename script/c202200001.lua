@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-p,ct)
 	if ct==1 then return end
 		Duel.BreakEffect()
-	   local g=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_HAND,0,nil)
+	   local g=Duel.GetMatchingGroup(s.filter,p,LOCATION_HAND,0,nil)
 	   if #g>0 and ct>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	   Duel.Damage(p,g*200,REASON_EFFECT)
 end
