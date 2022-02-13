@@ -15,9 +15,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_TO_HAND)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
-	
+	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -36,8 +35,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-   local re=rp:GetReasonEffect()
-	if not re then return false end
 	local rc=re:GetHandler()
 	return c:IsType(TYPE_SPIRIT) and c:IsPreviousControler(tp)
 	 and rc==c
