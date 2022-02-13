@@ -36,11 +36,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-   local re=e:GetReasonEffect()
+   local re=c:GetReasonEffect()
 	if not re then return false end
 	local rc=re:GetHandler()
 	return c:IsType(TYPE_SPIRIT) and c:IsPreviousControler(tp)
-		and c:IsReason(REASON_EFFECT) and rc==c
+	 and rc==c
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
