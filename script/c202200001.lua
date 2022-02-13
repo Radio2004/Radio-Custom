@@ -26,12 +26,13 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsExistingMatchingCard(Card.IsPublic,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.SetTargetPlayer(tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local ct=Duel.GetFieldGroup(p,LOCATION_HAND,0)
 	Duel.ConfirmCards(1-p,ct)
-	
+	Duel.ShuffleHand(p)
 	if ct==1 then return end
 		Duel.BreakEffect()
 	   local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
