@@ -41,11 +41,6 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
-Duel.SetTargetCard(eg)
-Duel.SetChainLimit(s.chainlm)
-end
-function s.chainlm(e,rp,tp)
-	return tp==rp
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
  if not e:GetHandler():IsRelateToEffect(e) then return end
