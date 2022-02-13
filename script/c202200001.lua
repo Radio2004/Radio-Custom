@@ -48,7 +48,7 @@ if #g>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		local k=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #k>0 then
 			Duel.SendtoHand(k,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+			Duel.ConfirmCards(1-tp,k)
 end
 end
 end
