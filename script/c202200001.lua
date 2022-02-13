@@ -38,6 +38,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	   local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
 	   if #g>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	   local f=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_HAND,0,nil)
+	Duel.SetTargetPlayer(1-tp)
+
 	   Duel.Damage(p,f*200,REASON_EFFECT)
 end
 end
