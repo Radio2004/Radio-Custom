@@ -57,18 +57,16 @@ local c=e:GetHandler()
 			Duel.HintSelection(sg)
 			Duel.Destroy(sg,REASON_EFFECT)
 		else 
-		-- Negate effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tg:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tg:RegisterEffect(e2)
+		tc:RegisterEffect(e2)
 Duel.Destroy(tg,REASON_EFFECT) end
 	end
 end
