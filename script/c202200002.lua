@@ -51,7 +51,13 @@ local c=e:GetHandler()
  local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		local tg=g:GetMaxGroup(Card.GetAttack)
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		if #tg>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local sg=tg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.Destroy(sg,REASON_EFFECT)
+		else 
+ Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		-- Negate effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -64,12 +70,7 @@ local c=e:GetHandler()
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		if #tg>1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=tg:Select(tp,1,1,nil)
-			Duel.HintSelection(sg)
-			Duel.Destroy(sg,REASON_EFFECT)
-		else Duel.Destroy(tg,REASON_EFFECT) end
+Duel.Destroy(tg,REASON_EFFECT) end
 	end
 end
 
