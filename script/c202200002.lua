@@ -57,7 +57,6 @@ local c=e:GetHandler()
 			Duel.HintSelection(sg)
 			Duel.Destroy(sg,REASON_EFFECT)
 		else 
- Duel.NegateRelatedChain(tg,RESET_TURN_SET)
 		-- Negate effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
