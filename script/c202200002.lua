@@ -61,12 +61,12 @@ local c=e:GetHandler()
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sg:RegisterEffect(e1)
+		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sg:RegisterEffect(e2)
+		Duel.RegisterEffect(e2,tp)
 Duel.Destroy(tg,REASON_EFFECT) end
 	end
 end
