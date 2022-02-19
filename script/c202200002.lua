@@ -51,12 +51,6 @@ local c=e:GetHandler()
  local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		local tg=g:GetMaxGroup(Card.GetAttack)
-		if #tg>1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=tg:Select(tp,1,1,nil)
-			Duel.HintSelection(sg)
-			Duel.Destroy(sg,REASON_EFFECT)
-		else 
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -67,7 +61,12 @@ local c=e:GetHandler()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		Duel.RegisterEffect(e2,tg)
-Duel.Destroy(tg,REASON_EFFECT) end
+		if #tg>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local sg=tg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.Destroy(sg,REASON_EFFECT)
+		else Duel.Destroy(tg,REASON_EFFECT) end
 	end
 end
 
