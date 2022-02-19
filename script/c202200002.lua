@@ -40,18 +40,24 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and tc:GetReasonEffect() and tc:GetReasonEffect():GetOwner()==tc
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local tg=g:GetMaxGroup(Card.GetAttack)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
- if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+ local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+		local tg=g:GetMaxGroup(Card.GetAttack)
+		if #tg>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local sg=tg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.Destroy(sg,REASON_EFFECT)
+		else Duel.Destroy(tg,REASON_EFFECT) end
 	end
 end
+
 
 
 
