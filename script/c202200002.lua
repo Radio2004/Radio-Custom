@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsControler(tp) and tc:IsPreviousControler(tp) 
+	return #eg==1 and tc:IsControler(tp) and tc:IsPreviousControler(tp) and tc:IsType(TYPE_SPIRIT)
 		and tc:GetReasonEffect() and tc:GetReasonEffect():GetOwner()==tc
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
