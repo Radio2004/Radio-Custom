@@ -54,9 +54,7 @@ local c=e:GetHandler()
 		if #tg>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=tg:Select(tp,1,1,nil)
-			Duel.HintSelection(sg)
-			Duel.Destroy(sg,REASON_EFFECT)
-		else Duel.Destroy(tg,REASON_EFFECT) end
+end	 
 if not sg:IsDisabled() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -68,4 +66,4 @@ if not sg:IsDisabled() then
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
-	end
+  
