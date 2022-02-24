@@ -66,4 +66,4 @@ if not sg:IsDisabled() then
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
-  
+end
