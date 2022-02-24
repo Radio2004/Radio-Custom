@@ -15,7 +15,7 @@ local e2=Effect.CreateEffect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_HAND) and c:IsReason(REASON_EFFECT) and c:IsPublic()
+	return c:IsPreviousLocation(LOCATION_HAND) or c:IsLocation(LOCATION_HAND) and c:IsPublic()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,1-tp) 
