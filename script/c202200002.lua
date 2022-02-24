@@ -71,4 +71,3 @@ end
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-	end
