@@ -18,7 +18,7 @@ function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsReason(REASON_EFFECT) and c:IsPublic()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,1-tp) and
+	return eg:IsExists(s.cfilter,1,nil,1-tp) 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
    local c=e:GetHandler()
