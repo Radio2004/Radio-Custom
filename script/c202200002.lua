@@ -69,3 +69,4 @@ local c=e:GetHandler()
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
+	end
