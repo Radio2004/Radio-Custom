@@ -69,3 +69,4 @@ else Duel.Destroy(tg,REASON_EFFECT)
 	end
 end
 	end
+		end
