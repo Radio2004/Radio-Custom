@@ -67,8 +67,3 @@ if not tg:IsDisabled() then
 		Duel.NegateRelatedChain(tg,RESET_TURN_SET)
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
-end
-
-
-
-
