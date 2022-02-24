@@ -50,18 +50,18 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tg,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-local c=e:GetHandler()
- local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	if #g>0 then
-		local tg=g:GetMaxGroup(Card.GetAttack)
-		if #tg>1 then
+			local c=e:GetHandler()
+			local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	if #g==0 then return end
+			local sg=g:GetMaxGroup(Card.GetAttack)
+	if #sg>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=tg:Select(tp,1,1,nil)
+			local sg=sg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
 end
-local tc=sg:GetFirst()
+			local tc=sg:GetFirst()
 	if not tc:IsDisabled() then
-		local e1=Effect.CreateEffect(e:GetHandler())
+			local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
