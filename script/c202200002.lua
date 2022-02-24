@@ -58,15 +58,15 @@ local c=e:GetHandler()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=tg:Select(tp,1,1,nil):GetMaxGroup(Card.GetAttack)
 			end
-	if not tc:IsDisabled() then
+	if not sg:IsDisabled() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
+		sg:RegisterEffect(e1)
 		Duel.AdjustInstantly()
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		Duel.Destroy(tc,REASON_EFFECT)
+		Duel.NegateRelatedChain(sg,RESET_TURN_SET)
+		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
 	end
