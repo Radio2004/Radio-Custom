@@ -15,10 +15,10 @@ local e2=Effect.CreateEffect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsLocation(LOCATION_HAND) and c:IsReason(REASON_EFFECT) and c:IsPublic()
+	return c:IsPreviousLocation(LOCATION_HAND) and c:IsReason(REASON_EFFECT) and c:IsPublic()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp:IsExists(s.cfilter,1,nil,1-tp) 
+	return eg:IsExists(s.cfilter,1,nil,1-tp) 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
    local c=e:GetHandler()
