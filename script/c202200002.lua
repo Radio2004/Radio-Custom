@@ -68,6 +68,6 @@ end
 		tc:RegisterEffect(e1)
 		Duel.AdjustInstantly()
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
