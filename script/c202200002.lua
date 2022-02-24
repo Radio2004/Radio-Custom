@@ -39,16 +39,19 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and tc:IsControler(tp) and tc:IsPreviousControler(tp) and tc:IsType(TYPE_SPIRIT)
 		and tc:GetReasonEffect() and tc:GetReasonEffect():GetOwner()==tc
 end
+function s.filter(c,tp)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled()
+end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tg,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 local c=e:GetHandler()
- local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+ local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		local tg=g:GetMaxGroup(Card.GetAttack)
 		if #tg>1 then
@@ -61,9 +64,11 @@ else
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tg:RegisterEffect(e1)
 		Duel.AdjustInstantly()
 		Duel.NegateRelatedChain(tg,RESET_TURN_SET)
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end
 	end
+		end
