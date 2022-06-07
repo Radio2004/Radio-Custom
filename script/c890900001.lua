@@ -29,7 +29,6 @@ s.listed_series={0x22cd}
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local tc=re:GetHandler()
-		
 		Duel.NegateEffect(ev)
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
