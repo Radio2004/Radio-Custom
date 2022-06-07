@@ -3,7 +3,7 @@
 	function s.initial_effect(c)
 	--negate
 	local e1=Effect.CreateEffect(c) 
-	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_NEGATE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
@@ -23,16 +23,38 @@ s.listed_series={0x22cd}
 		and Duel.GetLocationCount(tp,LOCATION_HAND)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and rc:IsLocation(LOCATION_HAND) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)   
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 	end
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
-	local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)~=0 then
-		c:CompleteProcedure()
+		local c=e:GetHandler()
+		local tc=re:GetHandler()
+		Duel.NegateActivation(ev)
+		Duel.NegateEffect(ev)
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_DISABLE)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetValue(RESET_TURN_SET)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e2)
+	if tc:IsType(TYPE_TRAPMONSTER) then
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+		e3:SetReset(RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e3)
 	end
-end 
+end
+
 
 
 
