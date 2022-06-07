@@ -23,12 +23,13 @@ s.listed_series={0x22cd}
 		and Duel.GetLocationCount(tp,LOCATION_HAND)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and rc:IsLocation(LOCATION_HAND) end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 	end
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local tc=re:GetHandler()
-		Duel.NegateActivation(ev)
+		
 		Duel.NegateEffect(ev)
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
