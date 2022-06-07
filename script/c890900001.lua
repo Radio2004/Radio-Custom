@@ -8,6 +8,7 @@
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.condition)
+	e1:SetCost(s.discost)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -20,7 +21,12 @@ end
 	return ep~=tp and re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev)
 		and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0))and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		end
-		function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
+end
+	function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 			local rc=re:GetHandler()
 		if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED)
 		and Duel.GetLocationCount(tp,LOCATION_HAND)
