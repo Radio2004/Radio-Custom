@@ -15,7 +15,7 @@ end
 s.listed_series={0x22cd}
 	function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev)
-		and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0))and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,1,nil)
+		and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0))and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x22cd),tp,LOCATION_MZONE,0,1,nil)
 		end
 		function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 			local rc=re:GetHandler()
