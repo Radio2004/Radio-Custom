@@ -48,7 +48,8 @@ end
 		end
 	function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
+	if chk==0 then return c:IsDiscardable() e:GetHandler():RegisterFlagEffect(id,RESET_EVENT,0,2)
+ end
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 	function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
