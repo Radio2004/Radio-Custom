@@ -87,7 +87,7 @@ end
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 	end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT,0,0)
 end
 
 
