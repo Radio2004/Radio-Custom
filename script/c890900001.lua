@@ -24,7 +24,7 @@
 	c:RegisterEffect(e2)
 end
 	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and c:IsReason(REASON_EFFECT)
+	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and (r&REASON_EFFECT)~=0 
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
