@@ -25,10 +25,10 @@
 	c:RegisterEffect(e2)
 end
 	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and (r&REASON_DISCARD)~=0 and e:GetFlagEffect(id)>0
+	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and (r&REASON_DISCARD)~=0
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return c:GetFlagEffect(id)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 	function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -48,8 +48,7 @@ end
 		end
 	function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() e:GetHandler():RegisterFlagEffect(id,RESET_EVENT,0,2)
- end
+	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 	function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -87,6 +86,7 @@ end
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 	end
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 end
 
 
