@@ -31,9 +31,9 @@
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_BE_MATERIAL)
 	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.tgcon)
-	e3:SetTarget(s.tgtg)
-	e3:SetOperation(s.tgop)
+	e3:SetCondition(s.spcon2)
+	e3:SetTarget(s.sptg2)
+	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 
 end
@@ -51,10 +51,27 @@ end
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return r==REASON_LINK and c:GetReasonCard():IsSetCard(0x22cd)
 end
+	function s.spfilter2(c,e,tp)
+	return c:IsSetCard(0x22cd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+	function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+end
+	function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
+end
+
 s.listed_series={0x22cd}
 	function s.cfilter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(0x22cd)
