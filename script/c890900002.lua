@@ -82,7 +82,9 @@ end
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EVENT_CHANGE_POS)
-		e2:SetOperation(s.desop3)
+		e2:SetCondition(s.descon3)
+	e2:SetOperation(s.desop3)
+
 		c:RegisterEffect(e2)
 	end
 end
@@ -95,9 +97,17 @@ end
 		Duel.AttackCostPaid()
 	end
 end
-	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(tp,REASON_EFFECT)
+	function s.descon3(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetHandler():GetFirstCardTarget()
+	return tc and eg:IsContains(tc) and tc:IsDefensePos()
 end
+function s.desop3(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=c:GetFirstCardTarget()
+	local g=Group.FromCards(tc,c)
+	Duel.Destroy(g,REASON_EFFECT)
+end
+
 
 
 
