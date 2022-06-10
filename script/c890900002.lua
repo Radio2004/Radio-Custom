@@ -73,24 +73,18 @@ end
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_ATTACK_COST)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetCost(s.atcost)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(0,1)
 		e1:SetOperation(s.atop)
 		tc:RegisterEffect(e1)
 	end
 end
-	function s.atcost(e,c,tp)
-	local ct=#{Duel.GetPlayerEffect(tp,id)}
-	return Duel.CheckLPCost(tp,ct*500)
-end
 	function s.atop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsAttackCostPaid()~=2 then
 		Duel.PayLPCost(tp,500)
 		Duel.AttackCostPaid()
-	end
 end
 
 
