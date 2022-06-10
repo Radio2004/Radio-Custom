@@ -64,20 +64,35 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 	function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return Duel.IsExistingTarget(aux.nzatk,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,aux.nzatk,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
 	function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		c:SetCardTarget(tc)
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetCode(EFFECT_ATTACK_COST)
+		e1:SetRange(LOCATION_MZONE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(0)
+		e1:SetCost(s.atcost)
+		e1:SetOperation(s.atop)
 		tc:RegisterEffect(e1)
 	end
 end
+	function s.atcost(e,c,tp)
+	local ct=#{Duel.GetPlayerEffect(tp,id)}
+	return Duel.CheckLPCost(tp,ct*500)
+end
+	function s.atop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsAttackCostPaid()~=2 then
+		Duel.PayLPCost(tp,500)
+		Duel.AttackCostPaid()
+	end
+end
+
 
 
