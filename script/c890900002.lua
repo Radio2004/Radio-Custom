@@ -85,7 +85,7 @@ end
 		e2:SetCondition(s.descon3)
 	e2:SetOperation(s.desop3)
 
-		c:RegisterEffect(e2)
+		tc:RegisterEffect(e2)
 	end
 end
 	function s.atcost(e,c,tp)
