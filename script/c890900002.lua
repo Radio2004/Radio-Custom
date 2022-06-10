@@ -74,6 +74,7 @@ end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_COST)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetCost(s.atcost)
 		e1:SetOperation(s.atop)
 		tc:RegisterEffect(e1)
