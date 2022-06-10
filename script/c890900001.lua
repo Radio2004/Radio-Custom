@@ -53,7 +53,7 @@ end
 end
 	function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return r==REASON_LINK and c:GetReasonCard():IsSetCard(0x22cd)
+	return r==REASON_LINK and c:GetReasonCard():IsSetCard(0x3dd)
 end
 	function s.spfilter2(c,e,tp)
 	return c:IsSetCard(0x22cd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -71,10 +71,8 @@ end
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
-s.listed_series={0x22cd}
 	function s.cfilter(c)
-	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(0x22cd)
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(0x3dd)
 end
 	function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev)
