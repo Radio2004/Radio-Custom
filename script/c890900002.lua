@@ -71,6 +71,7 @@ end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_COST)
@@ -78,6 +79,12 @@ end
 		e1:SetCost(s.atcost)
 		e1:SetOperation(s.atop)
 		tc:RegisterEffect(e1)
+		--Destroy
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EVENT_CHANGE_POS)
+		e2:SetOperation(s.desop3)
+		c:RegisterEffect(e2)
 	end
 end
 	function s.atcost(e,c,tp)
@@ -88,6 +95,12 @@ end
 		Duel.PayLPCost(tp,500)
 		Duel.AttackCostPaid()
 	end
+end
+	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=c:GetFirstCardTarget()
+	local g=Group.FromCards(tc,c)
+	Duel.Destroy(g,REASON_EFFECT)
 end
 
 
