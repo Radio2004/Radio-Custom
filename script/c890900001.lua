@@ -30,7 +30,7 @@ end
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(id)>0 end
+	if chk==0 then return c:GetFlagEffect(id)~=0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 	function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -88,7 +88,7 @@ end
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 	end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT,0,0)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 end
 
 
