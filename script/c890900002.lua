@@ -72,7 +72,6 @@ end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
-
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_COST)
@@ -85,8 +84,7 @@ end
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EVENT_CHANGE_POS)
 		e2:SetCondition(s.descon3)
-	e2:SetOperation(s.desop3)
-
+		e2:SetOperation(s.desop3)
 		tc:RegisterEffect(e2)
 	end
 end
@@ -103,7 +101,7 @@ end
 	local tc=e:GetHandler():GetFirstCardTarget()
 	return tc and eg:IsContains(tc) and tc:IsDefensePos()
 end
-function s.desop3(e,tp,eg,ep,ev,re,r,rp)
+	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetFirstCardTarget()
 	local g=Group.FromCards(tc,c)
