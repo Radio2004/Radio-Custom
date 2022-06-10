@@ -72,20 +72,19 @@ end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_ATTACK_COST)
-	e1:SetCost(s.atcost)
-	e1:SetOperation(s.atop)
-
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_ATTACK_COST)
+		e1:SetCost(s.atcost)
+		e1:SetOperation(s.atop)
 		tc:RegisterEffect(e1)
 	end
 end
 	function s.atcost(e,c,tp)
-	return Duel.CheckLPCost(tp,1000)
+	return Duel.CheckLPCost(tp,500)
 end
 	function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsAttackCostPaid()~=2 and e:GetHandler():IsLocation(LOCATION_MZONE) then
-		Duel.PayLPCost(tp,1000)
+		Duel.PayLPCost(tp,500)
 		Duel.AttackCostPaid()
 	end
 end
