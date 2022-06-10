@@ -97,10 +97,7 @@ end
 	end
 end
 	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=c:GetFirstCardTarget()
-	local g=Group.FromCards(tc,c)
-	Duel.Destroy(g,REASON_EFFECT)
+	Duel.Destroy(tp,REASON_EFFECT)
 end
 
 
