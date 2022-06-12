@@ -74,7 +74,7 @@ end
 		Duel.ConfirmDecktop(tp,1)
 		local g=Duel.GetDecktopGroup(tp,1)
 		local tg=g:GetFirst()
-		if tg:IsType(TYPE_SPELL) and tg:IsAbleToHand() then
+		if tg:IsType(TYPE_MONSTER) and tg:IsCode(0x3dd) then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
