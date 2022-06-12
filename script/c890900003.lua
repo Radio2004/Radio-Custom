@@ -92,17 +92,9 @@ end
 			tc:RegisterEffect(e2)
 else
 	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
-		--Destroy
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-		e3:SetCode(EVENT_CHANGE_POS)
-		e3:SetOperation(s.desop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e3)
 	end
 end
 	end
-end
 	function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
