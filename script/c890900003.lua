@@ -42,3 +42,13 @@ end
 		Duel.RegisterEffect(e1,tp)
 	end
 end
+	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return true end
+	end
+	function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
+end
