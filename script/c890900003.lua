@@ -74,9 +74,8 @@ end
 		Duel.ConfirmDecktop(tp,1)
 		local g=Duel.GetDecktopGroup(tp,1)
 		local tg=g:GetFirst()
-		if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd)  then
+		if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) and (not tg:SendtoGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then 
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 		local atk=tg:GetAttack()
 		local def=tg:GetDefense()
 			local e1=Effect.CreateEffect(c)
@@ -89,6 +88,8 @@ end
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
 			e2:SetValue(-def)
 			tc:RegisterEffect(e2)
+else
+	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 		--Destroy
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
