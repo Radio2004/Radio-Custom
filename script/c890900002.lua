@@ -82,11 +82,10 @@ end
 		--Destroy
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e2:SetRange(LOCATION_MZONE)
-		e2:SetCode(EFFECT_SELF_DESTROY)
+		e2:SetCode(EVENT_CHANGE_POS)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetCondition(s.sdcon)
+		e2:SetOperation(s.desop3)
 		tc:RegisterEffect(e2)
 	end
 end
@@ -100,7 +99,8 @@ end
 	end
 end
    function s.sdcon(e)
-	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) or e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
+	local c=e:GetHandler()
+	Duel.Destroy(tc,REASON_EFFECT)
 end
 
 
