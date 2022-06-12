@@ -81,7 +81,7 @@ end
 		tc:RegisterEffect(e1)
 		--Destroy
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 		e2:SetCode(EVENT_CHANGE_POS)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCondition(s.descon3)
@@ -100,7 +100,7 @@ end
 end
 	function s.descon3(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	return tc and eg:IsContains(tc) and tc:IsDefensePos()
+	return tc and (c:GetPreviousPosition()&POS_ATTACK)~=0 and tc:IsDefensePos()
 end
 	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
