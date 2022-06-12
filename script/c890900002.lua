@@ -81,8 +81,9 @@ end
 		tc:RegisterEffect(e1)
 		--Destroy
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EVENT_CHANGE_POS)
+		e2:SetRange(LOCATION_MZONE)
 		e2:SetCondition(s.descon3)
 		e2:SetOperation(s.desop3)
 		tc:RegisterEffect(e2)
