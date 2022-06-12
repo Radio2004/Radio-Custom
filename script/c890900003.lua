@@ -74,8 +74,9 @@ end
 		Duel.ConfirmDecktop(tp,1)
 		local g=Duel.GetDecktopGroup(tp,1)
 		local tg=g:GetFirst()
-		if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) and (not tg:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then 
+	if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then 
 		Duel.DisableShuffleCheck()
+	if tg:GetAttack() and tg:GetDefense() and (not tg:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		local atk=tg:GetAttack()
 		local def=tg:GetDefense()
 			local e1=Effect.CreateEffect(c)
