@@ -98,7 +98,7 @@ end
 	end
 end
    function s.sdcon(e)
-	return e:GetHandler():Duel.ChangePosition()
+	return e:GetHandler():Duel.ChangePosition(g,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 end
 
 
