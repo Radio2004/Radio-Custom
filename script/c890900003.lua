@@ -92,6 +92,7 @@ end
 			tc:RegisterEffect(e2)
 else
 	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
+	end
 		--Destroy
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -99,7 +100,6 @@ else
 		e3:SetOperation(s.desop)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
-	end
 end
 	end
 end
