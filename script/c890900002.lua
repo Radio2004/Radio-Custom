@@ -81,11 +81,12 @@ end
 		tc:RegisterEffect(e1)
 		--Destroy
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e2:SetCode(EVENT_CHANGE_POS)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetCondition(s.descon3)
-		e2:SetOperation(s.desop3)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_SELF_DESTROY)
+	e2:SetCondition(s.sdcon)
+
 		tc:RegisterEffect(e2)
 	end
 end
@@ -98,16 +99,10 @@ end
 		Duel.AttackCostPaid()
 	end
 end
-	function s.descon3(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetFirstCardTarget()
-	return tc and eg:IsContains(tc) and tc:IsDefensePos()
+   function s.sdcon(e)
+	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
-	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=c:GetFirstCardTarget()
-	local g=Group.FromCards(tc,c)
-	Duel.Destroy(tc,REASON_EFFECT)
-end
+
 
 
 
