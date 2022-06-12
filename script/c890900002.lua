@@ -99,12 +99,12 @@ end
 	end
 end
 	function s.descon3(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetFirstTarget()
-	return tc and eg:IsContains(tc) and tc:IsDefensePos() or tc:IsAttackPos()
+	local tc=e:GetHandler():GetFirstCardTarget()
+	return tc and eg:IsContains(tc) and tc:IsDefensePos()
 end
 	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=c:GetFirstTarget()
+	local tc=c:GetFirstCardTarget()
 	local g=Group.FromCards(tc,c)
 	Duel.Destroy(g,REASON_EFFECT)
 end
