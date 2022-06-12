@@ -74,17 +74,26 @@ end
 		Duel.ConfirmDecktop(tp,1)
 		local g=Duel.GetDecktopGroup(tp,1)
 		local tg=g:GetFirst()
-		if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) and tg:IsAbleToHand() then
+		if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd)  then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ShuffleHand(tp)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		local atk=tg:GetBaseAttack()+tg:GetBaseDefense()
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e1:SetValue(atk)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
+			tc:RegisterEffect(e2)
 		--Destroy
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-		e2:SetCode(EVENT_CHANGE_POS)
-		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+		e3:SetCode(EVENT_CHANGE_POS)
+		e3:SetOperation(s.desop)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e3)
 	end
 end
 	end
