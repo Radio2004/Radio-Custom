@@ -83,7 +83,7 @@ end
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetRange(LOCATION_MZONE)
-		e2:SetCode(EFFECT_SELF_DESTROY+EVENT_CHANGE_POS)
+		e2:SetCode(EFFECT_SELF_DESTROY)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
@@ -98,7 +98,7 @@ end
 	end
 end
    function s.sdcon(e)
-	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) or e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
+	return e:GetHandler():Duel.ChangePosition()
 end
 
 
