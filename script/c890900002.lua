@@ -98,8 +98,8 @@ end
 	end
 end
 	function s.descon3(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetFirstCardTarget()
-	return tc and eg:IsContains(tc) and tc:IsDefensePos()
+	local tc=e:GetHandler():GetFirstTarget()
+	return tc and eg:IsContains(tc) and tc:IsDefensePos() or tc:IsAttackPos()
 end
 	function s.desop3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
