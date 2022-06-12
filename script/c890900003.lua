@@ -77,8 +77,8 @@ end
 		if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd)  then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
-		local atk=tc:GetAttack()
-		local def=tc:GetDefense()
+		local atk=tg:GetAttack()
+		local def=tg:GetDefense()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
