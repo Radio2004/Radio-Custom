@@ -69,11 +69,12 @@ end
 	function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.ConfirmDecktop(tp,1)
 		local g=Duel.GetDecktopGroup(tp,1)
-		local tc=g:GetFirst()
-		if tc:IsType(TYPE_SPELL) and tc:IsAbleToHand() then
+		local tg=g:GetFirst()
+		if tg:IsType(TYPE_SPELL) and tg:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
