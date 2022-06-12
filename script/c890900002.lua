@@ -81,11 +81,11 @@ end
 		tc:RegisterEffect(e1)
 		--Destroy
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetCode(EFFECT_SELF_DESTROY+EVENT_CHANGE_POS)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetOperation(s.posop)
+		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+			e2:SetCode(EVENT_CHANGE_POS)
+			e2:SetOperation(s.desop)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+
 		tc:RegisterEffect(e2)
 	end
 end
@@ -98,9 +98,13 @@ end
 		Duel.AttackCostPaid()
 	end
 end
-   function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangePosition(tp,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+   function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsAttackPos() then
+		Duel.Destroy(c,REASON_EFFECT)
+	end
 end
+
 
 
 
