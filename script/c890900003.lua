@@ -11,6 +11,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
+	--Reduce ATK/DEF
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
+	e2:SetTarget(s.target)
+	e2:SetOperation(s.operation)
+	c:RegisterEffect(e2)
 end
 	function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x3dd)
@@ -51,4 +59,30 @@ end
 	end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
+end
+	function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+end
+	function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_ATTACK_COST)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetCost(s.atcost)
+		e1:SetOperation(s.atop)
+		tc:RegisterEffect(e1)
+		--Destroy
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+		e2:SetCode(EVENT_CHANGE_POS)
+		e2:SetOperation(s.desop)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e2)
+	end
 end
