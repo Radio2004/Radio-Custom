@@ -43,7 +43,6 @@ end
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetLabel(fid)
 		e1:SetLabelObject(c)
 		e1:SetCondition(s.thcon)
