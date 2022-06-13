@@ -101,7 +101,7 @@ end
 end
 	function s.costchk(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if  (r&REASON_BATTLE)~=0 then
+	if not (r&REASON_BATTLE)~=0 then
 	Duel.Recover(tp,e:GetAttack(),REASON_EFFECT)
 end
 	end
