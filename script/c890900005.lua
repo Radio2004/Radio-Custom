@@ -100,5 +100,5 @@ end
 	return (r&REASON_BATTLE)~=0
 end
 	function s.costchk(e,te_or_c,tp)
-	Duel.Recover(tp,с:GetAttack(),REASON_EFFECT)
+	Duel.Recover(tp,e:GetAttack(),REASON_EFFECT)
 end
