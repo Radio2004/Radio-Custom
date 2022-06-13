@@ -70,15 +70,17 @@ end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
+		--battle indes
+	local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_ATTACK_COST)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetCost(s.atcost)
-		e1:SetOperation(s.atop)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+		e1:SetCountLimit(1)
+		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
 		--Destroy
-		local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 		e2:SetCode(EVENT_CHANGE_POS)
 		e2:SetOperation(s.desop)
@@ -91,4 +93,7 @@ end
 	if c:IsAttackPos() or c:IsDefensePos() then
 		Duel.Destroy(c,REASON_EFFECT)
 	end
+end
+	function s.valcon(e,re,r,rp)
+	return (r&REASON_BATTLE)~=0
 end
