@@ -97,8 +97,11 @@ end
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
 			e2:SetValue(-def)
 			tc:RegisterEffect(e2)
-else
-	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
+		elseif
+			Duel.MoveSequence(tg,1)
+
+		else
+			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 	end
 end
 	end
