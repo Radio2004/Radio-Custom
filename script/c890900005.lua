@@ -96,7 +96,8 @@ end
 	end
 end
 	function s.valcon(e,re,r,rp)
-	return (r&REASON_BATTLE)~=0 and Duel.Recover(tp,tg:GetAttack(),REASON_EFFECT)
+	local c=e:GetHandler()
+	return (r&REASON_BATTLE)~=0 and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
 end
 	function s.costchk(e,te_or_c,tp)
 	Duel.Recover(tp,e:GetAttack(),REASON_EFFECT)
