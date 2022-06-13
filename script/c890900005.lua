@@ -78,7 +78,6 @@ end
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		e1:SetCondition(s.damcon)
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
 		e1:SetValue(s.valcon)
