@@ -99,7 +99,9 @@ end
 	function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
-	function s.costchk(e,te_or_c,tp)
+	function s.costchk(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if  (r&REASON_BATTLE)~=0 then
 	Duel.Recover(tp,e:GetAttack(),REASON_EFFECT)
 end
+	end
