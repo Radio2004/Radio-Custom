@@ -87,6 +87,7 @@ end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+	end
 	function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
