@@ -82,7 +82,6 @@ end
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 	if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) and (not tg:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-			Duel.DisableShuffleCheck()
 			local atk=tg:GetAttack()
 			local def=tg:GetDefense()
 			local e1=Effect.CreateEffect(c)
