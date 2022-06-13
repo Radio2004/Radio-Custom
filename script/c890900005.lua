@@ -78,7 +78,7 @@ end
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		e2:SetCost(s.costchk)
+		e1:SetCost(s.costchk)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
 		--Destroy
