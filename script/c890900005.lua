@@ -108,7 +108,7 @@ end
 	function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep then
 		Duel.ChangeBattleDamage(tp,0)
-		Duel.Damage(1-tp,ev,REASON_EFFECT)
+		Duel.Damage(tp,ev,REASON_EFFECT)
 	end
 end
 
