@@ -102,12 +102,12 @@ end
 	return (r&REASON_BATTLE)~=0
 end
 	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	return not tc:IsReason(REASON_BATTLE)
+	return not (r&REASON_BATTLE)~=0
 end
 	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return true end
-	local atk=e:GetLabelObject():GetBaseAttack()
+	local atk=c:GetBaseAttack()
 	if atk<0 then atk=0 end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(atk)
