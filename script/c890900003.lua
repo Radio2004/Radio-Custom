@@ -81,9 +81,8 @@ end
 		e3:SetOperation(s.desop)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
-	if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) then 
-		Duel.DisableShuffleCheck()
-	if tg:GetAttack() and tg:GetDefense() and (not tg:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
+	if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) and (not tg:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
+			Duel.DisableShuffleCheck()
 			local atk=tg:GetAttack()
 			local def=tg:GetDefense()
 			local e1=Effect.CreateEffect(c)
@@ -102,7 +101,12 @@ end
 		elseif not tg:IsType(TYPE_MONSTER) and not tg:IsSetCard(0x3dd) then
 			Duel.DisableShuffleCheck()
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
+end
 	end
+	end
+end
+	end
+end
 	function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
