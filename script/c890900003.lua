@@ -100,8 +100,6 @@ end
 		else
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 	end
-		elseif
-			Duel.MoveSequence(tg,1)
 end
 	end
 end
