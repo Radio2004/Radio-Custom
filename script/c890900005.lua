@@ -76,6 +76,7 @@ end
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
