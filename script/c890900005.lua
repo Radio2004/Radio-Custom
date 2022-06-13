@@ -78,6 +78,7 @@ end
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
+		e2:SetCost(s.costchk)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
 		--Destroy
@@ -96,9 +97,9 @@ end
 	end
 end
 	function s.valcon(e,re,r,rp)
-	local c=e:GetHandler()
-	return (r&REASON_BATTLE)~=0 and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
+	return (r&REASON_BATTLE)~=0
 end
 	function s.costchk(e,te_or_c,tp)
+	local c=e:GetHandler()
 	Duel.Recover(tp,e:GetAttack(),REASON_EFFECT)
 end
