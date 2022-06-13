@@ -79,7 +79,6 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetCost(s.costchk)
-		e1:SetOperation(s.costop)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
 		--Destroy
@@ -101,10 +100,5 @@ end
 	return (r&REASON_BATTLE)~=0
 end
 	function s.costchk(e,te_or_c,tp)
-	local ct=#{Duel.GetPlayerEffect(tp,id)}
-	return Duel.CheckLPCost(tp,ct*600)
+	Duel.Recover(tp,с:GetAttack(),REASON_EFFECT)
 end
-function s.costop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.PayLPCost(tp,600)
-end
-
