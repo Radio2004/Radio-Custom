@@ -85,6 +85,7 @@ end
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 	end
 end
 	end
