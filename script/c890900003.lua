@@ -81,9 +81,6 @@ end
 		e3:SetOperation(s.desop)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
-	if not tg:IsSetCard(0x03dd) and not tg:IsType(TYPE_MONSTER) then
-		Duel.SendtoGrave(tg,REASON_EFFECT)
-end
 	if tg:IsType(TYPE_MONSTER) and tg:IsSetCard(0x3dd) then 
 		Duel.DisableShuffleCheck()
 	if tg:GetAttack() and tg:GetDefense() and (not tg:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
@@ -101,6 +98,7 @@ end
 			e2:SetValue(-def)
 			tc:RegisterEffect(e2)
 		else
+			Duel.DisableShuffleCheck()
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 	end
 end
