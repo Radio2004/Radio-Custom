@@ -99,7 +99,6 @@ end
 			tc:RegisterEffect(e2)
 		elseif
 			Duel.MoveSequence(tg,1)
-
 		else
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 	end
