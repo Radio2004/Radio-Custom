@@ -104,6 +104,9 @@ end
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 	end
 end
+	end
+end
+	end
 	function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
