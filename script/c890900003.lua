@@ -98,13 +98,9 @@ end
 		else
 			Duel.DisableShuffleCheck()
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
-		elseif not tg:IsType(TYPE_MONSTER) and not tg:IsSetCard(0x3dd) then
-			Duel.DisableShuffleCheck()
-			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 end
 	end
 end
-	end
 	function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
