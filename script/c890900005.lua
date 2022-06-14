@@ -98,12 +98,7 @@ end
 	function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
 	if r & REASON_BATTLE ==0 then return 0 end
-	local tp=e:GetHandlerPlayer()
-	local a=Duel.GetAttacker()
-	local tc=a:GetBattleTarget()
-	if tc and tc:IsControler(1-tp) then a,tc=tc,a end
-	local dam=Duel.GetLP(tp)
-	if not tc or dam<=0 then return 1 end
+	local dam=Duel.GetLP(tp,tc:GetAttack(),REASON_EFFECT)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
