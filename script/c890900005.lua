@@ -87,6 +87,12 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+		e1:SetOperation(s.damop)
+		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -98,4 +104,10 @@ end
 	function s.valcon(e,re,r,rp)
 	if r & REASON_BATTLE ==0 then return 0 end
 	return 1
+end
+	function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	if tp==ep then
+		Duel.ChangeBattleDamage(tp,0)
+		Duel.Damage(1-tp,ev,REASON_EFFECT)
+	end
 end
