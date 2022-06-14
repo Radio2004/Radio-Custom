@@ -86,7 +86,7 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
+	if
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -96,5 +96,6 @@ end
 	end
 end
 	function s.valcon(e,re,r,rp)
-	return (r&REASON_BATTLE)~=0 
+	local c=e:GetHandler()
+	if r & REASON_BATTLE ==0 then return 0 end
 end
