@@ -85,7 +85,7 @@ end
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCountLimit(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(s.valcon1)
+		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -96,12 +96,13 @@ end
 	end
 end
 	function s.valcon(e,re,r,rp)
-	local c=e:GetHandler()
+	
 	local tp=e:GetHandlerPlayer()
 	if r & REASON_BATTLE ==0 then return 0 end
-	return 1
+	c~=e:GetHandler() and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
+	return 1 
 end
 	function s.valcon1(e,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_BATTLE)~=0 and c~=e:GetHandler() and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
+	return (r&REASON_BATTLE)~=0
 end
