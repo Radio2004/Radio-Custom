@@ -85,7 +85,7 @@ end
 	e1:SetTarget(s.reptg)
 	e1:SetValue(s.repval)
 	e1:SetOperation(s.repop)
-	tc:RegisterEffect(e2)
+	tc:RegisterEffect(e1)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
