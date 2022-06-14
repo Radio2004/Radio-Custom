@@ -100,15 +100,15 @@ end
 	return (r&REASON_BATTLE)~=0 
 end
 	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetAttackTarget()~=nil end
-	local bc=e:GetHandler():GetBattleTarget()
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,bc:GetAttack())
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,bc:GetDefense())
+	if chk==0 then return true end
+	local c=e:GetHandler()
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,c:GetAttack())
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,c:GetDefense())
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	local atk=bc:GetAttack()
-	local def=bc:GetDefense()
+	local c=e:GetHandler()
+	local atk=c:GetAttack()
+	local def=c:GetDefense()
 	if atk<0 then atk=0 end
 	if def<0 then def=0 end
 	Duel.Damage(1-tp,atk,REASON_EFFECT,true)
