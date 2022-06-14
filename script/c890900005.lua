@@ -94,7 +94,7 @@ end
 	e3:SetCode(EVENT_DAMAGE_STEP_END)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
-	c:RegisterEffect(e3)
+	tc:RegisterEffect(e3)
 	end
 end
 	end
