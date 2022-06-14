@@ -95,10 +95,9 @@ end
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
-	function s.valcon(e,re,r,rp)
+	function s.valcon(e,re,r,rp,tp)
 	local c=e:GetHandler()
 	if r & REASON_BATTLE ==0 then return 0 end
-	local tp=e:GetHandlerPlayer()
 	local dam=Duel.GetLP(tp,c:GetAttack(),REASON_EFFECT)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(c)
