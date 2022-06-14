@@ -102,5 +102,5 @@ end
 	return 1
 end
 	function s.valcon1(e,re,r,rp)
-	return (r&REASON_BATTLE)~=0 and (Duel.GetAttacker()==e:GetHandler() or (Duel.GetAttackTarget() and Duel.GetAttackTarget()==e:GetHandler()))
+	return (r&REASON_BATTLE)~=0 and (Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT))
 end
