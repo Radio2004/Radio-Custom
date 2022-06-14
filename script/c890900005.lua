@@ -96,11 +96,6 @@ end
 	end
 end
 	function s.valcon(e,re,r,rp)
-	local tp=e:GetHandlerPlayer()
 	if r & REASON_BATTLE ==0 then return 0 end
 	return 1
-end
-	function s.valcon1(e,re,r,rp)
-	local c=e:GetHandler()
-	return (r&REASON_BATTLE)~=0
 end
