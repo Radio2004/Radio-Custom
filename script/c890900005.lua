@@ -78,17 +78,14 @@ end
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		--battle indes
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DESTROY_REPLACE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCountLimit(1)
-		e1:SetValue(s.valcon)
-		e1:SetTarget(s.damtg)
-		e1:SetOperation(s.damop)
-		tc:RegisterEffect(e1)
+		local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EFFECT_DESTROY_REPLACE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTarget(s.reptg)
+	e1:SetValue(s.repval)
+	e1:SetOperation(s.repop)
+	tc:RegisterEffect(e2)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -100,21 +97,25 @@ end
 	function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0 
 end
-	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local c=e:GetHandler()
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,c:GetAttack())
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,c:GetDefense())
+   function s.repfilter(c,tp)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(0x3dd)
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local atk=c:GetAttack()
-	local def=c:GetDefense()
-	if atk<0 then atk=0 end
-	if def<0 then def=0 end
-	Duel.Damage(1-tp,atk,REASON_EFFECT,true)
-	Duel.Recover(tp,def,REASON_EFFECT,true)
-	Duel.RDComplete()
+function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		return true
+	else
+		return false
+	end
 end
+function s.repval(e,c)
+	return s.repfilter(c,e:GetHandlerPlayer())
+end
+function s.repop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+end
+
 
 
