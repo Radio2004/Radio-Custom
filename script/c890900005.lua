@@ -86,7 +86,6 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-	if
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
