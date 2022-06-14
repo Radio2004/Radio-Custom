@@ -79,14 +79,12 @@ end
 		tc:RegisterEffect(e2)
 		--battle indes
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		e1:SetValue(s.valcon)
-		e1:SetTarget(s.damtg)
-		e1:SetOperation(s.damop)
+		e1:SetValue(s.valcon)	   
 		tc:RegisterEffect(e1)
 	end
 end
