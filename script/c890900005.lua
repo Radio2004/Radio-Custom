@@ -98,28 +98,5 @@ end
 	function s.valcon(e,re,r,rp,tp)
 	local c=e:GetHandler()
 	if r & REASON_BATTLE ==0 then return 0 end
-	local dam=Duel.GetLP(tp,c:GetAttack(),REASON_EFFECT)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EVENT_RECOVER)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(dam)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e1)
-	--Reset
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetOperation(function (e)
-		if c:GetFlagEffect(id)==0 then
-			e1:Reset()
-			e:Reset()
-		end
-	end)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e2)
 	return 1
 end
