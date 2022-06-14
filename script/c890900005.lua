@@ -102,9 +102,8 @@ end
 	end
 end
  function s.valcon(e,re,r,rp)
-	local c=e:GetHandler()
 	if (r&REASON_BATTLE)~=0 then
-		Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		return true
 	else return false end
 end
