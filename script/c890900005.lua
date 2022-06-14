@@ -102,7 +102,7 @@ end
 	local a=Duel.GetAttacker()
 	local tc=a:GetBattleTarget()
 	if tc and tc:IsControler(1-tp) then a,tc=tc,a end
-	local dam=Duel.GetBattleDamage(tp)
+	local dam=Duel.GetLP(tp)
 	if not tc or dam<=0 then return 1 end
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(c)
