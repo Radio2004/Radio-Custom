@@ -102,5 +102,6 @@ end
 	return 1
 end
 	function s.valcon1(e,re,r,rp)
-	return (r&REASON_BATTLE)~=0 and (Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT))
+	local c=e:GetHandler()
+	return (r&REASON_BATTLE)~=0 and (Duel.Recover(tp,c:GetAttack(),REASON_EFFECT))
 end
