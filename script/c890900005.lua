@@ -97,6 +97,4 @@ end
 end
 	function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
-	if r & REASON_BATTLE ==0 then return 0 end
-	Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
-end
+	if r & REASON_BATTLE ==0 then return 0 and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT) end
