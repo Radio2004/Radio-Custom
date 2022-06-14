@@ -80,13 +80,6 @@ end
 		e1:SetCountLimit(1)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e3:SetOperation(s.damop)
-		e3:SetCountLimit(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3)
 		--Destroy
 	local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -102,8 +95,9 @@ end
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
-	function s.valcon(e,re,r,rp)
-	return (r&REASON_BATTLE)~=0
+	function s.valcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return (r&REASON_BATTLE)~=0 and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
 end
 	function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep then
