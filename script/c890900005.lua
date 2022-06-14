@@ -97,5 +97,5 @@ end
 end
 	function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
-	if r & REASON_BATTLE ==0 then return 0 end
+	if r & REASON_BATTLE ==0 then return 1 end
 end
