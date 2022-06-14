@@ -70,8 +70,15 @@ end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--Destroy
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+		e2:SetCode(EVENT_CHANGE_POS)
+		e2:SetOperation(s.desop)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e2)
 		--battle indes
-	local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -79,13 +86,15 @@ end
 		e1:SetCountLimit(1)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		--Destroy
-	local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-		e2:SetCode(EVENT_CHANGE_POS)
-		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
+	if c:IsRelateToEffect(e) then
+		local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_DAMAGE+CATEGORY_RECOVER)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_DAMAGE_STEP_END)
+	e3:SetTarget(s.damtg)
+	e3:SetOperation(s.damop)
+	c:RegisterEffect(e3)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -96,6 +105,22 @@ end
 end
 	function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0 and 
+end
+	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetAttackTarget()~=nil end
+	local bc=e:GetHandler():GetBattleTarget()
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,bc:GetAttack())
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,bc:GetDefense())
+end
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	local bc=e:GetHandler():GetBattleTarget()
+	local atk=bc:GetAttack()
+	local def=bc:GetDefense()
+	if atk<0 then atk=0 end
+	if def<0 then def=0 end
+	Duel.Damage(1-tp,atk,REASON_EFFECT,true)
+	Duel.Recover(tp,def,REASON_EFFECT,true)
+	Duel.RDComplete()
 end
 
 
