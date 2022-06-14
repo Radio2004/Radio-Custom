@@ -104,7 +104,7 @@ end
 	end
 end
 	function s.valcon(e,re,r,rp)
-	return (r&REASON_BATTLE)~=0 and 
+	return (r&REASON_BATTLE)~=0 
 end
 	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttackTarget()~=nil end
