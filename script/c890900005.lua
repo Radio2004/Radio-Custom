@@ -85,7 +85,6 @@ end
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCountLimit(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetTarget(s.indtg1)
 		e1:SetValue(s.valcon1)
 		tc:RegisterEffect(e1)
 	end
@@ -102,11 +101,7 @@ end
 	if r & REASON_BATTLE ==0 then return 0 end
 	return 1
 end
-	function s.indtg1(e,c)
-	return c:IsAttackPos() and c~=e:GetHandler() and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
-end
-
 	function s.valcon1(e,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_BATTLE)~=0
+	return (r&REASON_BATTLE)~=0 and c~=e:GetHandler() and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
 end
