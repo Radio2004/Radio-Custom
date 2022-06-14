@@ -85,8 +85,8 @@ end
 		e1:SetCountLimit(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetTarget(s.reptg)
-	e1:SetValue(s.repval)
-	e1:SetOperation(s.repop)
+		e1:SetValue(s.valcon)
+		e1:SetOperation(s.repop)
 		tc:RegisterEffect(e1)
 	end
 end
