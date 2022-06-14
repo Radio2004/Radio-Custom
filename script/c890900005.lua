@@ -79,25 +79,17 @@ end
 		tc:RegisterEffect(e2)
 		--battle indes
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetValue(s.valcon)
+		e1:SetTarget(s.damtg)
+		e1:SetOperation(s.damop)
 		tc:RegisterEffect(e1)
-	if c:IsRelateToEffect(e) then
-		local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_DAMAGE+CATEGORY_RECOVER)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_DAMAGE_STEP_END)
-	e3:SetTarget(s.damtg)
-	e3:SetOperation(s.damop)
-	tc:RegisterEffect(e3)
 	end
 end
-	end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
