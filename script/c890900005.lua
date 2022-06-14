@@ -83,11 +83,10 @@ end
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetTarget(s.reptg)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
-		e1:SetOperation(s.repop)
 		tc:RegisterEffect(e1)
+		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -99,27 +98,3 @@ end
 	function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0 
 end
-   function s.repfilter(c,tp)
-	local c=e:GetHandler()
-	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(0x3dd)
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
-end
-function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-		return true
-	else
-		return false
-	end
-end
-function s.repval(e,c)
-	return s.repfilter(c,e:GetHandlerPlayer())
-end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
-end
-
-
-
