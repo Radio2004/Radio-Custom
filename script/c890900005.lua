@@ -97,5 +97,21 @@ end
 end
 	function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
-	if r & REASON_BATTLE ==0 then return 0 and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT) end
+	if r & REASON_BATTLE ==0 then return 0 end
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
+	--Reset
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_ADJUST)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetOperation(function (e)
+		if c:GetFlagEffect(id)==0 then
+			e1:Reset()
+			e:Reset()
+		end
+	end)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	tc:RegisterEffect(e2)
+	return 1
 end
