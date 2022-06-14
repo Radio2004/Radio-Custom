@@ -101,13 +101,10 @@ end
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
-	function s.valcon(e,re,r,rp)
-	if r & REASON_BATTLE ==0 then return 0 end
-	return 1
-end
-	function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if tp==ep then
-		Duel.ChangeBattleDamage(tp,0)
-		Duel.Damage(1-tp,ev,REASON_EFFECT)
-	end
+ function s.valcon(e,re,r,rp)
+	local c=e:GetHandler()
+	if (r&REASON_BATTLE)~=0 then
+		Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
+		return true
+	else return false end
 end
