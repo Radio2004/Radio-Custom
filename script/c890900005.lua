@@ -100,6 +100,7 @@ end
 	return (r&REASON_BATTLE)~=0 
 end
    function s.repfilter(c,tp)
+	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(0x3dd)
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
