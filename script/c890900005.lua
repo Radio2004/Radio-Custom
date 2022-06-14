@@ -78,14 +78,16 @@ end
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		--battle indes
-		local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EFFECT_DESTROY_REPLACE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(s.reptg)
+	   local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
+		e1:SetCountLimit(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetTarget(s.reptg)
 	e1:SetValue(s.repval)
 	e1:SetOperation(s.repop)
-	tc:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
