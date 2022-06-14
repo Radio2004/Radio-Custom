@@ -107,7 +107,7 @@ end
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(dam)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e1)
+	c:RegisterEffect(e1)
 	--Reset
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -120,6 +120,6 @@ end
 		end
 	end)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e2)
+	c:RegisterEffect(e2)
 	return 1
 end
