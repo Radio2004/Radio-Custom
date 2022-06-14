@@ -96,14 +96,7 @@ end
 	end
 end
 	function s.valcon(e,re,r,rp)
-	local c=e:GetHandler()
-	return (r&REASON_BATTLE)~=0 and Duel.Recover(tp,c:GetAttack(),REASON_EFFECT)
-end
-	function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if tp==ep then
-		Duel.ChangeBattleDamage(tp,0)
-		Duel.Damage(tp,ev,REASON_EFFECT)
-	end
+	return (r&REASON_BATTLE)~=0 and 
 end
 
 
