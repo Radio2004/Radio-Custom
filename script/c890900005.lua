@@ -98,28 +98,6 @@ end
 	function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
-	local d=Duel.GetAttackTarget()
 	if r & REASON_BATTLE ==0 then return 0 end
-	if d==c then d=Duel.GetAttacker() end
-	local ex1,a1,b1,p1,d1=Duel.GetOperationInfo(0,CATEGORY_DAMAGE)
-	local ex2,a2,b2,p2,d2=Duel.GetOperationInfo(0,CATEGORY_RECOVER)
-	Duel.Damage(1-tp,d1,REASON_EFFECT,true)
-	Duel.Recover(tp,d2,REASON_EFFECT,true)
-	Duel.RDComplete()
 	return 1
-end
-	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetAttackTarget()~=nil end
-	local c=e:GetHandler()
-	local d=Duel.GetAttackTarget()
-	if d==c then d=Duel.GetAttacker() end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,d:GetDefense())
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,d:GetAttack())
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local ex1,a1,b1,p1,d1=Duel.GetOperationInfo(0,CATEGORY_DAMAGE)
-	local ex2,a2,b2,p2,d2=Duel.GetOperationInfo(0,CATEGORY_RECOVER)
-	Duel.Damage(1-tp,d1,REASON_EFFECT,true)
-	Duel.Recover(tp,d2,REASON_EFFECT,true)
-	Duel.RDComplete()
 end
