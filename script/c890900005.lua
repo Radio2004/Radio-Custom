@@ -88,7 +88,7 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		if not c:IsRelateToEffect(e1) then
+		if tc:IsRelateToEffect(e1) and not tc:IsHasEffect(EFFECT_INDESTRUCTABLE_COUNT) then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
