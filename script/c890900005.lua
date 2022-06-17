@@ -102,7 +102,7 @@ end
 	local dam=c:GetAttack()
 	if r & REASON_BATTLE ==0 then return 0 end
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_BATTLED)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCondition(s.damcon)
