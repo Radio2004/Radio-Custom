@@ -99,6 +99,16 @@ end
 end
  function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
+	local tp=e:GetHandlerPlayer()
+	local dam=Duel.GetBattleDamage(tp)
 	if r & REASON_BATTLE ==0 then return 0 end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(dam)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	tc:RegisterEffect(e1)
 	return 1
 end
