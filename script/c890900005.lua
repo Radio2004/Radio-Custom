@@ -88,7 +88,7 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		if not tc:IsRelateToEffect(e1) and r&REASON_EFFECT==1 then
+		if SetCode(EVENT_BATTLE_DESTROYED) then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
