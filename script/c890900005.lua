@@ -101,7 +101,7 @@ end
 	local dam=c:GetAttack()
 	if r & REASON_BATTLE ==0 then return 0 end
 	if not c:IsImmuneToEffect(e) and not c:IsHasEffect(EFFECT_REVERSE_UPDATE) and dam>0 then
-			Duel.Damage(1-tp,dam,REASON_EFFECT)
+			Duel.Damage(tp,dam,REASON_EFFECT)
 	return 1
 end
 end
