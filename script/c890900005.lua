@@ -101,6 +101,8 @@ end
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
 	local dam=Duel.GetBattleDamage(tp)
+	local a=Duel.GetAttacker()
+	local tc=a:GetBattleTarget()
 	if r & REASON_BATTLE ==0 then return 0 end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
