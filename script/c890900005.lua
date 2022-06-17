@@ -88,10 +88,11 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		if Duel.Destroy(tc,REASON_BATTLE)==0 then return end
+		if Duel.Destroy(tc,REASON_BATTLE)==0 then return
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
+	end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
