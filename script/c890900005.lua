@@ -104,3 +104,4 @@ end
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	return 1
 end
+end
