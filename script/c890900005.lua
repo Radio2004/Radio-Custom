@@ -84,7 +84,6 @@ end
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCountLimit(1)
-		e1:SetLabelObject(tc)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
