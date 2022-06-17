@@ -88,7 +88,6 @@ end
 		e1:SetLabelObject(tc)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
-		e1:SetCondition(s.shcon)
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
 		tc:RegisterEffect(e1)
