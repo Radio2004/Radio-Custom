@@ -79,7 +79,7 @@ end
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		--battle indes
-	   local e1=Effect.CreateEffect(e:GetHandler())
+	   local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
@@ -88,7 +88,7 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		if not tc:IsRelateToEffect(e1)  then
+		if tc:IsRelateToEffect(e1) and not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) and dam>0 then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
