@@ -69,7 +69,7 @@ end
 	function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local dam=atk-tc:GetAttack()
+	local dam=tc:GetAttack()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		--Destroy
 		local e2=Effect.CreateEffect(c)
