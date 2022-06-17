@@ -107,7 +107,7 @@ end
 end
 	function s.shcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return re:IsContains(tc) and tc:GetFlagEffect(id)~=0
+	return r:IsContains(tc) and tc:GetFlagEffect(id)~=0
 end
 	function s.shfilter(c)
 	return c:IsSetCard(0x3dd) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
