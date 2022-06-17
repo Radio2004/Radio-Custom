@@ -88,9 +88,6 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		if not tc:IsImmuneToEffect(e1) and not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) and dam>0 then
-			Duel.Damage(1-tp,dam,REASON_EFFECT)
-	end
 end
 	end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -101,6 +98,9 @@ end
 end
  function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
+	local dam=c:GetAttack()
 	if r & REASON_BATTLE ==0 then return 0 end
+	if not tc:IsImmuneToEffect(e) and not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) and dam>0 then
+			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	return 1
 end
