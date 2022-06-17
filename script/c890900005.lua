@@ -99,7 +99,6 @@ end
  function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
-	local tc=Duel.GetFirstTarget()
 	local dam=c:GetAttack()
 	if r & REASON_BATTLE ==0 then return 0 end
 	local e1=Effect.CreateEffect(c)
