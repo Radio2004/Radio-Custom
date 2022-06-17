@@ -103,11 +103,26 @@ end
 	if r & REASON_BATTLE ==0 then return 0 end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetCode(EVENT_BATTLED)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(dam)
+	e1:SetCondition(s.damcon)
+	e1:SetTarget(s.damtg)
+	e1:SetOperation(s.damop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	return 1
+end
+	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+end
+function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local dam=e:GetHandler():GetAttack()
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(dam)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
+end
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	Duel.Damage(p,e:GetHandler():GetAttack(),REASON_EFFECT)
 end
