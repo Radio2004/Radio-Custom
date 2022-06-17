@@ -88,7 +88,7 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		if r&REASON_EFFECT==0 then
+		if not r&REASON_EFFECT==0 then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
