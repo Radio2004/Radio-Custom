@@ -99,7 +99,6 @@ end
  function s.valcon(e,re,r,rp)
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
-	local dam=c:Duel.Damage()
 	if r & REASON_BATTLE ==0 then return 0 end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
