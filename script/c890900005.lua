@@ -100,7 +100,7 @@ end
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
 	local tc=Duel.GetFirstTarget()
-	local dam=tc:GetAttack()
+	local dam=c:GetAttack()
 	if r & REASON_BATTLE ==0 then return 0 end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -109,6 +109,6 @@ end
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(dam)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e1)
+	c:RegisterEffect(e1)
 	return 1
 end
