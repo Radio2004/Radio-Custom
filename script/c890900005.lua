@@ -100,8 +100,7 @@ end
 	end
 end
  function s.valcon(e,re,r,rp)
-	if (r&REASON_BATTLE)~=0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		return true
-	else return false end
+	local c=e:GetHandler()
+	if r & REASON_BATTLE ==0 then return 0 end
+	return 1
 end
