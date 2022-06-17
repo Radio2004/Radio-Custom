@@ -100,8 +100,11 @@ end
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
 	if r & REASON_BATTLE ==0 then return 0 end
-	return 1
-end
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(2000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,2000)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
+	return 1
 end
