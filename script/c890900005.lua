@@ -89,9 +89,9 @@ end
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
 	end
-end
 		if r&REASON_EFFECT==1 then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
+end
 	end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
