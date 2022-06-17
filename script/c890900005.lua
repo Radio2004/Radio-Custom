@@ -69,6 +69,7 @@ end
 	function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
+	local dam=atk-tc:GetAttack()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		--Destroy
 		local e2=Effect.CreateEffect(c)
@@ -87,14 +88,11 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
-		Duel.RegisterEffect(e1,tp)
+		if not tc:IsImmuneToEffect(e1) and not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) and dam>0 then
+			Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
+	end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
