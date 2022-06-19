@@ -107,10 +107,15 @@ end
 	e1:SetCode(EVENT_ADJUST)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
+	e1:SetCondition(s.damcon)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 	return 1
+end
+	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_BATTLE)
 end
 	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
