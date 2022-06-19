@@ -20,7 +20,6 @@ local s,id=GetID()
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-end
 	function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x3dd)
 end
