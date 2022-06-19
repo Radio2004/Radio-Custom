@@ -105,6 +105,7 @@ end
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_ADJUST)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
