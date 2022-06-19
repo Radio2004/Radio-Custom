@@ -115,7 +115,7 @@ end
 end
 	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE)
+	return not c:IsReason(REASON_BATTLE)
 end
 	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
