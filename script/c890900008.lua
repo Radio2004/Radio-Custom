@@ -87,6 +87,12 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(s.valcon)
 		tc:RegisterEffect(e1)
+	   --pierce
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_PIERCE)
+		e3:SetValue(DOUBLE_DAMAGE)
+		c:RegisterEffect(e3)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -99,33 +105,5 @@ end
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
 	if r & REASON_BATTLE ==0 then return 0 end 
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DAMAGE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_ADJUST)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e1:SetCountLimit(1)
-	e1:SetCondition(s.damcon)
-	e1:SetTarget(s.damtg)
-	e1:SetOperation(s.damop)
-	c:RegisterEffect(e1)
 	return 1
-end
-	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return not c:IsReason(REASON_BATTLE)
-end
-	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local dam=c:GetBaseAttack()
-	if chk==0 then return true end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(dam)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,dam)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Damage(p,d,REASON_EFFECT)
 end
