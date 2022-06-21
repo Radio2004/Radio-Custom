@@ -1,4 +1,4 @@
---Melirria, Episode of Fire and Ice - Leo Kryu
+--Melirria, Episode of Fire and Ice - Matias Eferus
 	local s,id=GetID()
 	function s.initial_effect(c)
 	--Special Summon from hand
@@ -70,7 +70,6 @@ end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.Damage(1-tp,tc:GetAttack()/2,REASON_EFFECT)
 		--Destroy
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
