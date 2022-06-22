@@ -77,6 +77,15 @@ end
 		e1:SetOperation(s.desop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		--Cannot Attack
+		c:SetCardTarget(tc)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_CANNOT_ATTACK)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetCondition(s.rcon)
+		tc:RegisterEffect(e2)
+
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -84,4 +93,7 @@ end
 	if c:IsAttackPos() or c:IsDefensePos() then
 		Duel.Destroy(c,REASON_EFFECT)
 	end
+end
+	function s.rcon(e)
+	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
