@@ -85,7 +85,7 @@ end
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetRange(LOCATION_MZONE)
-		e2:SetValue(-s.atkval)
+		e2:SetValue(s.atkval)
 		c:RegisterEffect(e2)
 	end
 end
@@ -96,5 +96,5 @@ end
 	end
 end
 	function s.atkval(e,c)
-	return Duel.GetCounter(0,1,1,0x1015)*200
+	return Duel.GetCounter(0,1,1,0x1015)*-200
 end
