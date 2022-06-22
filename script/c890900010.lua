@@ -1,4 +1,4 @@
---Melirria, Episode of Fire and Ice - Matias Eferus
+--Melirria, Episode of Fire and Ice - Nemesisudus
 	local s,id=GetID()
 	function s.initial_effect(c)
 	--Special Summon from hand
@@ -82,6 +82,7 @@ end
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetCondition(s.rcon)
 		tc:RegisterEffect(e2)
 
 	end
@@ -91,4 +92,7 @@ end
 	if c:IsAttackPos() or c:IsDefensePos() then
 		Duel.Destroy(c,REASON_EFFECT)
 	end
+end
+	function s.rcon(e)
+	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
