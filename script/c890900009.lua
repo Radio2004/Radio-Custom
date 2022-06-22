@@ -78,9 +78,10 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		--Cannot Attack
-		c:SetCardTarget(e2)
+		c:SetCardTarget(tc)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e2:SetCondition(s.rcon)
