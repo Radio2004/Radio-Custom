@@ -39,6 +39,7 @@ end
 end
 	function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsLocation(LOCATION_GRAVE) and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) end
+	e:SetLabel(e:GetHandler():GetAttack())
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 	function s.atkfil(c)
