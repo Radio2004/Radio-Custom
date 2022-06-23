@@ -23,6 +23,42 @@
 	e3:SetCode(EVENT_BATTLED)
 	e3:SetOperation(s.statop)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCode(EVENT_TO_GRAVE)
+	e4:SetCost(s.atkcost)
+	e4:SetCondition(s.atkcon)
+	e4:SetTarget(s.atktg)
+	e4:SetOperation(s.atkop)
+	c:RegisterEffect(e4)
+end
+	function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+end
+	function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsLocation(LOCATION_GRAVE) and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+end
+	function s.atkfil(c)
+	return c:IsFaceup()
+end
+	function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfil(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.atkfil,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.SelectTarget(tp,s.atkfil,tp,LOCATION_MZONE,0,1,1,nil)
+end
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(e:GetLabel())
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	tc:RegisterEffect(e1)
 end
 	function s.statop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
