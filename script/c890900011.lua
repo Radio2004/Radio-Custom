@@ -38,8 +38,8 @@ end
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 	function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(e:GetHandler():GetAttack())
 	if chk==0 then return e:GetHandler():IsLocation(LOCATION_GRAVE) and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) end
+	e:SetLabel(e:GetHandler())
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 	function s.atkfil(c)
@@ -52,12 +52,15 @@ end
 	Duel.SelectTarget(tp,s.atkfil,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
+	local ec=e:GetLabel()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+	local atk=ec:GetAttack()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(e:GetLabel())
+	e1:SetValue(atk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)
 end
