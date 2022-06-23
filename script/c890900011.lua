@@ -24,6 +24,7 @@
 	e3:SetCondition(s.statcon)
 	e3:SetOperation(s.statop)
 	c:RegisterEffect(e3)
+	--All Melirria gain ATK
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
