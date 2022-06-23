@@ -79,14 +79,16 @@ end
 		e1:SetOperation(s.desop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		--gain ATK
+		--Lose ATK
 		local e2=Effect.CreateEffect(c)
 		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetRange(LOCATION_MZONE)
 		e2:SetValue(s.atkval)
-		c:RegisterEffect(e2)
+		tc:RegisterEffect(e2)
+		local e3=e2:Clone()
+		e3:SetCode(EFFECT_UPDATE_DEFENSE)
+		c:RegisterEffect(e3)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
