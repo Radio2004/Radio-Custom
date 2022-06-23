@@ -45,7 +45,18 @@ end
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		Duel.RegisterEffect(e1,tp)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+		e2:SetTargetRange(1,0)
+		e2:SetTarget(s.splimit)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e2,tp)
 	end
+end
+	function s.splimit(e,c,sump,sumtype,sumpos,targetp)
+	return not c:IsSetCard(0x3dd)
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
