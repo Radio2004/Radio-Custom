@@ -51,7 +51,7 @@ end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.atkfil,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,LOCATION_MZONE,0,nil,POS_FACEUP_ATTACK)
 	if #g>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 	local sc=g:GetFirst()
 	for sc in aux.Next(g) do
