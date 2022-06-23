@@ -11,7 +11,7 @@
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Inflict Damage
+	--Lose ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -98,5 +98,5 @@ end
 	end
 end
 	function s.atkval(e,c)
-	return Duel.GetCounter(0,1,1,0x1015)*-200
+	return c:GetCounter(0x1015)*-200
 end
