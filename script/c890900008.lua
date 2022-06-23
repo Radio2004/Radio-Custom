@@ -20,11 +20,8 @@ local s,id=GetID()
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-	function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x3dd)
-end
 	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,1,nil)
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
