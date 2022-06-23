@@ -40,6 +40,7 @@ end
 end
 	function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsLocation(LOCATION_GRAVE) and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) end
+	e:SetLabel(e:GetHandler():GetPreviousAttackOnField())
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 	function s.atkfil(c)
@@ -53,12 +54,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.atkfil,tp,LOCATION_MZONE,0,nil)
 	if #g>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 	local sc=g:GetFirst()
-	local atk=c:GetPreviousAttackOnField()
 	for sc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(atk)
+		e1:SetValue(e:GetLabel())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		sc:RegisterEffect(e1)
 end
