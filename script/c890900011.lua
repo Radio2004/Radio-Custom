@@ -17,10 +17,11 @@
 	e2:SetCode(EFFECT_ATTACK_ALL)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--ATK goes down after battle
+	--ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLED)
+	e3:SetCondition(s.statcon)
 	e3:SetOperation(s.statop)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
@@ -61,6 +62,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(e:GetLabel())
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)
+end
+	function s.statcon(e)
+	local ph=Duel.GetCurrentPhase()
+	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL)
+		and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
 end
 	function s.statop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
