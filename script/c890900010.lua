@@ -84,11 +84,12 @@ end
 		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetRange(LOCATION_MZONE)
 		e2:SetValue(s.atkval)
 		tc:RegisterEffect(e2)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_UPDATE_DEFENSE)
-		c:RegisterEffect(e3)
+		tc:RegisterEffect(e3)
 	end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
