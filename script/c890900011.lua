@@ -11,15 +11,30 @@
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Inflict Damage
+	--attack all
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_ATTACK_ALL)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
+	--ATK goes down after battle
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_BATTLED)
+	e3:SetOperation(s.statop)
+	c:RegisterEffect(e3)
 end
+	function s.statop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToBattle() and c:IsFaceup() then
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(500)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e1)
+end
+	end
 	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,1,nil) or Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
@@ -67,36 +82,4 @@ end
 end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
-end
-	function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-end
-	function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		--Destroy
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-		e1:SetCode(EVENT_CHANGE_POS)  
-		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		--Cannot Attack
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_CANNOT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
-
-	end
-end
-   function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsAttackPos() or c:IsDefensePos() then
-		Duel.Destroy(c,REASON_EFFECT)
-	end
 end
