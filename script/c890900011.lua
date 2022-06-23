@@ -35,6 +35,7 @@
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
+	s.listed_names={0x1fa3}
 	function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
