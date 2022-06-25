@@ -37,6 +37,16 @@
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd))
 	e4:SetValue(500)
 	c:RegisterEffect(e4)
+	--cannot be targeted
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetRange(LOCATION_PZONE)
+	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e5:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd))
+	e5:SetValue(aux.tgoval)
+	c:RegisterEffect(e5)
 end
 	function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
