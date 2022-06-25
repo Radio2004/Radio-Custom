@@ -27,11 +27,24 @@
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e3:SetValue(s.splimit)
 	c:RegisterEffect(e3)
+	--atk up
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_UPDATE_ATTACK)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(s.atkcon)
+	e4:SetTargetRange(LOCATION_MZONE,0)
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd))
+	e4:SetValue(500)
+	c:RegisterEffect(e4)
 end
-function s.psplimit(e,c,tp,sumtp,sumpos)
+	function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
+end
+	function s.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x3dd) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
 end
-function s.splimit(e,se,sp,st)
+	function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
 end
 	function s.rfilter(c)
