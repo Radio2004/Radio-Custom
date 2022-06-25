@@ -35,7 +35,7 @@ function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
 end
 	function s.rfilter(c)
-	return c:IsSetCard(0x3dd) and c:IsFaceup()
+	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsFaceup()
 	end
 	function s.spcon(e,c)
 	if c==nil then return true end
