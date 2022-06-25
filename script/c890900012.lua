@@ -49,7 +49,7 @@
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 end
-	function s.notarget(e,tp,eg,ep,ev,re,r,rp)
+	function s.targetcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 	function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
