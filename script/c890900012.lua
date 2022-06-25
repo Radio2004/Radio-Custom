@@ -44,6 +44,7 @@
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e5:SetReset(RESET_PHASE+PHASE_END)
 	e5:SetCondition(s.targetcon)
 	e5:SetTarget(s.notarget)
 	e5:SetValue(aux.tgoval)
