@@ -44,7 +44,7 @@
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e5:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd))
+	e5:SetTarget(s.notarget)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 end
@@ -56,6 +56,9 @@ end
 end
 	function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
+end
+	function s.notarget(e,c)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 	function s.rfilter(c)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsFaceup()
