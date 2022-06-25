@@ -37,6 +37,20 @@
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd))
 	e4:SetValue(500)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e5:SetRange(LOCATION_PZONE)
+	e5:SetCode(EVENT_ADJUST)
+	e5:SetCondition(s.notarget)
+	e5:SetTarget(s.damtg)
+	e5:SetOperation(s.damop)
+	c:RegisterEffect(e5)
+end
+	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+end
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	--cannot be targeted
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
@@ -44,7 +58,7 @@
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e5:SetReset(RESET_PHASE+PHASE_END)
+	e5:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e5:SetTarget(s.notarget)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
