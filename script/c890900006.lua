@@ -52,21 +52,13 @@ end
 	end
 end
 	function s.asd(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(id)~=e:GetLabel() and e:GetHandler():IsHasEffect(890900013) then
-		e:Reset()
-		return false
-	else return true end
+	return e:GetHandler():IsHasEffect(890900013)
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(id)~=e:GetLabel() and not e:GetHandler():IsHasEffect(890900013) then
-		e:Reset()
-		return false
-	else return true end
+	return not e:GetHandler():IsHasEffect(890900013)
 end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 	function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
