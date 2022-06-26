@@ -70,7 +70,7 @@ end
 end
 	end
 	function s.thop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 	end
