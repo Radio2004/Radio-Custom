@@ -1,6 +1,7 @@
 --Mentor of Melirria - Bella the Administrator
 	local s,id=GetID()
 	function s.initial_effect(c)
+	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c)
 	--splimit
 	local e1=Effect.CreateEffect(c)
