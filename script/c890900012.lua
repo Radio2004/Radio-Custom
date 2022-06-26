@@ -1,8 +1,15 @@
 --Mentor of Melirria - Bella the Administrator
 	local s,id=GetID()
 	function s.initial_effect(c)
-	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c)
+	--revive limit
+	c:EnableUnsummonable()
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_REVIVE_LIMIT)
+	e0:SetCondition(s.rvlimit)
+	c:RegisterEffect(e0)
 	--splimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -59,6 +66,9 @@
 	e6:SetTarget(s.thtg1)
 	e6:SetOperation(s.thop1)
 	c:RegisterEffect(e6)
+end
+	function s.rvlimit(e)
+	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
