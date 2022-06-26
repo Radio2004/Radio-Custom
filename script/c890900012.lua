@@ -96,15 +96,18 @@ end
 	function s.th1filter(c)
 	return c:IsSetCard(0x22c3) and c:IsAbleToHand()
 end
+	function s.desfilter(c)
+	return c:IsSetCard(0x22c3)
+end
 	function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then Duel.IsExistingMatchingCard(s.th1filter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingTarget(s.th1filter,tp,LOCATION_SZONE,0,1,nil)
+	if chk==0 then Duel.IsExistingMatchingCard(s.th1filter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingTarget(s.desfilter,tp,LOCATION_PZONE,0,1,nil)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_PZONE)
 end
 	function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectMatchingCard(tp,s.th1filter,tp,LOCATION_PZONE,0,1,1,nil)
+	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_PZONE,0,1,1,nil)
 	if #dg==0 then return end
 	if Duel.Destroy(dg,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
