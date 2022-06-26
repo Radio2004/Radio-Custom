@@ -36,7 +36,7 @@ end
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		--Return it to the hand during the End Phase
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
