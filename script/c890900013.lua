@@ -75,11 +75,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local c=e:GetHandler()
 	if Duel.NegateActivation(ev) then
-		if rc:IsType(TYPE_MONSTER) and not rc:IsType(TYPE_XYZ) then
-		Duel.Damage(1-tp,rc:GetLevel()*200,REASON_EFFECT)
 		if rc:IsType(TYPE_XYZ) then
 		Duel.Damage(1-tp,rc:GetRank()*200,REASON_EFFECT)
+		else
+		Duel.Damage(1-tp,rc:GetLevel()*200,REASON_EFFECT)
 	end
 end
 	end
-end
