@@ -37,6 +37,19 @@
 	e4:SetCondition(s.rdcon)
 	e4:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e4)
+	--negate activate
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_NEGATE+CATEGORY_DAMAGE)
+	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e5:SetType(EFFECT_TYPE_QUICK_O)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCode(EVENT_CHAINING)
+	e5:SetCondition(s.condition)
+	e5:SetCost(s.cost)
+	e5:SetTarget(s.target)
+	e5:SetOperation(s.operation)
+	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 end
 	function s.attg(e,c)
 	return c:IsSetCard(0x1fa3) and c:IsFaceup() and not c:IsCode(id)
@@ -44,4 +57,22 @@ end
 	function s.rdcon(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetAttackTarget()==nil and e:GetHandler():GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+end
+	function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.NegateActivation(ev) then
+		Duel.Damage(1-tp,500,REASON_EFFECT)
+	end
 end
