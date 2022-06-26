@@ -36,7 +36,7 @@ end
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		--Return it to the hand during the End Phase
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -47,13 +47,16 @@ end
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-		e2:SetProperty(0)
 		e2:SetCondition(s.asd)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
 	function s.asd(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsHasEffect(890900013)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffectLabel(id)~=e:GetLabel() and e:GetHandler():IsHasEffect(890900013) then
+		e:Reset()
+		return false
+	else return true end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
