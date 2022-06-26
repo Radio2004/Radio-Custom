@@ -42,20 +42,24 @@ end
 		e1:SetOperation(s.thop)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-		e2:SetCondition(s.asd)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCondition(s.thcon1)
+		e2:SetOperation(s.thop1)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
-	function s.asd(e,tp,eg,ep,ev,re,r,rp)
+	function s.thcon1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsHasEffect(890900013)
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsHasEffect(890900013)
 end
+	function s.thop1(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT) end
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 	function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
