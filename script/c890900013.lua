@@ -73,6 +73,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
-		Duel.Damage(1-tp,ev:GetLevel()*200,REASON_EFFECT)
+		Duel.Damage(1-tp,re:GetLevel()*200,REASON_EFFECT)
 	end
 end
