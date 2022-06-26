@@ -56,7 +56,7 @@
 	e6:SetRange(LOCATION_PZONE)
 	e6:SetCountLimit(1,id)
 	e6:SetTarget(s.thtg1)
-	e6:SetOperation(s.thop)
+	e6:SetOperation(s.thop1)
 	c:RegisterEffect(e6)
 end
 	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
@@ -105,7 +105,7 @@ end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_PZONE)
 end
-	function s.op(e,tp,eg,ep,ev,re,r,rp)
+	function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_PZONE,0,1,1,nil)
 	if #dg==0 then return end
