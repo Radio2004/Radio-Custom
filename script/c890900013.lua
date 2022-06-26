@@ -32,7 +32,6 @@
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e4:SetCondition(s.rdcon)
-	e4:SetTarget(s.attg)
 	e4:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e4)
 end
