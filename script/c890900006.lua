@@ -47,6 +47,7 @@ end
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+		e2:SetProperty(0)
 		e2:SetCondition(s.asd)
 		Duel.RegisterEffect(e2,tp)
 	end
