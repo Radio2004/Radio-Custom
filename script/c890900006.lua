@@ -45,7 +45,14 @@ end
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone()
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+		e2:SetCondition(s.asd)
+		Duel.RegisterEffect(e2,tp)
 	end
+end
+	function Auxiliary.NeosReturnCondition2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsHasEffect(890900013)
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
