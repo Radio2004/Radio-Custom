@@ -46,7 +46,6 @@ end
 		e1:SetOperation(s.thop)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCondition(s.thcon1)
 		e2:SetOperation(s.thop1)
 		Duel.RegisterEffect(e2,tp)

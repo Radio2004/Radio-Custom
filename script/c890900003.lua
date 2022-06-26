@@ -45,17 +45,37 @@ end
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone()
+		e2:SetCondition(s.thcon1)
+		e2:SetOperation(s.thop1)
+		Duel.RegisterEffect(e2,tp)
 	end
 end
-	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	function s.thcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
+	if e:GetHandler():IsHasEffect(890900013) then
 	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
 		e:Reset()
 		return false
 	else return true end
+end
+	end
+	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if not e:GetHandler():IsHasEffect(890900013) then
+	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return true end
+end
+	end
+	function s.thop1(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+end
 	end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 	function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
