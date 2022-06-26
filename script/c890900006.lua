@@ -32,13 +32,16 @@ end
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)>0 then
+		local fid=c:GetFieldID()
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		--Return it to the hand during the End Phase
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetRange(LOCATION_MZONE)
 		e1:SetCountLimit(1)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetLabel(fid)
+		e1:SetLabelObject(c)
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		Duel.RegisterEffect(e1,tp)
@@ -50,10 +53,20 @@ end
 	end
 end
 	function s.thcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsHasEffect(890900013)
+	local tc=e:GetLabelObject()
+	if e:GetHandler():IsHasEffect(890900013) then
+	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return true end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsHasEffect(890900013)
+	local tc=e:GetLabelObject()
+	if not e:GetHandler():IsHasEffect(890900013) then
+	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return true end
 end
 	function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
