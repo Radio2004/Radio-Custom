@@ -45,15 +45,13 @@
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
-	--cannot be targeted
+	--unaffected by opponent card effects
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
-	e5:SetTargetRange(LOCATION_MZONE,0)
 	e5:SetCondition(s.tgcon)
-	e5:SetTarget(s.notarget)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 	-- Search 1 "Mentor of Melirria" Monster
@@ -70,17 +68,17 @@ end
 	function s.rvlimit(e)
 	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
+	function s.filter1(c)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
+end
 	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x3dd) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
 end
 	function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
-end
-	function s.notarget(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 	function s.rfilter(c)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsFaceup()
