@@ -54,7 +54,7 @@ end
 	return not e:GetHandler():IsHasEffect(890900013)
 end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+	if not c:IsRelateToEffect(e) or c:IsFacedown() then Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT) end
 end
 	function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end
