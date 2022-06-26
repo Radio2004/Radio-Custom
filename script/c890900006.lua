@@ -51,12 +51,12 @@ end
 		Duel.RegisterEffect(e2,tp)
 	end
 end
-	function Auxiliary.NeosReturnCondition2(e,tp,eg,ep,ev,re,r,rp)
+	function s.asd(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsHasEffect(890900013)
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+	if tc:GetFlagEffectLabel(id)~=e:GetLabel() and not e:GetHandler():IsHasEffect(890900013) then
 		e:Reset()
 		return false
 	else return true end
