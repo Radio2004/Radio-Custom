@@ -105,7 +105,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 	end
 	function s.th1filter(c)
-	return c:IsSetCard(0x22c3) and c:IsAbleToHand()
+	return c:IsSetCard(0x22c3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 	function s.desfilter(c)
 	return c:IsSetCard(0x22c3)
