@@ -43,7 +43,7 @@
 	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
-	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e5:SetTargetRange(LOCATION_MZONE,0)
 	e5:SetTarget(s.notarget)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
