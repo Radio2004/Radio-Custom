@@ -117,6 +117,3 @@ end
 			Duel.ConfirmCards(1-tp,g)
 		end
 	end
-	end
-	end
- 
