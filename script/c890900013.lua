@@ -45,6 +45,7 @@
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EVENT_CHAINING)
+	e5:SetCountLimit(1,id)
 	e5:SetCondition(s.condition)
 	e5:SetCost(s.cost)
 	e5:SetTarget(s.target)
