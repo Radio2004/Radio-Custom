@@ -58,6 +58,7 @@ end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
+	end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
