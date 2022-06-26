@@ -60,6 +60,7 @@ end
 		return false
 	else return true end
 end
+	end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if not e:GetHandler():IsHasEffect(890900013) then
@@ -68,6 +69,7 @@ end
 		return false
 	else return true end
 end
+	end
 	function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
