@@ -54,7 +54,7 @@
 	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_PZONE)
-	e6:SetCountLimit(1,id)
+	e6:SetCountLimit(1)
 	e6:SetTarget(s.thtg1)
 	e6:SetOperation(s.thop1)
 	c:RegisterEffect(e6)
@@ -100,10 +100,10 @@ end
 	return c:IsSetCard(0x22c3)
 end
 	function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then Duel.IsExistingMatchingCard(s.th1filter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingTarget(s.desfilter,tp,LOCATION_PZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_PZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.th1filter,tp,LOCATION_DECK,0,1,nil)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_PZONE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 	function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
