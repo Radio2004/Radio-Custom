@@ -27,7 +27,18 @@
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	c:RegisterEffect(e3)
+	--Reduce Damage
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e4:SetCondition(s.rdcon)
+	e4:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
+	c:RegisterEffect(e4)
 end
 	function s.attg(e,c)
 	return c:IsSetCard(0x1fa3) and c:IsFaceup() and not c:IsCode(id)
+end
+	function s.rdcon(e)
+	local tp=e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and e:GetHandler():GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
