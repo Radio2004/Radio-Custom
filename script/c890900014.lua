@@ -72,7 +72,7 @@ end
 	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 	function s.tgcon(c)
-	 return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
+	 return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x3dd) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
