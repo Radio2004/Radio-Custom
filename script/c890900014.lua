@@ -51,7 +51,7 @@
 	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
-	e5:SetCondition(s.tgcon)
+   
 	e5:SetValue(s.efilter)
 	c:RegisterEffect(e5)
 	-- Search 1 "Mentor of Melirria" Monster
