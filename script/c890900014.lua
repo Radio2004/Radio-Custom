@@ -74,7 +74,7 @@ end
 	function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
 end
-	function s.tgcon(e)
+	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
