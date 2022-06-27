@@ -54,7 +54,16 @@
 	e5:SetCondition(s.tgcon)
 	e5:SetValue(s.efilter)
 	c:RegisterEffect(e5)
-	
+	-- Search 1 "Mentor of Melirria" Monster
+	local e6=Effect.CreateEffect(c)
+	e6:SetDescription(aux.Stringid(id,0))
+	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY)
+	e6:SetType(EFFECT_TYPE_IGNITION)
+	e6:SetRange(LOCATION_PZONE)
+	e6:SetCountLimit(1)
+	e6:SetTarget(s.thtg1)
+	e6:SetOperation(s.thop1)
+	c:RegisterEffect(e6)
 end
 	function s.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
@@ -62,12 +71,8 @@ end
 	function s.rvlimit(e)
 	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
-	function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
-end
-	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
+	function s.tgcon(c)
+	 return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x3dd) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
