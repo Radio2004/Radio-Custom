@@ -65,8 +65,8 @@
 	e6:SetOperation(s.thop1)
 	c:RegisterEffect(e6)
 end
-	function s.efilter(e,re)
-	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
+	function s.efilter(e,te)
+	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 	function s.rvlimit(e)
 	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
