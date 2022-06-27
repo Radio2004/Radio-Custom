@@ -54,16 +54,7 @@
 	e5:SetCondition(s.tgcon)
 	e5:SetValue(s.efilter)
 	c:RegisterEffect(e5)
-	-- Search 1 "Mentor of Melirria" Monster
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,0))
-	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY)
-	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetRange(LOCATION_PZONE)
-	e6:SetCountLimit(1)
-	e6:SetTarget(s.thtg1)
-	e6:SetOperation(s.thop1)
-	c:RegisterEffect(e6)
+	
 end
 	function s.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
