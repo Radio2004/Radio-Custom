@@ -40,7 +40,7 @@
 	e6:SetOperation(s.operation3)
 	c:RegisterEffect(e6)
 	local e7=e4:Clone()
-	e7:SetDescription(aux.Stringid(id,3)
+	e7:SetDescription(aux.Stringid(id,3))
 	e7:SetTarget(s.target4)
 	e7:SetOperation(s.operation4)
 	c:RegisterEffect(e7)
