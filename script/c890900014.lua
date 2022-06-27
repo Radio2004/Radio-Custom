@@ -74,7 +74,7 @@ end
 	function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
 end
-	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	function s.tgcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,e:GetHandler())
