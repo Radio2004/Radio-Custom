@@ -45,6 +45,15 @@
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
+	--unaffected by opponent card effects
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetRange(LOCATION_PZONE)
+	e5:SetCondition(s.tgcon)
+	e5:SetValue(s.efilter)
+	c:RegisterEffect(e5)
 	-- Search 1 "Mentor of Melirria" Monster
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
@@ -55,6 +64,9 @@
 	e6:SetTarget(s.thtg1)
 	e6:SetOperation(s.thop1)
 	c:RegisterEffect(e6)
+end
+	function s.efilter(e,re)
+	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 end
 	function s.rvlimit(e)
 	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
