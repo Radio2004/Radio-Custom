@@ -48,7 +48,7 @@
 	--unaffected by opponent card effects
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_IMMUNE_EFFECT)
+	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetCondition(s.tgcon)
@@ -71,11 +71,8 @@ end
 	function s.rvlimit(e)
 	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
-	function s.filter1(c)
+	function s.tgcon(c)
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
-end
-	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x3dd) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
