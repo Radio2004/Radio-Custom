@@ -71,7 +71,7 @@ end
 	function s.rvlimit(e)
 	return not e:GetHandler():IsLocation(LOCATION_HAND) or e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
-	function s.tgcon(e,c)
+	function s.tgcon(e)
 	return Duel.IsEnvironment(0x3dd)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
