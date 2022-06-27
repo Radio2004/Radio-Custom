@@ -35,7 +35,7 @@
 	e5:SetOperation(s.operation2)
 	c:RegisterEffect(e5)
 	local e6=e4:Clone()
-	e6:SetDescription(aux.Stringid(id,2)
+	e6:SetDescription(aux.Stringid(id,2))
 	e6:SetTarget(s.target3)
 	e6:SetOperation(s.operation3)
 	c:RegisterEffect(e6)
