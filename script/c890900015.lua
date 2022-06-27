@@ -33,10 +33,12 @@ end
 	function s.tg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:GetCode()~=id
 	end
+	function s.costfilter(c)
+	return c:IsSetCard(0x3dd) and c:IsDiscardable()
+end
 	function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,0x3dd,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.DiscardHand(tp,Card.IsSetCard,0x3dd,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.filter1(c)
 	return c:IsSetCard(0x3dd) and c:IsAbleToHand()
