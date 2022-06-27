@@ -11,7 +11,7 @@
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e3:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd))
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
