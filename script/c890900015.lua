@@ -25,9 +25,9 @@
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e4:SetCost(s.thcost)
-	e4:SetTarget(s.thtg)
-	e4:SetOperation(s.thop)
+	e4:SetCost(s.cost)
+	e4:SetTarget(s.target1)
+	e4:SetOperation(s.operation1)
 	c:RegisterEffect(e4)
 end
 	function s.tg(e,c)
