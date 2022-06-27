@@ -72,6 +72,7 @@ end
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 	function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
