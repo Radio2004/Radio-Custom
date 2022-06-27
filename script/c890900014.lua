@@ -51,6 +51,7 @@
 	e5:SetCode(EFFECT_IMMUNE_EFFECT)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_PZONE)
+	e5:SetCondition(s.tgcon)
 	e5:SetValue(s.efilter)
 	c:RegisterEffect(e5)
 	-- Search 1 "Mentor of Melirria" Monster
@@ -74,7 +75,7 @@ end
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 	function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
 end
 	function s.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x3dd) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM 
