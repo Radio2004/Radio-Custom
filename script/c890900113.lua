@@ -9,7 +9,7 @@
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(id)
 	e3:SetRange(LOCATION_MZONE)
-	e3:value(s.asd)
+	e3:operation(s.asd)
 	c:RegisterEffect(e3)
 end
 	function s.asd(e,c)
