@@ -20,6 +20,31 @@
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	--unaffected by opponent card effects
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_IMMUNE_EFFECT)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.tgcon)
+	e3:SetValue(s.efilter)
+	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(s.tgcon)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
+end
+	function s.filter1(c)
+	return c:IsFaceup() and c:IsSetCard(0x1fa3)
+end
+	function s.tgcon(e)
+	return Duel.IsExistingMatchingCard(s.filter1,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+	function s.efilter(e,te)
+	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 	function s.rfilter(c,tp)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and (c:IsControler(tp) or c:IsFaceup())
