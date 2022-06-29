@@ -6,14 +6,14 @@
 	c:EnableReviveLimit()
 	--"Melirria" can choose to not return
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(id)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(s.asd)
 	c:RegisterEffect(e3)
 end
-	function s.asd(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetTargetParam(GetOverlayGroup())
+	function s.asd(e,c)
+	return e:SetTargetParam(GetOverlayCount())
 end
 	
 	
