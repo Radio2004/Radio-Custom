@@ -8,7 +8,7 @@
 	local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DOUBLE_TRIBUTE)
-			e2:SetValue(5)
+			e2:SetValue(6)
 			c:RegisterEffect(e2)
 end
 	
