@@ -6,7 +6,7 @@
 	c:EnableReviveLimit()
 	--"Melirria" can choose to not return
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(id)
 	e3:SetRange(LOCATION_MZONE)
 	e3:value(s.asd)
