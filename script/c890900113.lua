@@ -16,7 +16,7 @@
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetDescription(aux.Stringid(id,0))
 		ge1:SetType(EFFECT_TYPE_FIELD)
-		ge1:SetCode(EFFECT_SPSUMMON_PROC)
+		ge1:SetCode(EFFECT_SUMMON_PROC)
 		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 		ge1:SetCondition(s.sumcon)
 		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,0xdd),s.sumtg))
