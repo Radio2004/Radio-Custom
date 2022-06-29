@@ -21,7 +21,6 @@
 		ge1:SetCondition(s.sumcon)
 		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(aux.TRUE),s.sumtg))
 		ge1:SetOperation(s.sumop)
-		ge1:SetValue(SUMMON_TYPE_TRIBUTE)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
@@ -30,15 +29,15 @@ end
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
-	local mi,ma=c:GetTributeRequirement()
+	local mi,ma=c:GetReleaseGroup()
 	if mi<minc then mi=minc end
 	if ma<mi then return false end
-	return ma>0 and Duel.CheckReleaseGroup(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetControler(),mi,ma)
+	return ma>0 and aux.SelectUnselectGroup(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetControler(),mi,ma)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	tp=c:GetControler()
-	local mi,ma=c:GetTributeRequirement()
-	local sg=Duel.SelectReleaseGroup(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
+	local mi,ma=c:GetReleaseGroup()
+	local sg=aux.SelectUnselectGroup(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
 	if sg then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)
