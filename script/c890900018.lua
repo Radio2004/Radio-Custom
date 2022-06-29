@@ -78,7 +78,7 @@ end
 	function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
 end
 	function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
