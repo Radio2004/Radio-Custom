@@ -111,6 +111,7 @@ end
 			Duel.ConfirmCards(1-tp,g1)
 			Duel.ShuffleHand(tp)
 			e:SetLabel(#g1)
+			if #g>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -123,6 +124,7 @@ end
 			tc:RegisterEffect(e2)
 end
 	end
+end
 	function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsAttackPos() or c:IsDefensePos() then
