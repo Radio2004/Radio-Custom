@@ -5,11 +5,17 @@
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,5)
 	c:EnableReviveLimit()
 	--"Melirria" can choose to not return
-	local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_DOUBLE_TRIBUTE)
-			e2:SetValue(6)
-			c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(id)
+	e3:SetValue(1)
+	e3:SetOperation(s.asd)
+	c:RegisterEffect(e3)
 end
-	
+	function s.asd(c)
+	if not c:IsHasEffect(890900113) then return false end
+	local eff={c:GetCardEffect(890900113)}
+	for i=1,#eff do
+		release_param = 5
+end
 	
