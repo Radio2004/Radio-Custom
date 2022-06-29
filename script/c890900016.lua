@@ -110,17 +110,15 @@ end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 			Duel.ConfirmCards(1-tp,g1)
 			Duel.ShuffleHand(tp)
-			e:SetLabel(#g1)
 			if #g>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(e:GetLabel(g1)*-500)
+			e1:SetValue(#g1*-500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			e2:SetValue(e:GetLabel(g1)*-500)
 			tc:RegisterEffect(e2)
 end
 	end
