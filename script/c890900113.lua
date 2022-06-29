@@ -2,7 +2,7 @@
 	local s,id=GetID()
 	function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,5)
 	c:EnableReviveLimit()
 	--summon proc
 	local e3=Effect.CreateEffect(c)
@@ -16,10 +16,10 @@
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetDescription(aux.Stringid(id,0))
 		ge1:SetType(EFFECT_TYPE_FIELD)
-		ge1:SetCode(EFFECT_SUMMON_PROC)
+		ge1:SetCode(EFFECT_SPSUMMON_PROC)
 		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 		ge1:SetCondition(s.sumcon)
-		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,0xdd),s.sumtg))
+		ge1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd),s.sumtg)
 		ge1:SetOperation(s.sumop)
 		ge1:SetValue(SUMMON_TYPE_TRIBUTE)
 		Duel.RegisterEffect(ge1,0)
