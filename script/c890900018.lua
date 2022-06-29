@@ -1,7 +1,7 @@
 --Power of Melirria EX - Fire Dragon
 	local s,id=GetID()
 	function s.initial_effect(c)
-   
+	c:EnableReviveLimit()
 	--Can only be 1 copy of this card on the field
 	c:SetUniqueOnField(1,1,id)
 	--cannot special summon
