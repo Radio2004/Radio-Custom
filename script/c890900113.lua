@@ -33,12 +33,12 @@ end
 	local mi,ma=c:GetTributeRequirement()
 	if mi<minc then mi=minc end
 	if ma<mi then return false end
-	return ma>0 and Duel.IsExistingMatchingCard(s.castlefilter,c:GetControler(),LOCATION_SZONE,0,1,nil,c:GetControler(),mi,ma)
+	return ma>0 and Duel.IsExistingMatchingCard(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetControler(),mi,ma)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	tp=c:GetControler()
 	local mi,ma=c:GetTributeRequirement()
-	local sg=Duel.SelectMatchingCard(tp,s.castlefilter,tp,LOCATION_SZONE,0,1,1,true,nil,tp,mi,ma)
+	local sg=Duel.SelectMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
 	if sg then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)
