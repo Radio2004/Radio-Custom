@@ -12,7 +12,7 @@
 	e3:operation(s.asd)
 	c:RegisterEffect(e3)
 end
-	function s.condition(e,c)
+	function s.asd(e,c)
 	return c:SetTargetParam(GetOverlayCount())
 end
 	
