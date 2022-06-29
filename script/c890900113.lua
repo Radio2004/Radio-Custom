@@ -19,7 +19,7 @@
 		ge1:SetCode(EFFECT_SUMMON_PROC)
 		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 		ge1:SetCondition(s.sumcon)
-		ge1:SetTarget(aux.FieldSummonProcTg(s.sumtg))
+		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,0x3dd),s.sumtg))
 		ge1:SetOperation(s.sumop)
 		ge1:SetValue(SUMMON_TYPE_TRIBUTE)
 		Duel.RegisterEffect(ge1,0)
@@ -36,6 +36,7 @@ end
 	return ma>0 and Duel.IsExistingMatchingCard(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetControler(),mi,ma)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	tp=c:GetControler()
 	local mi,ma=c:GetTributeRequirement()
 	local sg=Duel.SelectMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
 	if sg then
