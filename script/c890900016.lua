@@ -115,12 +115,12 @@ end
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(e:GetLabel()*-500)
+			e1:SetValue(e:GetLabel(g1)*-500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			e2:SetValue(e:GetLabel()*-500)
+			e2:SetValue(e:GetLabel(g1)*-500)
 			tc:RegisterEffect(e2)
 end
 	end
