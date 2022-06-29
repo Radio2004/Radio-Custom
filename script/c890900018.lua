@@ -29,6 +29,7 @@
 	e3:SetCondition(s.tgcon)
 	e3:SetValue(s.efilter)
 	c:RegisterEffect(e3)
+	--Cannot be destoyed by battle
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -36,6 +37,15 @@
 	e4:SetCondition(s.tgcon)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
+	--Destroy cards
+	local e5=Effect.CreateEffect(c)
+	e5:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCountLimit(1,id)
+	e5:SetTarget(s.destg)
+	e5:SetOperation(s.desop)
+	c:RegisterEffect(e5)
 end
 	function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x1fa3)
@@ -70,4 +80,26 @@ end
 	if not g then return end
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
+end
+	function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,e:GetHandler())
+	local ct=g:FilterCount(Card.IsControler,nil,1-tp)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*500)
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,e:GetHandler())
+	Duel.Destroy(g,REASON_EFFECT)
+	local ct=Duel.GetOperatedGroup():FilterCount(function(c,tp) return c:IsPreviousControler(tp) end,nil,1-tp)
+	if ct>0 then
+		Duel.Damage(1-tp,ct*500,REASON_EFFECT)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3207)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1)
+	end
 end
