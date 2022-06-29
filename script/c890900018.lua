@@ -2,6 +2,8 @@
 	local s,id=GetID()
 	function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--Can only be 1 copy of this card on the field
+	c:SetUniqueOnField(1,1,id)
 	--cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
