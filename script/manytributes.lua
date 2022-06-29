@@ -1263,6 +1263,8 @@ int32 field::get_summon_release_list(card* target, card_set* release_list, card_
 				pcard->release_param = 3;
 			else if(pcard->is_affected_by_effect(EFFECT_DOUBLE_TRIBUTE, target))
 				pcard->release_param = 2;
+			else if(pcard->is_affected_by_effect(EFFECT_FIVE_TRIBUTE, target))
+				pcard->release_param = 5;
 			else
 				pcard->release_param = 1;
 			rcount += pcard->release_param;
