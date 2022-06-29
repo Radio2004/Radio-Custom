@@ -63,12 +63,12 @@ end
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
-	return aux.SelectUnselectGroup(rg,e,tp,6,6,aux.ChkfMMZ(1),0)
+	return aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),0)
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
-	local mg=aux.SelectUnselectGroup(rg,e,tp,6,6,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #mg==6 then
+	local mg=aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #mg==5 then
 		mg:KeepAlive()
 		e:SetLabelObject(mg)
 		return true
