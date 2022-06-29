@@ -107,7 +107,7 @@ end
 			Duel.ShuffleHand(tp)
 	local sg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil)
 	local g1=aux.SelectUnselectGroup(sg,e,tp,1,nil,aux.dncheck,1,tp,HINTMSG_SELECT)
-			if #g==0 then
+			if #g1>0 then
 			Duel.ConfirmCards(1-tp,g1)
 			Duel.ShuffleHand(tp)
 			local e1=Effect.CreateEffect(c)
