@@ -105,12 +105,11 @@ end
 		if #g==0 or Duel.SendtoHand(g,nil,REASON_EFFECT)==0 then return end
 			Duel.ConfirmCards(1-tp,g)
 			Duel.ShuffleHand(tp)
-	local g1=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,63,nil)
+	local sg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil)
+	local g1=aux.SelectUnselectGroup(sg,e,tp,1,nil,aux.dncheck,1,tp,HINTMSG_SELECT)
 			if #g==0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 			Duel.ConfirmCards(1-tp,g1)
 			Duel.ShuffleHand(tp)
-			if #g>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
