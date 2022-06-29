@@ -21,7 +21,7 @@
 		ge1:SetCondition(s.sumcon)
 		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,0x3de),s.sumtg))
 		ge1:SetOperation(s.sumop)
-		ge1:SetValue(SUMMON_TYPE_TRIBUTE)
+		ge1:SetValue(SUMMON_TYPE_SPECIAL)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
