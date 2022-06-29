@@ -9,7 +9,7 @@
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(92001300)
+	e3:SetCode(id)
 	c:RegisterEffect(e3)
 	aux.GlobalCheck(s,function()
 		--summon proc
@@ -26,7 +26,7 @@
 	end)
 end
 	function s.castlefilter(c,tp,mi,ma)
-	return c:IsHasEffect(92001300) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
+	return c:IsHasEffect(id) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
