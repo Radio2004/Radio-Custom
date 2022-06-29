@@ -12,8 +12,8 @@
 	e3:operation(s.asd)
 	c:RegisterEffect(e3)
 end
-	function s.asd(e,c)
-	return e:SetTargetParam(GetOverlayCount())
+	function s.asd(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetTargetParam(GetOverlayGroup())
 end
 	
 	
