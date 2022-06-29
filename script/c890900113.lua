@@ -13,7 +13,7 @@
 	c:RegisterEffect(e3)
 end
 	function s.asd(e,c)
-	return c:SetTargetParam(GetOverlayCount())
+	return e:SetTargetParam(GetOverlayCount())
 end
 	
 	
