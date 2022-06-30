@@ -33,12 +33,11 @@ end
 	local mi,ma=c:GetTributeRequirement()
 	if mi<minc then mi=minc end
 	if ma<mi then return false end
-	return ma>0 and Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,mi,false,ma,true,c,c:GetControler(),nil,false,nil)
+	return ma>0 and Duel.CheckReleaseGroup(c:GetControler(),s.castlefilter,mi,false,ma,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	tp=c:GetControler()
 	local mi,ma=c:GetTributeRequirement()
-	local sg=Duel.SelectReleaseGroup(tp,aux.TRUE,mi,ma,false,true,true,c,nil,nil,false,nil)
+	local sg=Duel.SelectReleaseGroup(tp,s.castlefilter,mi,ma,false,true,true,c,nil,nil,false,nil)
 	if sg then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)
@@ -49,6 +48,6 @@ end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	local sg=e:GetLabelObject()
 	if not sg then return end
-	Duel.Release(sg,REASON_COST+REASON_MATERIAL)
+	Duel.Release(sg,REASON_COST)
 	sg:DeleteGroup()
 end
