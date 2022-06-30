@@ -33,7 +33,7 @@ end
 	local mi,ma=c:GetTributeRequirement()
 	if mi<minc then mi=minc end
 	if ma<mi then return false end
-	return ma>0 andDuel.CheckReleaseGroup(c:GetControler(),aux.TRUE,mi,false,ma,true,c,c:GetControler(),nil,false,nil)
+	return ma>0 and Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,mi,false,ma,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	tp=c:GetControler()
