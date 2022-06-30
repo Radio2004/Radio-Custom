@@ -25,22 +25,21 @@
 	end)
 end
 	function s.castlefilter(c,tp,mi,ma)
-	return c:IsHasEffect(id) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable() and aux.SpElimFilter(c,true)
+	return c:IsHasEffect(id) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
-	local mi,ma=c:GetTributeRequirement()
-	if mi<minc then mi=minc end
-	if ma<mi then return false end
-	return ma>0 and Duel.SelectMatchingCard(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,5,nil,c:GetControler(),mi,ma)
+	local ct=c:GetOverlayCount()
+	local tp=c:GetControler()
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.castlefilter,nil,tp)
+	return aux.SelectUnselectGroup(rg,e,tp,ct,ct,aux.ChkfMMZ(1),0)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	tp=c:GetControler()
-	local mi,ma=c:GetTributeRequirement()
-	local sg=Duel.SelectMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,5,5,true,nil,tp,mi,ma)
-	if sg then
-		sg:KeepAlive()
-		e:SetLabelObject(sg)
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.castlefilter,nil,tp)
+	local mg=aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #mg==5 then
+		mg:KeepAlive()
+		e:SetLabelObject(mg)
 		return true
 	end
 	return false
