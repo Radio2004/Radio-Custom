@@ -30,14 +30,14 @@ end
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
-	local mi,ma=c:GetTributeCount(c)
+	local mi,ma=c:GetTributeRequirement(c)
 	if mi<minc then mi=minc end
 	if ma<mi then return false end
 	return ma>0 and Duel.IsExistingMatchingCard(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetControler(),mi,ma)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	tp=c:GetControler()
-	local mi,ma=c:GetTributeCount(c)
+	local mi,ma=c:GetTributeRequirement(c)
 	local sg=Duel.IsExistingMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
 	if sg then
 		sg:KeepAlive()
