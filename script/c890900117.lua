@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.addc)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
-	e4:SetCode(EVENT_MSET)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 	--summon proc
 	local e3=Effect.CreateEffect(c)
