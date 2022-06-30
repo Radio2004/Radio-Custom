@@ -28,7 +28,7 @@ end
 	return c:IsHasEffect(id) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
 end
 	function s.rfilter(c,tp)
-	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and (c:IsControler(tp) or c:IsFaceup()) and c:IsHasEffect(id)
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
