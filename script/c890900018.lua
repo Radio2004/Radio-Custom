@@ -4,7 +4,12 @@
 	c:EnableReviveLimit()
 	--Can only be 1 copy of this card on the field
 	c:SetUniqueOnField(1,1,id)
-   
+	--cannot special summon
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -57,11 +62,11 @@ end
 	function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetTributeGroup(tp):Filter(s.rfilter,nil,tp)
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
 	return aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),0)
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.Duel.GetTributeGroup(tp):Filter(s.rfilter,nil,tp)
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
 	local mg=aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 	if #mg==5 then
 		mg:KeepAlive()
