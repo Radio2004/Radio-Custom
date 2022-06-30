@@ -37,7 +37,7 @@ end
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	tp=c:GetControler()
-	local mi,ma=c:GetTributeRequirement()
+	local mi,ma=c:GetMaterial()
 	local sg=Duel.IsExistingMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
 	if sg then
 		sg:KeepAlive()
