@@ -21,25 +21,27 @@
 		ge1:SetCondition(s.sumcon)
 		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(aux.TRUE),s.sumtg))
 		ge1:SetOperation(s.sumop)
+		ge1:SetValue(SUMMON_TYPE_SPECIAL)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
 	function s.castlefilter(c,tp,mi,ma)
-	return c:IsHasEffect(id) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
+	return c:IsHasEffect(id) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
-	local ct=c:GetOverlayCount()
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.castlefilter,nil,tp)
-	return aux.SelectUnselectGroup(rg,e,tp,ct,ct,aux.ChkfMMZ(1),0)
+	local mi,ma=c:GetTributeRequirement()
+	if mi<minc then mi=minc end
+	if ma<mi then return false end
+	return ma>0 and Duel.IsExistingMatchingCard(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetControler(),mi,ma)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.castlefilter,nil,tp)
-	local mg=aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #mg==5 then
-		mg:KeepAlive()
-		e:SetLabelObject(mg)
+	tp=c:GetControler()
+	local mi,ma=c:GetTributeRequirement()
+	local sg=Duel.IsExistingMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
 		return true
 	end
 	return false
@@ -47,6 +49,6 @@ end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	local sg=e:GetLabelObject()
 	if not sg then return end
-	Duel.Release(sg,REASON_COST)
+	Duel.Release(sg,REASON_COST+REASON_MATERIAL)
 	sg:DeleteGroup()
 end
