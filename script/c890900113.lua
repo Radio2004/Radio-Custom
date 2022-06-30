@@ -25,30 +25,29 @@
 	end)
 end
 	function s.castlefilter(c,tp,mi,ma)
-	return c:IsHasEffect(id) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
-end
-	function s.rfilter(c,tp)
-	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and (c:IsControler(tp) or c:IsFaceup()) and c:IsHasEffect(id)
+	return c:IsHasEffect(id) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable() and aux.SpElimFilter(c,true)
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
-	return aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),0)
+	local mi,ma=c:GetTributeRequirement()
+	if mi<minc then mi=minc end
+	if ma<mi then return false end
+	return ma>0 and Duel.SelectMatchingCard(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,5,nil,c:GetControler(),mi,ma)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
-	local mg=aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #mg==5 then
-		mg:KeepAlive()
-		e:SetLabelObject(mg)
+	tp=c:GetControler()
+	local mi,ma=c:GetTributeRequirement()
+	local sg=Duel.SelectMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,5,5,true,nil,tp,mi,ma)
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
 		return true
 	end
 	return false
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+	local sg=e:GetLabelObject()
+	if not sg then return end
+	Duel.Release(sg,REASON_COST)
+	sg:DeleteGroup()
 end
