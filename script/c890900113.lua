@@ -2,7 +2,7 @@
 	local s,id=GetID()
 	function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,3)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,5)
 	c:EnableReviveLimit()
 	--summon proc
 	local e3=Effect.CreateEffect(c)
@@ -21,7 +21,6 @@
 		ge1:SetCondition(s.sumcon)
 		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(aux.TRUE),s.sumtg))
 		ge1:SetOperation(s.sumop)
-		ge1:SetValue(SUMMON_TYPE_SPECIAL)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
@@ -33,11 +32,12 @@ end
 	local mi,ma=c:GetTributeRequirement()
 	if mi<minc then mi=minc end
 	if ma<mi then return false end
-	return ma>0 and Duel.CheckReleaseGroup(c:GetControler(),s.castlefilter,mi,false,ma,true,c,c:GetControler(),nil,false,nil)
+	return ma>0 and Duel.IsExistingMatchingCard(s.castlefilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetControler(),mi,ma)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	tp=c:GetControler()
 	local mi,ma=c:GetTributeRequirement()
-	local sg=Duel.SelectReleaseGroup(tp,s.castlefilter,mi,ma,false,true,true,c,nil,nil,false,nil)
+	local sg=Duel.IsExistingMatchingCard(tp,s.castlefilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,mi,ma)
 	if sg then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)
