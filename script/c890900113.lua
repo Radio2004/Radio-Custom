@@ -26,7 +26,7 @@
 	end)
 end
 	function s.castlefilter(c,tp,mi,ma)
-	return c:IsHasEffect(id) and c:GetOverlayCount()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
+	return c:IsHasEffect(id) and c:GetOverlayGroup()>=mi and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsReleasable()
 end
 	function s.sumcon(e,c,minc)
 	if c==nil then return true end
