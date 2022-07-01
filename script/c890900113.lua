@@ -19,7 +19,7 @@
 		ge1:SetCode(EFFECT_SUMMON_PROC)
 		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 		ge1:SetCondition(s.sumcon)
-		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsCode,)890900018,s.sumtg))
+		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsCode,890900018),s.sumtg))
 		ge1:SetOperation(s.sumop)
 		Duel.RegisterEffect(ge1,0)
 	end)
