@@ -29,7 +29,7 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0xb,1)
 end
 function s.rfilter(c,tp)
-	return c:IsCode(890900018)) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsCode(890900018) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.sumcon(e,c,minc)
 	if c==nil then return true end
