@@ -29,7 +29,7 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0xb,1)
 end
 function s.rfilter(c,tp)
-	return c:IsCode(890900018) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsCode(id) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.sumcon(e,c,minc)
 	if c==nil then return true end
@@ -40,7 +40,7 @@ end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
 	local mg=aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #mg==5 then
+	if #mg==1 then
 		mg:KeepAlive()
 		e:SetLabelObject(mg)
 		return true
