@@ -17,19 +17,16 @@
 		ge1:SetDescription(aux.Stringid(id,0))
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_SPSUMMON_PROC)
-		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
+		ge1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+		ge1:SetTargetRange(LOCATION_HAND,0)
 		ge1:SetCondition(s.sumcon)
 		ge1:SetTarget(aux.TargetBoolFunction(Card.IsCode,890900018),s.sumtg)
 		ge1:SetOperation(s.sumop)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x7}
-function s.addc(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0xb,1)
-end
 function s.rfilter(c,tp)
-	return c:IsCode(id) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(0x3dd) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.sumcon(e,c,minc)
 	if c==nil then return true end
