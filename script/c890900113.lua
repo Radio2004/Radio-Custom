@@ -2,7 +2,7 @@
 	local s,id=GetID()
 	function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,3)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,1)
 	c:EnableReviveLimit()
 	--summon proc
 	local e3=Effect.CreateEffect(c)
