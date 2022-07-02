@@ -59,32 +59,22 @@ end
 	function s.rfilter(c,tp)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and (c:IsControler(tp) or c:IsFaceup())
 end
-	function s.rfilter1(c,tp)
-	return c:IsCode(890900113) and (c:IsControler(tp) or c:IsFaceup())
-end
 	function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
-	local rb=Duel.GetReleaseGroup(tp):Filter(s.rfilter1,nil,tp)
-	return aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),0) or aux.SelectUnselectGroup(rb,e,tp,1,1,aux.ChkfMMZ(1),0)
+	return aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),0)
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
-	local rb=Duel.GetReleaseGroup(tp):Filter(s.rfilter1,nil,tp)
 	local mg=aux.SelectUnselectGroup(rg,e,tp,5,5,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	local lg=aux.SelectUnselectGroup(rb,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 	if #mg==5 then
 		mg:KeepAlive()
 		e:SetLabelObject(mg)
-	if #lg==1 then
-		lg:KeepAlive()
-		e:SetLabelObject(lg)
 		return true
 	end
 	return false
 end
-	end
 	function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
