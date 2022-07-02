@@ -7,10 +7,10 @@
 		--summon proc
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_ADJUST)
+		e1:SetCode(id)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetOperation(s.op)
-		Duel.RegisterEffect(e1)
+		c:RegisterEffect(e1)
 end
 	function s.filter(c)
 	return c:IsCode(890900018) 
