@@ -84,6 +84,7 @@ end
 	end
 	return false
 end
+	end
 	function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
