@@ -6,7 +6,7 @@
 	c:EnableReviveLimit()
 		--summon proc
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(id)
@@ -15,7 +15,6 @@
 		--summon proc
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
@@ -32,7 +31,6 @@ end
 	local g1=Duel.GetMatchingGroup(s.filter,0,LOCATION_HAND,LOCATION_HAND,nil)
 	local tc=g1:GetFirst()
 	while tc do
-		if tc:GetFlagEffect(id)==0 then
 			local e2=Effect.CreateEffect(tc)
 			e2:SetDescription(aux.Stringid(64382841,3))
 			e2:SetType(EFFECT_TYPE_FIELD)
@@ -48,9 +46,8 @@ end
 				e2:SetCondition(s.plasmacon)
 				e2:SetOperation(s.plasmaop)
 			end
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=g1:GetNext()
 	end
