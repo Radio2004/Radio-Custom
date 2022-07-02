@@ -4,22 +4,13 @@
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,1)
 	c:EnableReviveLimit()
-	--summon proc
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(id)
-	c:RegisterEffect(e3)
-	aux.GlobalCheck(s,function()
 		--summon proc
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		ge1:SetOperation(s.op)
-		Duel.RegisterEffect(ge1,0)
-	end)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_ADJUST)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetOperation(s.op)
+		Duel.RegisterEffect(e1)
 end
 	function s.filter(c)
 	return c:IsCode(890900018) 
@@ -40,7 +31,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e2)
 		end
 		tc=g1:GetNext()
-	end
 end
 function s.plasmacon(e,c)
 	if c==nil then return true end
