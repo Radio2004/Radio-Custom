@@ -77,7 +77,7 @@ end
 	if #mg==5 then
 		mg:KeepAlive()
 		e:SetLabelObject(mg)
-	if #lg=1 then
+	if #lg==1 then
 		lg:KeepAlive()
 		e:SetLabelObject(lg)
 		return true
