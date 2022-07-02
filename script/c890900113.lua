@@ -38,5 +38,5 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.Release(g,REASON_COST)
-	g:DeleteGroup(
+	g:DeleteGroup()
 end
