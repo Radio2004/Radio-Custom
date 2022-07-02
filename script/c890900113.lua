@@ -8,7 +8,7 @@
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_SUMMON_PROC)
+		e1:SetCode(EFFECT_SPSUMMON_PROC)
 		e1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 		e1:SetCondition(s.sumcon)
 		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd),s.sumtg)
