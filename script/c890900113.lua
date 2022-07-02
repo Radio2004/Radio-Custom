@@ -19,15 +19,6 @@
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetDescription(aux.Stringid(id,0))
-		ge1:SetType(EFFECT_TYPE_FIELD)
-		ge1:SetCode(EFFECT_SPSUMMON_PROC)
-		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-		ge1:SetCondition(s.sumcon)
-		ge1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3dd),s.sumtg)
-		ge1:SetOperation(s.sumop)
-		Duel.RegisterEffect(ge1,0)
 	end)
 end
 	s.listed_series={0x3dd}
