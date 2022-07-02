@@ -27,11 +27,9 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetRange(LOCATION_HAND)
 			e2:SetCondition(s.plasmacon)
 			e2:SetOperation(s.plasmaop)
-			end
 			tc:RegisterEffect(e2)
+			end
 		end
-		tc=g1:GetNext()
-end
 function s.plasmacon(e,c)
 	if c==nil then return true end
 	local g=Duel.GetReleaseGroup(c:GetControler())
