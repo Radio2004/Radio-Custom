@@ -51,7 +51,6 @@ end
 		end
 		tc=g1:GetNext()
 	end
-end
 function s.sumcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
