@@ -6,7 +6,7 @@
 	c:EnableReviveLimit()
 		--summon proc
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(id)
@@ -48,9 +48,11 @@ end
 			end
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=g1:GetNext()
 	end
+end
 function s.sumcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
