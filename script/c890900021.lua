@@ -41,26 +41,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsActiveType(TYPE_MONSTER) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
-	if ep==tp then return end
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or #g~=1 then return false end
-	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE)
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	return ep~=tp and tg and #tg==1 and tg:GetFirst():GetControler()==e:GetHandlerPlayer() and tg:GetFirst():IsLocation(LOCATION_MZONE)
+		and re:IsActiveType(TYPE_EFFECT) and Duel.IsChainNegatable(ev)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tf=re:GetTarget()
-	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp) end
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsAbleToRemove() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tf=re:GetTarget()
-	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp)
-	if #g>0 then
-		Duel.HintSelection(g)
-		Duel.ChangeTargetCard(ev,g)
+	Duel.NegateActivation(ev)
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 	end
 end
