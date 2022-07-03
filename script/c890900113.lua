@@ -23,6 +23,7 @@ end
 	local g1=Duel.GetMatchingGroup(s.filter,0,LOCATION_HAND,LOCATION_HAND,nil)
 	local tc=g1:GetFirst()
 	while tc do
+			if tc:GetFlagEffect(id)==0 then
 			local e2=Effect.CreateEffect(tc)
 			e2:SetDescription(aux.Stringid(64382841,3))
 			e2:SetType(EFFECT_TYPE_FIELD)
@@ -38,8 +39,9 @@ end
 				e2:SetCondition(s.plasmacon)
 				e2:SetOperation(s.plasmaop)
 			end
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=g1:GetNext()
 	end
