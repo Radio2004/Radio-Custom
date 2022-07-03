@@ -22,10 +22,10 @@
 end
 	s.listed_series={0x3dd}
 	function s.rfilter(c,tp)
-	return c:IsCode(890900113) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsCode(890900113) and c:GetOverlayCount()=5 and (c:IsControler(tp) or c:IsFaceup())
 end
 	function s.filter(c)
-	return c:IsCode(890900018) or c:IsCode(83965310)
+	return c:IsCode(890900018)
 end
 	function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(s.filter,0,LOCATION_HAND,LOCATION_HAND,nil)
