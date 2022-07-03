@@ -21,7 +21,6 @@
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-end
 	s.listed_series={0x3dd}
 	function s.rfilter(c,tp)
 	return c:IsCode(890900113) and (c:IsControler(tp) or c:IsFaceup())
