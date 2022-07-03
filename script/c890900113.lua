@@ -47,6 +47,7 @@ end
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 			end
 		end
+end
 function s.sumcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
