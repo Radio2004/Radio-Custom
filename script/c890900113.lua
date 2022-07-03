@@ -22,7 +22,7 @@
 end
 	s.listed_series={0x3dd}
 	function s.rfilter(c,tp)
-	return c:IsCode(890900113) and c:GetOverlayCount()=5 and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsCode(890900113) and e:GetHandler():GetOverlayGroup():GetClassCount()>=2  and (c:IsControler(tp) or c:IsFaceup())
 end
 	function s.filter(c)
 	return c:IsCode(890900018)
