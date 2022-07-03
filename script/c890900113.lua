@@ -10,7 +10,7 @@
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(id)
 		e1:SetOperation(s.op)
-		с:RegisterEffect(e1)
+		c:RegisterEffect(e1)
 end
 	s.listed_series={0x3dd}
 	function s.rfilter(c,tp)
