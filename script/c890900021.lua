@@ -1,4 +1,6 @@
 --Melirria, Episode of Fire and Ice
+	local s,id=GetID()
+	function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -21,7 +23,7 @@
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-	s.listed_series={0x1fa3}
+s.listed_series={0x1fa3}
 function s.filter(c)
 	return c:IsSetCard(0x1fa3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
