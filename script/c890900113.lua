@@ -6,19 +6,11 @@
 	c:EnableReviveLimit()
 		--summon proc
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(id)
-	c:RegisterEffect(e1)
-	aux.GlobalCheck(s,function()
-		--summon proc
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		ge1:SetOperation(s.op)
-		Duel.RegisterEffect(ge1,0)
-	end)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(id)
+		e1:SetOperation(s.op)
+		с:RegisterEffect(e1)
 end
 	s.listed_series={0x3dd}
 	function s.rfilter(c,tp)
@@ -48,11 +40,9 @@ end
 			end
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=g1:GetNext()
 	end
-end
 function s.sumcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
