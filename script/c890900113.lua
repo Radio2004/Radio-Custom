@@ -2,7 +2,7 @@
 	local s,id=GetID()
 	function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),5,2,nil,nil,99)
 	c:EnableReviveLimit()
 		--summon proc
 	local e1=Effect.CreateEffect(c)
@@ -22,10 +22,10 @@
 end
 	s.listed_series={0x3dd}
 	function s.rfilter(c,tp)
-	return c:IsCode(890900113) and c:GetOverlayCount()>=2  and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsCode(id) and c:GetOverlayCount()>=5  and (c:IsControler(tp) or c:IsFaceup())
 end
 	function s.filter(c)
-	return c:IsCode(890900018)
+	return c:IsCode(890900018) or c:IsCode(890900019)
 end
 	function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(s.filter,0,LOCATION_HAND,LOCATION_HAND,nil)
@@ -38,7 +38,7 @@ end
 			e2:SetCode(EFFECT_SPSUMMON_PROC)
 			e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 			e2:SetRange(LOCATION_HAND)
-			if tc:IsCode(890900018) then
+			if tc:IsCode(890900018) or tc:IsCode(890900019) then
 				e2:SetValue(1)
 				e2:SetCondition(s.sumcon)
 				e2:SetTarget(s.sumtg)
