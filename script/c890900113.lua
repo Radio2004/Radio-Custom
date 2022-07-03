@@ -14,6 +14,7 @@
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_ADJUST)
+		ge1:SetDescription(aux.Stringid(id,1))
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
@@ -32,7 +33,7 @@ end
 	while tc do
 			if tc:GetFlagEffect(id)==0 then
 			local e2=Effect.CreateEffect(tc)
-			e2:SetDescription(aux.Stringid(64382841,3))
+			e2:SetDescription(aux.Stringid(id,2))
 			e2:SetType(EFFECT_TYPE_FIELD)
 			e2:SetCode(EFFECT_SPSUMMON_PROC)
 			e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
