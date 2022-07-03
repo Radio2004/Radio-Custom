@@ -42,10 +42,10 @@ end
 			e2:SetCondition(s.sumcon)
 			e2:SetTarget(s.sumtg)
 			e2:SetOperation(s.sumop)
-			end
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			end
 		end
 		tc=g1:GetNext()
 	end
