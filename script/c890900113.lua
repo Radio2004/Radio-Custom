@@ -6,10 +6,8 @@
 	c:EnableReviveLimit()
 		--summon proc
 	local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetTargetRange(LOCATION_HAND,0)
 		e1:SetCode(EVENT_ADJUST)
 		e1:SetOperation(s.op)
 		c:RegisterEffect(e1)
