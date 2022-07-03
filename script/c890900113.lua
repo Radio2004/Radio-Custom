@@ -73,22 +73,3 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
 end
-	function s.plasmacon(e,c)
-	if c==nil then return true end
-	local g=Duel.GetReleaseGroup(c:GetControler())
-	local d2=g:FilterCount(Card.IsHasEffect,nil,id)
-	local d3=g:FilterCount(Card.IsHasEffect,nil,id+1)
-	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
-	return (ft>-2 and #g>1 and d2>0) or (ft>-1 and d3>0)
-end
-function s.plasmaop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetReleaseGroup(tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local sg1=g:FilterSelect(tp,Card.IsHasEffect,1,1,nil,id)
-	if not sg1:GetFirst():IsHasEffect(id+1) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg2=g:Select(tp,1,1,sg1:GetFirst())
-		sg1:Merge(sg2)
-	end
-	Duel.Release(sg1,REASON_COST)
-end
