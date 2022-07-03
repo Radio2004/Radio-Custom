@@ -96,7 +96,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 	function s.mtfilter(c,e)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:IsSetCard(0x1fa3) and not c:IsImmuneToEffect(e) and not c:IsCode(id)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:IsSetCard(0x1fa3) and not c:IsImmuneToEffect(e) 
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
