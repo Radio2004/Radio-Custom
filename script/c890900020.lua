@@ -20,6 +20,12 @@
 	e3:SetTarget(s.mttg)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
+	--attack all
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_ATTACK_ALL)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
 		--summon proc
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
