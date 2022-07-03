@@ -44,18 +44,17 @@ end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return ep~=tp and tg and #tg==1 and tg:GetFirst():GetControler()==e:GetHandlerPlayer() and tg:GetFirst():IsLocation(LOCATION_MZONE)
-		and re:IsActiveType(TYPE_EFFECT) and Duel.IsChainNegatable(ev)
+		and re:IsActiveType(TYPE_EFFECT) and Duel.IsCanChangePosition(ev)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsAbleToRemove() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	if re:GetHandler():IsCanChangePosition() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,1,0,0)
 	end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateActivation(ev)
 	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+		Duel.ChangePosition(eg,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
 end
