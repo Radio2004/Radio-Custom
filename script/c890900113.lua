@@ -25,7 +25,7 @@ end
 	return c:IsCode(890900113) and (c:IsControler(tp) or c:IsFaceup())
 end
 	function s.filter(c)
-	return c:IsCode(890900018) or c:IsCode(83965310)
+	return c:IsCode(890900018) 
 end
 	function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(s.filter,0,LOCATION_HAND,LOCATION_HAND,nil)
@@ -38,14 +38,10 @@ end
 			e2:SetCode(EFFECT_SPSUMMON_PROC)
 			e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 			e2:SetRange(LOCATION_HAND)
-			if tc:IsCode(890900018) then
-				e2:SetValue(1)
-				e2:SetCondition(s.sumcon)
-				e2:SetTarget(s.sumtg)
-				e2:SetOperation(s.sumop)
-			else
-				e2:SetCondition(s.plasmacon)
-				e2:SetOperation(s.plasmaop)
+			e2:SetValue(1)
+			e2:SetCondition(s.sumcon)
+			e2:SetTarget(s.sumtg)
+			e2:SetOperation(s.sumop)
 			end
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
@@ -75,23 +71,4 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
-end
-	function s.plasmacon(e,c)
-	if c==nil then return true end
-	local g=Duel.GetReleaseGroup(c:GetControler())
-	local d2=g:FilterCount(Card.IsHasEffect,nil,id)
-	local d3=g:FilterCount(Card.IsHasEffect,nil,id+1)
-	local ft=Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)
-	return (ft>-2 and #g>1 and d2>0) or (ft>-1 and d3>0)
-end
-function s.plasmaop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetReleaseGroup(tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local sg1=g:FilterSelect(tp,Card.IsHasEffect,1,1,nil,id)
-	if not sg1:GetFirst():IsHasEffect(id+1) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg2=g:Select(tp,1,1,sg1:GetFirst())
-		sg1:Merge(sg2)
-	end
-	Duel.Release(sg1,REASON_COST)
 end
