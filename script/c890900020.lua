@@ -96,17 +96,17 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 	function s.mtfilter(c,e)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:IsSetCard(0x1fa3) and not c:IsImmuneToEffect(e)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:IsSetCard(0x1fa3) and not c:IsImmuneToEffect(e) and not c:IsCode(id)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
-		and Duel.IsExistingMatchingCard(s.mtfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil,e) end
+		and Duel.IsExistingMatchingCard(s.mtfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,e:GetHandler(),e) end
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil,e)
+	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,e:GetHandler(),e)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.Overlay(c,tc,true)
