@@ -40,21 +40,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+	function s.cefilter(c,e)
+	return oc~=c and Duel.IsCanChangePosition(ct,c)
+end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
-	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return ep~=tp and tg and #tg==1 and tg:GetFirst():GetControler()==e:GetHandlerPlayer() and tg:GetFirst():IsLocation(LOCATION_MZONE)
-		and re:IsActiveType(TYPE_EFFECT)
+	if e==re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	if not g or #g~=1 then return false end
+	local tc=g:GetFirst()
+	e:SetLabelObject(tc)
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsFacedown()
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsCanChangePosition() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,1,0,0)
-	end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cefilter(chkc,ev,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingTarget(s.cefilter,tp,LOCATION_MZONE,0,1,e:GetLabelObject(),ev,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,s.cefilter,tp,LOCATION_MZONE,0,1,1,e:GetLabelObject(),ev,e:GetHandler())
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsRelateToEffect(re) then
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.ChangePosition(ev,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
 end
