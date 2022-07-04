@@ -13,8 +13,8 @@
 	--Change battle poisition
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetCountLimit(1,id)
