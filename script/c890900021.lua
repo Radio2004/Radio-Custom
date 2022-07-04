@@ -41,7 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
+	local cont,loc=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and cont==tp and loc~=LOCATION_MZONE
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsOnField() end
