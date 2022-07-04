@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	local cont,loc=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local cont,loc=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_RACE)
 	return re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x1fa3) and cont==tp and loc==LOCATION_MZONE 
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
