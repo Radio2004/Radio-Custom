@@ -14,7 +14,7 @@
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetCountLimit(1,id)
@@ -41,9 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	local cont,loc=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_RACE)
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x1fa3) and cont==tp and loc==LOCATION_MZONE 
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsOnField() end
