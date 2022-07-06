@@ -48,16 +48,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or #g~=1 then return false end
-	local tc=g:GetFirst()
-	if tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) then
-	e:GetHandler():SetLabelObject(tc)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 	end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)>=0
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	if not g or #g~=1 then return false end
+	local tc=g:GetFirst()
+	e:SetLabelObject(tc)
+	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and e:GetHandler():GetFlagEffect(id)>0
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
