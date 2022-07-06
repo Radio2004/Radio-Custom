@@ -48,7 +48,7 @@ end
 	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thfilter(c,re,rp,tf,ceg,cep,cev,cre,cr,crp)
-	return e:GetLabelObject() and c:IsFaceup()
+	return e:GetLabelObject() and c:IsFaceup() and tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tf=re:GetTarget()
