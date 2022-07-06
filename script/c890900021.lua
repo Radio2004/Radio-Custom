@@ -44,15 +44,15 @@ end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
-	SetCardTarget(tc)
+	e:SetLabelObject(tc)
 	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=e:GetCardTarget()
+	local tc=e:GetLabelObject()
 	if chk==0 then return tc:IsCanChangePosition() and tc:IsLocation(LOCATION_MZONE) end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetCardTarget()
+	local tc=e:GetLabelObject()
 	if tc and tc:IsFaceup() then
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
