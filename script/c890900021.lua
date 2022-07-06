@@ -61,15 +61,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
 end
-	function s.rfilter(c,tp)
+function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
 	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
-end
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.rfilter,1,nil,tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
