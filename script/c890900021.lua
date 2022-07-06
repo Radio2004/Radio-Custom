@@ -47,16 +47,19 @@ end
 	e:SetLabelObject(tc)
 	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
+	function s.thfilter(c,re,rp,tf,ceg,cep,cev,cre,cr,crp)
+	return e:GetLabelObject() and c:IsFaceup()
+end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tf=re:GetTarget()
 	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,re,rp,tf,ceg,cep,cev,cre,cr,crp) end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tf=re:GetTarget()
 	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,re,rp,tf,ceg,cep,cev,cre,cr,crp)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
