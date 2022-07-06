@@ -16,19 +16,12 @@
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EVENT_ADJUST)
-	e4:SetOperation(s.regop)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x1fa3}
 function s.filter(c)
@@ -55,7 +48,7 @@ end
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and e:GetHandler():GetFlagEffect(id)>0
+	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
