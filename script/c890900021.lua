@@ -22,12 +22,6 @@
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_ADJUST)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetOperation(s.regop)
-	c:RegisterEffect(e2)
 end
 s.listed_series={0x1fa3}
 function s.filter(c)
@@ -46,11 +40,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-	function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	
+	local tc=g:GetFirst()
+	e:SetLabelObject(tc)
+	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
