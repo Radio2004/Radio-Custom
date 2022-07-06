@@ -52,11 +52,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	if tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) then
+	e:GetHandler():SetLabelObject(tc)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 	end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)>=0 and e:SetLabelObject(tc)
+	return e:GetHandler():GetFlagEffect(id)>=0
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
