@@ -27,7 +27,6 @@
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EVENT_ADJUST)
-	e4:SetCondition(s.regcon)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 end
@@ -48,14 +47,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-	function s.regcon(e,tp,eg,ep,ev,re,r,rp)
+	
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	if tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) then
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
