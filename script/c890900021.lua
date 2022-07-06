@@ -49,7 +49,7 @@ end
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc:IsCanChangePosition() and tc:IsLocation(LOCATION_MZONE) and tc:IsCanBeEffectTarget(e) end
+	if chk==0 then return tc:IsCanChangePosition() and tc:IsLocation(LOCATION_MZONE) end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
