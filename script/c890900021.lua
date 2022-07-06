@@ -56,3 +56,4 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 	end
+end
