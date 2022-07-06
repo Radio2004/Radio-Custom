@@ -22,7 +22,14 @@
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCode(EVENT_ADJUST)
+	e4:SetCondition(s.regcon)
+	e4:SetOperation(s.regop)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x1fa3}
 function s.filter(c)
@@ -42,11 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or #g~=1 then return false end
-	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
+	return e:GetHandler():GetFlagEffect(id)>0
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
@@ -63,7 +66,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
+	return tc:IsLocation(LOCATION_MZONE) 
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
