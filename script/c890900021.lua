@@ -16,7 +16,7 @@
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetHintTiming(TIMING_END_PHASE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.thcon)
