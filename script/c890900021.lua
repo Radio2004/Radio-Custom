@@ -40,12 +40,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+	function s.cfilter(c)
+	return c:IsOnField() 
+end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	
+	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
+	e:SetLabelObject(g)
+	return g:FilterCount(s.cfilter,nil)==#g and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
