@@ -18,7 +18,7 @@
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.thcon)
+	
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -45,17 +45,18 @@ end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	
+	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
-	e:SetLabelObject(g)
-	return g:FilterCount(s.cfilter,nil)==#g and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
+	e:SetLabelObject(tc)
+	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=e:GetLabelObject()
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	local tc=g:GetFirst()
 	if chk==0 then return tc:IsCanChangePosition() and tc:IsLocation(LOCATION_MZONE) end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
+	local tc=g:GetFirst()
 	if tc and tc:IsFaceup() then
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
