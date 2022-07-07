@@ -16,9 +16,9 @@
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetCode(EVENT_ADJUST)
 	e3:SetCountLimit(1,id)
-	
+	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -51,13 +51,11 @@ end
 	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ev ~= eg
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
+	local tc=e:GetLabelObject()
 	if chk==0 then return tc:IsCanChangePosition() and tc:IsLocation(LOCATION_MZONE) end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=g:GetFirst()
+	local tc=e:GetLabelObject()
 	if tc and tc:IsFaceup() then
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
