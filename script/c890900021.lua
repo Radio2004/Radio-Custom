@@ -6,7 +6,7 @@
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -17,6 +17,7 @@
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetHintTiming(TIMING_END_PHASE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
