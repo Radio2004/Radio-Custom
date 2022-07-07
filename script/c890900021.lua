@@ -51,7 +51,8 @@ end
 	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetChainInfo(re,CHAININFO_TARGET_CARDS)
+	local ev == eg
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
 	if chk==0 then return tc:IsCanChangePosition() and tc:IsLocation(LOCATION_MZONE) end
 end
