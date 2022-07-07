@@ -13,7 +13,7 @@
 	--Change battle poisition
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_TRIGGER_O)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -45,7 +45,7 @@ end
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3)
+	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
