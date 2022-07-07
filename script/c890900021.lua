@@ -41,9 +41,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
 	return Duel.GetCurrentPhase()==PHASE_END
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
