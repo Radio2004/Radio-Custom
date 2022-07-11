@@ -27,7 +27,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.filter(c,e,tp,rc,tid)
-	return c:IsReason(REASON_LOST_TARGET) and c:GetReasonCard()==rc and c:GetTurnID()==tid
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	return c:GetReasonCard()==g and c:GetTurnID()==tid
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
