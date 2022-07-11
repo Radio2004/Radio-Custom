@@ -17,7 +17,6 @@
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_CHAINING)
-	
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
@@ -46,9 +45,9 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	local g=Duel.GetFirstTarget(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
-	local tc=g:GetCardTarget()
+	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
 	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) 
 end
