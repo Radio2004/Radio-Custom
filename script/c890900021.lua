@@ -63,7 +63,7 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,id)>0 and Duel.IsMainPhase()
+	return Duel.GetFlagEffect(1-tp,id)>0 and Duel.IsMainPhase()
 end
 	--function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	--local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
