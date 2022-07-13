@@ -41,6 +41,7 @@ s.listed_series={0x1fa3}
 	for tc in aux.Next(eg) do
 		Duel.RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 	end
+end
 	function s.filter(c)
 	return c:IsSetCard(0x1fa3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
