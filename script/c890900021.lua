@@ -34,11 +34,12 @@
 end
 s.listed_series={0x1fa3}
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	if not g or #g~=1 then return false end
 	local tc=ev:GetFirst()
-	if #tc=1 then return true end
 	e:SetLabelObject(tc)
 	for tc in aux.Next(ev) do
-		Duel.RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetLabelObject(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	function s.filter(c)
