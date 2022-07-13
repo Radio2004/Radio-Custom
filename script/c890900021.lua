@@ -37,7 +37,7 @@ function s.filter(c)
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=ev:GetFirst()
 	for tc in aux.Next(ev) do
-		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetChainInfo(ev,CHAININFO_TARGET_CARDS),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	return c:IsSetCard(0x1fa3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
