@@ -37,7 +37,7 @@ function s.filter(c)
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	local gg=g:GetFirst()
-	for tc in aux.Next(ev) do
+	for tc in aux.Next(eg) do
 		Duel.RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
