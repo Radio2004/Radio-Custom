@@ -33,7 +33,6 @@
 	end)
 end
 s.listed_series={0x1fa3}
-function s.filter(c)
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
@@ -42,6 +41,7 @@ function s.filter(c)
 		Duel.RegisterFlagEffect(tc:SetLabelObject(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
+	function s.filter(c)
 	return c:IsSetCard(0x1fa3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
