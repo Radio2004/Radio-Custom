@@ -38,7 +38,7 @@ function s.filter(c)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
 	for tc in aux.Next(ev) do
-		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	return c:IsSetCard(0x1fa3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
