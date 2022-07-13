@@ -13,11 +13,11 @@
 	--Change battle poisition
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,TIMING_MAIN_END)
+	e3:SetHintTiming(TIMING_END_PHASE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
@@ -33,15 +33,13 @@
 	end)
 end
 s.listed_series={0x1fa3}
+function s.filter(c)
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	local tc=ev:GetFirst()
-	e:SetLabelObject(tc)
-	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetChainInfo(ev,CHAININFO_TARGET_CARDS),id,RESET_PHASE+PHASE_END,0,1)
+	for tc in aux.Next(ev) do
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function s.filter(c)
 	return c:IsSetCard(0x1fa3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -62,7 +60,14 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(1-tp,id)>0 and Duel.IsMainPhase()
+	return Duel.GetFlagEffect(1-tp,id)>=1 and Duel.IsMainPhase()
+end
+	--function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	--local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	--if not g or #g~=1 then return false end
+	--local tc=g:GetFirst()
+	--e:SetLabelObject(tc)
+	--return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
