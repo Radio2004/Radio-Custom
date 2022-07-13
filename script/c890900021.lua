@@ -37,9 +37,9 @@ s.listed_series={0x1fa3}
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
+	e:SetLabelObject(g)
 	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetFirst(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(g:GetFirst(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	function s.filter(c)
