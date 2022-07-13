@@ -61,7 +61,7 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	Duel.GetFlagEffect(1-tp,id)>0 and Duel.IsMainPhase()
+	Duel.GetFlagEffect(1-tp,id)>=1 and Duel.IsMainPhase()
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
