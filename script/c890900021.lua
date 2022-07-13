@@ -74,7 +74,7 @@ end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:GetTargetCount()
+	local tg=g:GetMatchingGroup()
 	e:SetLabelObject(tg)
 	tc=e:GetLabelObject()
 	if chk==0 then return tc:IsCanChangePosition() end
