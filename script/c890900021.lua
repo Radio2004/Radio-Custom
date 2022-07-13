@@ -38,7 +38,7 @@ s.listed_series={0x1fa3}
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1) and e:SetLabelObject(tc)
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1) and Duel.SetLabelObject(tc)
 	end
 end
 	function s.filter(c)
