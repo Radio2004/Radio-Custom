@@ -74,7 +74,7 @@ end
 --end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc:IsCanChangePosition() end
+	if chk==0 then return true end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
