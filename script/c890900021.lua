@@ -36,6 +36,7 @@ s.listed_series={0x1fa3}
 function s.filter(c)
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=ev:GetFirst()
+	e:SetLabelObject(tc)
 	for tc in aux.Next(ev) do
 		Duel.RegisterFlagEffect(tc:GetChainInfo(ev,CHAININFO_TARGET_CARDS),id,RESET_PHASE+PHASE_END,0,1)
 	end
