@@ -39,9 +39,8 @@ s.listed_series={0x1fa3}
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
 	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetLabelObject(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 	end
-end
 	function s.filter(c)
 	return c:IsSetCard(0x1fa3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
