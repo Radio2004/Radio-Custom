@@ -35,9 +35,10 @@ end
 s.listed_series={0x1fa3}
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=ev:GetFirst()
+	if #tc=1 then return true end
 	e:SetLabelObject(tc)
 	for tc in aux.Next(ev) do
-		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	function s.filter(c)
