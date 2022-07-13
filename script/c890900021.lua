@@ -39,7 +39,7 @@ s.listed_series={0x1fa3}
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
 	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetTargetCount(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	function s.filter(c)
@@ -63,7 +63,7 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,id)>0 and Duel.IsMainPhase()
+	return Duel.GetFlagEffect(1-tp,id)>0 and Duel.IsMainPhase()
 end
 	--function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	--local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
