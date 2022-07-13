@@ -38,7 +38,7 @@ s.listed_series={0x1fa3}
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
 	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.filter(c)
