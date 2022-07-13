@@ -37,6 +37,7 @@ s.listed_series={0x1fa3}
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
+	e:SetLabelObject(tc)
 	for tc in aux.Next(eg) do
 		Duel.RegisterFlagEffect(tc:GetCardTargetCount(),id,RESET_PHASE+PHASE_END,0,1)
 	end
@@ -72,15 +73,11 @@ end
 	--return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
 --end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:GetMatchingGroup()
-	e:SetLabelObject(tg)
-	tc=e:GetLabelObject()
+	local tc=e:GetLabelObject()
 	if chk==0 then return tc:IsCanChangePosition() end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	tc=e:GetLabelObject()
+	local tc=e:GetLabelObject()
 	if tc and tc:IsFaceup() then
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
