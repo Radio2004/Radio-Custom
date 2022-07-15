@@ -41,16 +41,16 @@
 end
 s.listed_series={0x1fa3}
 	function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsOnField()
+	return ev:GetHandler():IsOnField()
 end
 function s.regop1(e,tp,eg,ep,ev,re,r,rp)
-	re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	ev:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
-	local ct=re:GetHandler():GetFlagEffect(id)
-	re:GetHandler():ResetFlagEffect(id)
+	local ct=ev:GetHandler():GetFlagEffect(id)
+	ev:GetHandler():ResetFlagEffect(id)
 	for i=1,ct-1 do
-		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		ev:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	function s.filter(c)
@@ -74,7 +74,7 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return  Duel.IsMainPhase()
+	return Duel.IsMainPhase()
 end
 	--function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	--local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
