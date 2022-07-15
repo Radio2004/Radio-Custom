@@ -101,13 +101,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) 
 end
 	function s.damfiler(c)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_WATER)
 end
 	function s.recfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WATER)
 end
 	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil) 
