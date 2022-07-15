@@ -72,8 +72,8 @@ end
 	--e:SetLabelObject(tc)
 	--return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
 --end
-	function s.chfilter(c,e,tp,ev,tid)
-	return c:IsFaceup() and c:IsCanChangePosition() and c:GetReasonCard()==ev and c:GetTurnID()==tid
+	function s.chfilter(c,e,tp,ev)
+	return c:IsFaceup() and c:IsCanChangePosition() and c:GetReasonCard()==ev and c:IsReason(REASON_EFFECT) and c:GetTurnID()==tid
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.chfilter,tp,0,LOCATION_MZONE,1,nil) end
