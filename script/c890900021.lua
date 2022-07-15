@@ -62,7 +62,7 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(id)>0 and Duel.IsMainPhase()
+	return Duel.GetFlagEffect(1-tp,id)>0 and Duel.IsMainPhase()
 end
 	--function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	--local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
@@ -72,10 +72,10 @@ end
 	--return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
 --end
 	function s.chfilter(c)
-	return c:GetFlagEffect(id)>0
+	return  c:GetFlagEffect(id)>0
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+   if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
