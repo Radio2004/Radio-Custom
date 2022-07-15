@@ -100,13 +100,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
 end
-	function s.spfilter(c)
+	function s.spfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsControler(tp)
 end
 	function s.damfiler(c)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_WATER)
 end
-	function s.recfilter(c)
+	function s.recfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsControler(tp)
 end
 	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
