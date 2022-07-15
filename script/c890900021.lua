@@ -72,12 +72,17 @@ end
 	--e:SetLabelObject(tc)
 	--return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
 --end
+	function s.chfilter(c)
+	return c:IsFaceup() and c:IsCanChangePosition()
+end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=e:GetLabelObject()
-	if chk==0 then return tc:IsCanChangePosition() end
+	if chk==0 then return Duel.IsExistingTarget(s.chfilter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectTarget(tp,s.chfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
+	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() then
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
