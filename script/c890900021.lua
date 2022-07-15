@@ -35,7 +35,7 @@ end
 s.listed_series={0x1fa3}
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or #g~=1 and not re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(0x1fa3) then return false end
+	if not g or #g~=1 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) then return false end
 	g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 	function s.filter(c)
