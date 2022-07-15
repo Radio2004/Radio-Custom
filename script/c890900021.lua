@@ -91,7 +91,7 @@ end
 	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE)
 end
 	function s.damfiler(c)
-	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_WATER)
 end
 	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil)
