@@ -17,7 +17,7 @@
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,TIMING_MAIN_END)
+	e3:SetHintTiming(TIMING_END_PHASE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
@@ -35,8 +35,7 @@ end
 s.listed_series={0x1fa3}
 	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or #g~=1 then return false end
-	
+	if not g or #g~=1 then return false end 
 	g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 	function s.filter(c)
@@ -60,15 +59,8 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
+	return Duel.GetCurrentPhase()==PHASE_END
 end
-	--function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	--local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	--if not g or #g~=1 then return false end
-	--local tc=g:GetFirst()
-	--e:SetLabelObject(tc)
-	--return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
---end
 	function s.chfilter(c)
 	return c:IsFaceup() and c:IsCanChangePosition() and c:GetFlagEffect(id)>0
 end
