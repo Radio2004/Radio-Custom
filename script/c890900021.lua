@@ -28,29 +28,17 @@
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_CHAINING)
-		ge1:SetCondition(s.regcon)
-		ge1:SetOperation(s.regop1)
+		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_CHAIN_NEGATED)
-		ge2:SetCondition(s.regcon)
-		ge2:SetOperation(s.regop2)
-		Duel.RegisterEffect(ge2,0)
 	end)
 end
 s.listed_series={0x1fa3}
-	function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return ev:GetHandler():IsOnField()
-end
-function s.regop1(e,tp,eg,ep,ev,re,r,rp)
-	ev:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-end
-function s.regop2(e,tp,eg,ep,ev,re,r,rp)
-	local ct=ev:GetHandler():GetFlagEffect(id)
-	ev:GetHandler():ResetFlagEffect(id)
-	for i=1,ct-1 do
-		ev:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	if not g or #g~=1 then return false end
+	local tc=g:GetFirst()
+	for tc in aux.Next(eg) do
+		ev:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	function s.filter(c)
@@ -74,7 +62,7 @@ end
 		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
 end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
+	return Duel.GetFlagEffect(1-tp,id)>0 and Duel.IsMainPhase()
 end
 	--function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	--local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
