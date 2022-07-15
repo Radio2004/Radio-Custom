@@ -97,7 +97,7 @@ end
 	return eg:IsExists(s.spfilter,1,nil)
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
 	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct*200)
