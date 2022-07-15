@@ -10,7 +10,7 @@
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-		--FIRE
+	--FIRE
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_RECOVER+CATEGORY_DESTROY+CATEGORY_DRAW)
@@ -19,23 +19,36 @@
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.spcon)
-	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.spop)
+	e2:SetCondition(s.damcon)
+	e2:SetTarget(s.damtg)
+	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--Change battle poisition
+	--Water
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_RECOVER+CATEGORY_DESTROY+CATEGORY_DRAW)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(TIMING_END_PHASE)
-	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.thcon)
-	e3:SetTarget(s.thtg)
-	e3:SetOperation(s.thop)
+	e3:SetCountLimit(1)
+	e3:SetCondition(s.recon)
+	e3:SetTarget(s.rectg)
+	e3:SetOperation(s.recop)
 	c:RegisterEffect(e3)
+	--Change battle poisition
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetHintTiming(TIMING_END_PHASE)
+	e4:SetCountLimit(1,id)
+	e4:SetCondition(s.thcon)
+	e4:SetTarget(s.thtg)
+	e4:SetOperation(s.thop)
+	c:RegisterEffect(e4)
 	--count
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
@@ -93,18 +106,36 @@ end
 	function s.damfiler(c)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_WATER)
 end
-	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	function s.recfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WATER)
+end
+	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil)
 end
-	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
 	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct*200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
 	Duel.Damage(p,ct*200,REASON_EFFECT)
+end
+	function s.recon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.recfilter,1,nil)
+end
+	function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(ct*300)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,ct*300)
+end
+function s.recop(e,tp,eg,ep,ev,re,r,rp)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	Duel.Recover(p,ct*300,REASON_EFFECT)
 end
