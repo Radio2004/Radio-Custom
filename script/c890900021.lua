@@ -29,7 +29,6 @@
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_CHAINING)
 		ge1:SetOperation(s.checkop)
-		ge1:SetLabelObject(ge1)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
@@ -38,8 +37,9 @@ s.listed_series={0x1fa3}
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
+	e:SetLabelObject(ge1)
 	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetCode(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetTargetCount(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 	function s.filter(c)
@@ -73,7 +73,7 @@ end
 	--return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1fa3) and Duel.GetCurrentPhase()==PHASE_END
 --end
 	function s.chfilter(c)
-	return c:IsFaceup() and c:IsCanChangePosition() and c:GetLabelObject()
+	return c:IsFaceup() and c:IsCanChangePosition() and c:GetFlagEffect()
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.chfilter,tp,0,LOCATION_MZONE,1,nil) end
