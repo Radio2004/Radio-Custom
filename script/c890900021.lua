@@ -10,6 +10,19 @@
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+		--FIRE
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_RECOVER+CATEGORY_DESTROY+CATEGORY_DRAW)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCountLimit(1)
+	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 	--Change battle poisition
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -56,20 +69,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-	function s.thfilter(c,tp,e)
-	return c:IsFaceup()  and c:IsLocation(LOCATION_MZONE) 
-		 and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()
-end
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END
 end
-	function s.chfilter(c)
+	function s.thfilter(c)
 	return c:IsFaceup() and c:IsCanChangePosition() and c:GetFlagEffect(id)>0
 end
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(s.chfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,s.chfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -77,4 +86,25 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFaceup() then
 	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	end
+end
+	function s.spfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE)
+end
+	function s.damfiler(c)
+	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAttribute(ATTRIBUTE_WATER)
+end
+	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.spfilter,1,nil)
+end
+	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(ct*200)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	Duel.Damage(p,ct*200,REASON_EFFECT)
 end
