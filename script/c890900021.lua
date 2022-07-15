@@ -101,16 +101,16 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsControler(tp)
 end
 	function s.damfiler(c)
 	return c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_WATER)
 end
 	function s.recfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsControler(tp)
 end
 	function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.spfilter,1,nil) and Duel.GetTurnPlayer()~=tp
+	return eg:IsExists(s.spfilter,1,nil) 
 end
 	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
@@ -125,7 +125,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,ct*200,REASON_EFFECT)
 end
 	function s.recon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.recfilter,1,nil) and Duel.GetTurnPlayer()~=tp
+	return eg:IsExists(s.recfilter,1,nil)
 end
 	function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
