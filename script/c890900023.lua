@@ -1,6 +1,7 @@
 --Future of Melirria - Mena Sakamotou
 	local s,id=GetID()
 	function s.initial_effect(c)
+	c:EnableCounterPermit(0x231C)
 	--link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),2,2,s.lcheck)
 	c:EnableReviveLimit()
@@ -16,6 +17,7 @@
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.counter_place_list={0x231C}
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
 end
