@@ -31,5 +31,5 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,e:GetHandler())
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x231,1)
+	e:GetHandler():AddCounter(0x231C,1)
 end
