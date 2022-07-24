@@ -1,7 +1,7 @@
 --Future of Melirria - Mena Sakamotou
 	local s,id=GetID()
 	function s.initial_effect(c)
-	c:EnableCounterPermit(0x231C)
+	c:EnableCounterPermit(0x382)
 	--link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),2,2,s.lcheck)
 	c:EnableReviveLimit()
@@ -17,7 +17,7 @@
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.counter_place_list={0x231C}
+s.counter_place_list={0x382}
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
 end
@@ -33,5 +33,5 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,e:GetHandler())
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x231C,1)
+	e:GetHandler():AddCounter(0x382,1)
 end
