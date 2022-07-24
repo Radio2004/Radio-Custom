@@ -53,6 +53,7 @@ end
 end
 	function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.filter1(c)
