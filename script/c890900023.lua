@@ -87,7 +87,8 @@ end
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
-	elseif e:GetLabel()==1 then
+		end
+	elseif e:GetLabel(op)==1 then
 		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(atkg) do
 		local e1=Effect.CreateEffect(c)
@@ -106,4 +107,3 @@ end
 	end
 end
 	end
-end
