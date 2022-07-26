@@ -67,16 +67,18 @@ end
 		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
 	local g=(op==1 and g1 or g2 or g3)
-		Duel.SetTargetParam(ct)
+		end
+		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
+end
 	function s.filter(c)
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
    function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op=e:GetLabel()
-	local ct=c:GetCounter(0x42)
+	local ct=e:GetLabel()
 	if not c:IsRelateToEffect(e) then return end
 	if op==1 then
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
@@ -97,7 +99,7 @@ end
 	else
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
+		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,ct,math.floor(ct/2),nil)
 		if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
