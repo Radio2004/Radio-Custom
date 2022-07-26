@@ -64,10 +64,9 @@ end
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ct=e:GetLabel()
-	local b1=e:GetLabel() > 0
-	local b2=e:GetLabel() > 2
-	if chk==0 then return ct>0 and (b1 or b2) end
+	local b1=e:GetLabel(sum) > 0
+	local b2=e:GetLabel(sum) > 2
+	if chk==0 then return (b1 or b2) end
 	local op=0
 	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
@@ -92,7 +91,7 @@ end
 	function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if e:GetLabel()==0 then
+	if e:GetLabel(op)==0 then
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
