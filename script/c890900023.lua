@@ -74,7 +74,7 @@ end
 	elseif op==1 then
 		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
-	else
+	elseif op==2 then
 		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
@@ -101,7 +101,7 @@ end
 		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 		end
-	else
+	elseif e:GetLabel()==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
 		if #g>0 then
