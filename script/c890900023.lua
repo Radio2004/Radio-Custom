@@ -65,8 +65,8 @@ end
 		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
-		ct:SetLabel()
 	local g=(op==1 and g1 or g2 or g3)
+	e:SetTarget(ct)
 	Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
 	function s.filter(c)
@@ -89,7 +89,7 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel()*200)
+		e1:SetValue(e:GetTarget()*200)
 		tc:RegisterEffect(e1)
 		end
 	elseif op==3 then
