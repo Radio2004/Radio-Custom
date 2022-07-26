@@ -60,8 +60,8 @@ end
 	local c=e:GetHandler()
 	local ct=e:GetLabel()
 	if chk==0 then return true end
-	local b1=ct >= 1 Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
-	local b2=ct >= 2
+	local b1=e:GetLabel() >= 1 Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local b2=e:GetLabel() >= 2
 	if ct > 0 then return (b1 or b2) end
 	local op=0
 	if b1 and b2 then
