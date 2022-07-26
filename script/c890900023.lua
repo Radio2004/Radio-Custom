@@ -67,7 +67,6 @@ end
 		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
 	local g=(op==1 and g1 or g2 or g3)
-		end
 		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
