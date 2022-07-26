@@ -62,19 +62,19 @@ end
 	if chk==0 then return b1 or b2 or b3 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,3)},
+		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
 	if op==1 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	elseif op==2 then
-		e:SetLabel(ct*200)
-		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
-	else
+	elseif op==3 then
 		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	else
+		e:SetLabel(ct*200)
+		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
 end
 	function s.filter(c)
@@ -89,7 +89,14 @@ end
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		end
-	elseif op==2 then
+	elseif op==3 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
+		if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+		end
+	else
 		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(atkg) do
 		local e1=Effect.CreateEffect(c)
@@ -99,12 +106,5 @@ end
 		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 		end
-	else 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
-		if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end
-	end
