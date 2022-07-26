@@ -64,7 +64,7 @@ end
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b1=e:GetLabel() > 0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local b1=e:GetLabel(sum)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=e:GetLabel() > 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
