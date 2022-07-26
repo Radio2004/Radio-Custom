@@ -69,7 +69,7 @@ end
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
-		e:SetLabel(ct*200)
+		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	else
 		e:SetLabel(ct)
@@ -96,7 +96,7 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel(ct))
+		e1:SetValue(e:GetLabel(ct*200))
 		tc:RegisterEffect(e1)
 		end
 	else 
