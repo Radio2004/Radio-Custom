@@ -66,8 +66,8 @@ end
 		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
-		e:SetLabel(ct)
 	local g=(op==1 and g1 or g2 or g3)
+		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
 	function s.filter(c)
@@ -90,13 +90,13 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel(ct*200))
+		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 		end
 	elseif op==3 then
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,math.floor(2),nil)
+		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
 		if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
