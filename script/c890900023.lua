@@ -51,7 +51,7 @@ end
 end
 	function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetCounter(0x55)>0 end
+	if chk==0 then return c:GetCounter(0x382)>0 end
 	local ct=c:GetCounter(0x382)
 	e:SetLabel(ct)
 	c:RemoveCounter(tp,0x382,ct,REASON_COST)
