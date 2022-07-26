@@ -64,8 +64,8 @@ end
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b1=e:GetLabel(sum) > 0
-	local b2=e:GetLabel(sum) > 2
+	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local b2=e:GetLabel() > 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
 	if b1 and b2 then
@@ -83,7 +83,7 @@ end
 	end
 end
 	function s.filter(c)
-	return c:IsSetCard(0x3dd) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(0x3dd) and c:IsAbleToGrave()
 end
 	function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c,false,true)
@@ -91,7 +91,7 @@ end
 	function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if e:GetLabel(op)==0 then
+	if e:GetLabel()==0 then
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
