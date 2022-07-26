@@ -50,6 +50,7 @@ end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x382)
+	local ct2=c:GetCounter(0x382)/2
 	local b1=Duel.IsCanRemoveCounter(tp,1,0,0x382,1,REASON_COST) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x382,3,REASON_COST)
 	local b3=Duel.IsCanRemoveCounter(tp,1,0,0x382,5,REASON_COST) and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil)
@@ -73,7 +74,7 @@ end
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE)
 	else
-		e:SetLabel(ct)
+		e:SetLabel(ct2)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
@@ -101,7 +102,7 @@ end
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,e:GetLabel()/2,nil)
+		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,e:GetLabel(),nil)
 		if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
