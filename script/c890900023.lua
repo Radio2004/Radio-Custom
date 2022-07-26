@@ -58,9 +58,8 @@ end
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ct1=c:GetCounter(0x382)
-	local ct=c:RemoveCounter(tp,0x382,ct1,REASON_COST)
-	local b1=ct >= 1 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	if c:RemoveCounter(tp,0x382,1,REASON_COST) then 
+	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	local b2=ct >= 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
