@@ -58,8 +58,6 @@ end
 	local b3=Duel.IsCanRemoveCounter(tp,1,0,0x382,5,REASON_COST) and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return (b1 or b2 or b3) end
 	local op=0
-	if not (b1 or b2) then op=3 end
-	if not (b1 or b3) then op=2 end
 	if b1 and b2 and b3 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
 	elseif b1 then
@@ -69,6 +67,8 @@ end
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(id,2))
 	end
+	if not (b1 or b2) then op=3 end
+	if not (b1 or b3) then op=2 end
 	e:SetLabel(op)
 	if op==0 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
@@ -86,6 +86,8 @@ end
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
    function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	if not (b1 or b2) then op=3 end
+	if not (b1 or b3) then op=2 end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if e:GetLabel()==0 then
