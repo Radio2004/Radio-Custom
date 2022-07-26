@@ -54,12 +54,12 @@ end
 	if chk==0 then return c:GetCounter(0x382)>0 end
 	local ct=c:GetCounter(0x382)
 	c:RemoveCounter(tp,0x382,ct,REASON_COST)
-	e:SetLabel(ct)
+	Duel.SetTargetParam(#ct)
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ct=e:GetLabel()
-	local b1=c:IsCanRemoveCounter(tp,0x382,1,REASON_COST) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+	local b1=ct >= 1 Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=ct >= 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
@@ -93,7 +93,7 @@ end
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,ct,nil)
+		local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD+LOCATION_GRAVE,1,ct,nil)
 		if #g>0 then
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
