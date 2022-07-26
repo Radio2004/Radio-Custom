@@ -53,7 +53,6 @@ end
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x382)
 	e:SetLabel(ct)
-	if chk==0 then return c:GetCounter(0x382)>0 end
 	c:RemoveCounter(tp,0x382,ct,REASON_COST)
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
