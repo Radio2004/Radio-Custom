@@ -65,7 +65,6 @@ end
 		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
-	end
 	if op==0 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
@@ -77,6 +76,7 @@ end
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
+end
 	function s.filter(c)
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
