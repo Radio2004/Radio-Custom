@@ -68,7 +68,6 @@ end
 	local g=(op==1 and g1 or g2 or g3)
 	end
 	Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
-end
 	function s.filter(c)
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
