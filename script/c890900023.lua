@@ -69,7 +69,6 @@ end
 		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
-end
 	function s.filter(c)
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
