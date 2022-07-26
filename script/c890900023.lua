@@ -93,7 +93,7 @@ end
 		e1:SetValue(e:GetLabel(ct*200))
 		tc:RegisterEffect(e1)
 		end
-	else
+	elseif op==3 then
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,math.floor(2),nil)
