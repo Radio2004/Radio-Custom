@@ -59,7 +59,7 @@ end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local b1=ct >= 1 Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local b1=ct > 0 Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=ct >= 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
