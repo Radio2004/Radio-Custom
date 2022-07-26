@@ -51,21 +51,15 @@ end
 end
 	function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetCounter(tp,1,1,0x382)>0 end
-	local g=Duel.GetMatchingGroup(s.damfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	local tc=g:GetFirst()
-	local sum=0
-	for tc in aux.Next(g) do
-		local sct=tc:GetCounter(0x382)
-		tc:RemoveCounter(tp,0x382,sct,0)
-		sum=sum+sct
-	end
-	e:SetLabel(sum)
+	if chk==0 then return c:GetCounter(0x382)>0 end
+	local ct=c:GetCounter(0x382)
+	e:SetLabel(ct)
+	c:RemoveCounter(tp,0x382,ct,REASON_COST)
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=e:GetLabel()
-	local b1=ct > 0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local b1=e:GetLabel() > 0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=e:GetLabel() > 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
