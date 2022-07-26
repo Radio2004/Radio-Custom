@@ -73,8 +73,7 @@ end
 end
    function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local op=e:GetLabel() == op
-	local ct=e:GetLabel() == ct
+	local op=e:GetLabel()
 	if not c:IsRelateToEffect(e) then return end
 	if op==1 then
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
