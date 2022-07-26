@@ -57,7 +57,7 @@ end
 	local op=0
 	if b1 and b2 and b3 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif b1 then
+	if b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
 	elseif b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))
@@ -67,7 +67,7 @@ end
 	e:SetLabel(op)
 	if op==0 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
-		
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	elseif op==1 then
 		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
