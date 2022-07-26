@@ -63,9 +63,9 @@ end
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
 	elseif b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
+		op=Duel.SelectOption(tp,aux.Stringid(id,1))
 	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
+		op=Duel.SelectOption(tp,aux.Stringid(id,2))
 	end
 	e:SetLabel(op)
 	if op==0 then
@@ -90,7 +90,6 @@ end
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
-		end
 	elseif e:GetLabel()==1 then
 		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(atkg) do
