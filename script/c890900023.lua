@@ -90,7 +90,7 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel())
+		e1:SetValue(ct*200)
 		tc:RegisterEffect(e1)
 		end
 	elseif op==3 then
