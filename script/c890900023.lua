@@ -68,7 +68,7 @@ end
 		e:SetLabel(op)
 	local g=(op==1 and g1 or g2 or g3)
 		e:SetLabel(ct)
-		e:SetLabel(ct1)
+		e:SetLabel(ct1*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
 	function s.filter(c)
