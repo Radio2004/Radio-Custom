@@ -53,13 +53,13 @@ end
 	local b1=Duel.IsCanRemoveCounter(tp,1,0,0x382,1,REASON_COST) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x382,3,REASON_COST)
 	local b3=Duel.IsCanRemoveCounter(tp,1,0,0x382,5,REASON_COST) and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil)
-	if chk==0 then return (b1 or b2) end
+	if chk==0 then return (b1 or b2 or b3) end
 	local op=0
 	if b1 and b2 and b3 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	elseif b2
+	elseif b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(id,2))
