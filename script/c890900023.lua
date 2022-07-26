@@ -69,10 +69,10 @@ end
 	if op==1 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	elseif op==2 then
-		
+		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	else
-	   
+		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
 end
@@ -96,7 +96,7 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel(200))
+		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 		end
 	else
