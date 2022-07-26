@@ -23,7 +23,6 @@
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,{id,1})
-	e4:SetCost(s.tgcost)
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
@@ -46,16 +45,6 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x382,1)
 end
-	function s.damfilter(c)
-	return c:GetCounter(0x382)>0
-end
-	function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetCounter(0x382)>0 end
-	local ct=c:GetCounter(0x382)
-	e:SetLabel(ct)
-	c:RemoveCounter(tp,0x382,ct,REASON_COST)
-end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x382)
@@ -72,8 +61,11 @@ end
 	end
 	e:SetLabel(op)
 	if op==0 then
+		Duel.RemoveCounter(tp,1,0,0x35,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	else
+		e:SetLabel(ct*200)
+		Duel.RemoveCounter(tp,1,0,0x35,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE)
 	end
 end
@@ -92,10 +84,14 @@ end
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD+LOCATION_GRAVE,1,1,nil)
-		if #g>0 then
-			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
+		for tc in aux.Next(atkg) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(e:GetLabel())
+		tc:RegisterEffect(e1)
 		end
 	end
 end
