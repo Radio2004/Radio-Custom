@@ -61,11 +61,11 @@ end
 	end
 	e:SetLabel(op)
 	if op==0 then
-		Duel.RemoveCounter(tp,1,0,0x35,ct,REASON_COST)
+		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	else
 		e:SetLabel(ct*200)
-		Duel.RemoveCounter(tp,1,0,0x35,ct,REASON_COST)
+		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE)
 	end
 end
