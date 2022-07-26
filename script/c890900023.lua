@@ -23,6 +23,7 @@
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,{id,1})
+	e4:SetCost(s.tgcost)
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
@@ -58,7 +59,7 @@ end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local b1=e:GetLabel() > 0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
-	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x382,3,REASON_COST)
+	local b2=e:GetLabel() > 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
 	if b1 and b2 then
