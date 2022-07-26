@@ -63,7 +63,7 @@ end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)},
-		{b3,aux.Stringid(id,2})
+		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
 	end
 	if op==0 then
