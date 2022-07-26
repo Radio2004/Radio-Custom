@@ -58,9 +58,11 @@ end
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local ct=e:GetLabel()
+	if chk==0 then return true end
+	local b1=ct >= 1 Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=ct >= 2
-	if chk==0 then return (b1 or b2) end
+	if ct > 0 then return (b1 or b2) end
 	local op=0
 	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
@@ -77,7 +79,7 @@ end
 	end
 end
 	function s.filter(c)
-	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() and c:GetLabel() > 0
+	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
 	function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c,false,true)
