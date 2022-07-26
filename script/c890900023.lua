@@ -67,6 +67,7 @@ end
 		e:SetLabel(op)
 	local g=(op==1 and g1 or g2 or g3)
 		e:SetLabel(ct)
+		e:SetLabel1(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
 	function s.filter(c)
@@ -89,7 +90,7 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel())
+		e1:SetValue(e:GetLabel1())
 		tc:RegisterEffect(e1)
 		end
 	else
