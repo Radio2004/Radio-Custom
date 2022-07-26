@@ -68,7 +68,7 @@ end
 	if op==0 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	elseif op==1 then
+	elseif op==2 then
 		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	else
@@ -88,7 +88,7 @@ end
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		end
-	elseif e:GetLabel()==3 then
+	elseif e:GetLabel()==2 then
 		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(atkg) do
 		local e1=Effect.CreateEffect(c)
