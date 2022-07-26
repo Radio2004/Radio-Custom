@@ -63,18 +63,18 @@ end
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
 	elseif b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))
+		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,2))
+		op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
 	end
 	e:SetLabel(op)
 	if op==0 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	elseif op==2 then
+	elseif op==1 then
 		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
-	elseif op==3 then
+	else
 		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
@@ -91,7 +91,7 @@ end
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		end
-	elseif e:GetLabel()==2 then
+	elseif e:GetLabel()==1 then
 		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(atkg) do
 		local e1=Effect.CreateEffect(c)
@@ -101,7 +101,7 @@ end
 		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 		end
-	elseif e:GetLabel()==3 then
+	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
 		if #g>0 then
