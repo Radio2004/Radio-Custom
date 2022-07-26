@@ -60,7 +60,7 @@ end
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
 	elseif b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
+		op=Duel.SelectOption(tp,aux.Stringid(id,1))
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(id,2))
 	end
