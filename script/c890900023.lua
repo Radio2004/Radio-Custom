@@ -58,8 +58,7 @@ end
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if c:RemoveCounter(tp,0x382,1,REASON_COST) then 
-	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=ct >= 2
 	if chk==0 then return (b1 or b2) end
 	local op=0
@@ -78,7 +77,7 @@ end
 	end
 end
 	function s.filter(c)
-	return c:IsSetCard(0x3dd) and c:IsAbleToGrave()
+	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() and c:GetLabel() > 0
 end
 	function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c,false,true)
