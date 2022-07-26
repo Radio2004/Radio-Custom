@@ -52,14 +52,13 @@ end
 	function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetCounter(0x382)>0 end
-	local g=Duel.GetMatchingGroup(s.damfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local ct=c:GetCounter(0x382)
 	c:RemoveCounter(tp,0x382,ct,REASON_COST)
-	e:SetLabel(g)
+	e:SetLabel(ct)
 end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ct=e:GetLabel()
+	local ct=c:GetCounter(0x382)
 	local b1=ct >= 1 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local b2=ct >= 2
 	if chk==0 then return (b1 or b2) end
