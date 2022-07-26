@@ -99,6 +99,7 @@ end
 		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 		end
+	end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,math.floor(e:GetLabel()/2),nil)
@@ -107,4 +108,3 @@ end
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-	end
