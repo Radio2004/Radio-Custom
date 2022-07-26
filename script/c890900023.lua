@@ -53,30 +53,26 @@ end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x382)
-	local b1=Duel.IsCanRemoveCounter(tp,1,0,0x382,1,REASON_COST) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
-	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x382,3,REASON_COST) and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
-	local b3=Duel.IsCanRemoveCounter(tp,1,0,0x382,5,REASON_COST) and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil)
-	if chk==0 then return (b1 or b2 or b3) end
-	local op=0
-	if b1 and b2 and b3 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif b1 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	elseif b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,2))
+	local g1=Duel.IsCanRemoveCounter(tp,1,0,0x382,1,REASON_COST) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local g2=Duel.IsCanRemoveCounter(tp,1,0,0x382,3,REASON_COST) and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
+	local g3=Duel.IsCanRemoveCounter(tp,1,0,0x382,5,REASON_COST) and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil)
+	local b1=g1  
+	local b2=g2
+	local b3=g3 
+	if chk==0 then return b1 or b2 or b3 end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)},
+		e:SetLabel(op)
 	end
-	if not (b1 or b2) then op=3 end
-	if not (b1 or b3) then op=2 end
-	e:SetLabel(op)
 	if op==0 then
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
 		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
-	elseif op==3 then
+	else then
 		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
@@ -86,16 +82,15 @@ end
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
    function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if not (b1 or b2) then op=3 end
-	if not (b1 or b3) then op=2 end
 	local c=e:GetHandler()
+	local op=e:GetLabel()
 	if not c:IsRelateToEffect(e) then return end
-	if e:GetLabel()==0 then
+	if op==1 then
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		end
-	elseif e:GetLabel()==2 then
+	elseif op==2 then
 		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(atkg) do
 		local e1=Effect.CreateEffect(c)
@@ -105,7 +100,7 @@ end
 		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 		end
-	elseif e:GetLabel()==3 then
+	else then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
 		if #g>0 then
