@@ -53,7 +53,6 @@ end
 	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x382)
-	e:SetLabel(ct)
 	local g1=Duel.IsCanRemoveCounter(tp,1,0,0x382,1,REASON_COST) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	local g2=Duel.IsCanRemoveCounter(tp,1,0,0x382,3,REASON_COST) and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 	local g3=Duel.IsCanRemoveCounter(tp,1,0,0x382,5,REASON_COST) and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil)
@@ -70,9 +69,10 @@ end
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
+		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	else
-	   
+		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
@@ -96,12 +96,12 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel())
+		e1:SetValue(e:GetLabel(ct))
 		tc:RegisterEffect(e1)
 		end
 	else 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(),math.floor(e:GetLabel()/2),nil)
+		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,e:GetLabel(ct),math.floor(e:GetLabel(ct)/2),nil)
 		if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
