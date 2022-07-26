@@ -75,7 +75,7 @@ end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE)
 	else
 		e:SetLabel(ct2)
-		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
+		Duel.RemoveCounter(tp,1,0,0x382,ct2,REASON_COST)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
 end
