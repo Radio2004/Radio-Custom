@@ -91,7 +91,7 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(ct*200)
+		e1:SetValue(ct)
 		tc:RegisterEffect(e1)
 		end
 	else
