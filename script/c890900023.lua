@@ -42,7 +42,7 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,e:GetHandler())
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x382,1)
+	e:GetHandler():AddCounter(0x382,5)
 end
 	function s.schfilter(c)
 	return c:IsSetCard(0x3dd) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
