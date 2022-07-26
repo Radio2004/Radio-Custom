@@ -83,7 +83,7 @@ end
 	function s.filter(c)
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
-	function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+   function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if e:GetLabel()==0 then
@@ -111,4 +111,3 @@ end
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-	end
