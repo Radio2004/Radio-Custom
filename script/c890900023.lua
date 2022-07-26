@@ -64,7 +64,7 @@ end
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})
-		e:SetLabel(op)
+		e:SetLabel(op,ct)
 	local g=(op==1 and g1 or g2 or g3)
 	Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
@@ -73,7 +73,7 @@ end
 end
    function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local op=e:GetLabel()
+	local op,ct=e:GetLabel()
 	if not c:IsRelateToEffect(e) then return end
 	if op==1 then
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
@@ -88,7 +88,7 @@ end
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(e:GetLabel()*200)
+		e1:SetValue(ct*200)
 		tc:RegisterEffect(e1)
 		end
 	elseif op==3 then
