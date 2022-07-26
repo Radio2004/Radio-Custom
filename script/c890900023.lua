@@ -65,15 +65,24 @@ end
 		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})
 		e:SetLabel(op)
-   
-	Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
+	local g=(op==1 and g1 or g2 or g3)
+	if op==1 then
+		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
+	elseif op==2 then
+		
+		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
+	else
+	   
+		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
+end
 	function s.filter(c)
 	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
 end
    function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local op=e:GetLabel(op)
+	local op=e:GetLabel()
+	if not c:IsRelateToEffect(e) then return end
 	if op==1 then
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
@@ -81,13 +90,13 @@ end
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	elseif op==2 then
-		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
-		for tc in aux.Next(g) do
+		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
+		for tc in aux.Next(atkg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(500)
+		e1:SetValue(e:GetLabel(200))
 		tc:RegisterEffect(e1)
 		end
 	else
