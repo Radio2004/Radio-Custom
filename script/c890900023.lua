@@ -60,7 +60,7 @@ end
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
 	elseif b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))
+		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(id,2))
 	end
@@ -71,7 +71,6 @@ end
 	elseif op==1 then
 		e:SetLabel(ct*200)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE)
 	else
 		e:SetLabel(ct)
 		Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
