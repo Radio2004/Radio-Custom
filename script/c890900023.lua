@@ -59,7 +59,7 @@ end
 	if chk==0 then return (b1 or b2 or b3) end
 	local op=0
 	if b1 and b2 and b3 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),tp,aux.Stringid(id,1),tp,aux.Stringid(id,2))
+		op=Duel.SelectOption(aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
 	elseif b2 then
