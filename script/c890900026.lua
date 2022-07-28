@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		table.insert(dtab,aux.Stringid(id,3))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
+	local op=Duel.SelectOption(tp,table.unpack(dtab))
 	if not b2 then op=1 end
 	if not b1 then op=2 end
 	if op==1 then
