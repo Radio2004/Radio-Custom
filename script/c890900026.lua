@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x1fa3)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,3,ft,nil)
-	e:SetLabel(g:GetFirst())
+	e:SetLabel(g:GetFirst():IsAttribute())
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
 end
@@ -39,10 +39,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local att=e:GetLabel()
 	local dtab={}
-	local b1=att:IsAttribute(ATTRIBUTE_FIRE)
-	local b2=att:IsAttribute(ATTRIBUTE_WATER) 
+	local b1=e:GetLabel(ATTRIBUTE_FIRE)
+	local b2=e:GetLabel(ATTRIBUTE_WATER) 
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
