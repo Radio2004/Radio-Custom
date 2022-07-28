@@ -18,7 +18,7 @@ end
 function s.cfilter(c)
 	return c:IsSetCard(0x1fa3) and not c:IsPublic()
 end
-	function s.spfilter(c,e,tp)
+	function s.spfilter(c,e,tp,att)
 	return c:IsSetCard(0x1fa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsAttribute(att)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -40,8 +40,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local dtab={}
-	local b1=e:GetLabel()&ATTRIBUTE_FIRE>0
-	local b2=e:GetLabel()&ATTRIBUTE_WATER>0
+	local b1=e:GetLabel()&ATTRIBUTE_FIRE>=1
+	local b2=e:GetLabel()&ATTRIBUTE_WATER>=1
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
