@@ -41,10 +41,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local att=e:GetLabel()
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
+	local dtab={}
 	local b1=att&ATTRIBUTE_FIRE == ATTRIBUTE_FIRE
 	local b2=att&ATTRIBUTE_WATER == ATTRIBUTE_WATER
-	local dtab={}
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
 	end
@@ -53,10 +53,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
 	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
-	if not (b1 or b2) then op=3 end
-	if not (b1 or b3) then op=2 end
-	if (b1 and b3 and not b2 and op==2) then op=3 end
-	if (b2 and b3 and not b1) then op=op+1 end
+	if not b2 then op=1 end
+	if not b1 then op=2 end
 	if op==1 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
