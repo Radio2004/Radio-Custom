@@ -43,10 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b1=e:GetLabel()&ATTRIBUTE_FIRE
 	local b2=e:GetLabel()&ATTRIBUTE_WATER
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
-	if b1>0 then
+	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
 	end
-	if b2>0 then
+	if b2 then
 		table.insert(dtab,aux.Stringid(id,3))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
