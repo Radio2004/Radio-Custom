@@ -52,8 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		table.insert(dtab,aux.Stringid(id,3))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-	local op=Duel.SelectOption(tp,table.unpack(dtab))
-	op=op+1
+	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
 	if not b2 then op=1 end
 	if not b1 then op=2 end
 	if op==1 then
@@ -61,9 +60,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
 	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	if #tc>0 then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 end
 	elseif op==2 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
