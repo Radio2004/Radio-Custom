@@ -62,8 +62,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,ATTRIBUTE_FIRE)
 	if #tc>0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-end
 	end
+end
 	elseif op==2 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
@@ -76,4 +76,4 @@ end
 end
    end
 end
-end
+	end
