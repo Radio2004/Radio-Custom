@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dtab={}
 	local b1=e:GetLabel()&ATTRIBUTE_FIRE > 0
 	local b2=e:GetLabel()&ATTRIBUTE_WATER > 0
-	if b1 > 0 and b2 > 0 then b1 == 0 and b2 == 0 end
+	if b1 > 0 and b2 > 0 then b1 = 0 and b2 = 0 end
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
