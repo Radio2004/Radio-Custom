@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local att=e:GetLabel()
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	local b1=att&ATTRIBUTE_FIRE == ATTRIBUTE_FIRE
-	local b2=att(ATTRIBUTE_WATER)
+	local b2=att&ATTRIBUTE_WATER == ATTRIBUTE_WATER
 	local dtab={}
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,0))
