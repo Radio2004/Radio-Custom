@@ -53,6 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
 	local op=Duel.SelectOption(tp,table.unpack(dtab))
+	op=op+1
 	if not b2 then op=1 end
 	if not b1 then op=2 end
 	if op==1 then
