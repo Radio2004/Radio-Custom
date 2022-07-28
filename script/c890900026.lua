@@ -18,10 +18,9 @@ end
 function s.cfilter(c)
 	return c:IsSetCard(0x1fa3) and not c:IsPublic()
 end
-	function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1fa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsAttribute(ATTRIBUTE_FIRE)
+	function s.spfilter(c,e,tp,att)
+	return c:IsSetCard(0x1fa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsAttribute(att)
 end
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,3,nil) end
 	local ft=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x1fa3)
@@ -62,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
 	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,ATTRIBUTE_FIRE)
 	if #tc>0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 end
@@ -71,7 +70,7 @@ end
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
 	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,ATTRIBUTE_WATER)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
