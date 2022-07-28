@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x1fa3)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,3,ft,nil)
-	e:SetLabel(g:GetFirst():GetAttribute)
+	e:SetLabel(g:GetFirst():GetAttribute())
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
 end
