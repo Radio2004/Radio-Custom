@@ -41,8 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local att=e:GetLabel()
 	local dtab={}
-	local b1=att:IsAttribute(ATTRIBUTE_FIRE > 0)
-	local b2=att:IsAttribute(ATTRIBUTE_WATER > 0) 
+	local b1=att:IsAttribute(ATTRIBUTE_FIRE)
+	local b2=att:IsAttribute(ATTRIBUTE_WATER) 
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		table.insert(dtab,aux.Stringid(id,3))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
+	local op=Duel.SelectOption(tp,table.unpack(dtab))
 	if not b2 then op=1 end
 	if not b1 then op=2 end
 	if op==1 then
