@@ -18,6 +18,10 @@ end
 function s.cfilter(c)
 	return c:IsSetCard(0x1fa3) and not c:IsPublic()
 end
+	function s.spfilter(c,e,tp)
+	return c:IsSetCard(0x1fa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsAttribute(ATTRIBUTE_FIRE)
+end
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	local ft=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x1fa3)
@@ -25,6 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,3,ft,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
+	e:SetLabel(g:GetAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -34,7 +39,32 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
+	local c=e:GetHandler()
+	local att=e:GetLabel()
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
+	local b1=att(ATTRIBUTE_FIRE)
+	local b2=att(ATTRIBUTE_WATER)
+	local dtab={}
+	if b1 then
+		table.insert(dtab,aux.Stringid(id,0))
+	end
+	if b2 then
+		table.insert(dtab,aux.Stringid(id,1))
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
+	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
+	if not b2 then op=1 end
+	if not b1 then op=2 end
+	if op==1 then
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
+	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+	
+
+	
