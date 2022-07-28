@@ -41,8 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local att=e:GetLabel()
 	local dtab={}
-	local b1=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,att():IsAttribute(ATTRIBUTE_FIRE))
-	local b2=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,att():IsAttribute(ATTRIBUTE_WATER))
+	if att:IsAttribute(ATTRIBUTE_FIRE) then b1 end
+	if att:IsAttribute(ATTRIBUTE_WATER) then b2 end
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
