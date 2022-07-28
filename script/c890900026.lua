@@ -55,6 +55,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
 	if not b2 then op=1 end
 	if not b1 then op=2 end
+	if (b1 and b3 and not b2 and op==2) then op=3 end
+	if (b2 and b3 and not b1) then op=op+1 end
 	if op==1 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
@@ -63,6 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+end
 	elseif op==2 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
@@ -77,4 +80,3 @@ end
 end
 	end
 end
-	end
