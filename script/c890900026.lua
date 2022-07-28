@@ -46,10 +46,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b2=att&ATTRIBUTE_WATER == ATTRIBUTE_WATER
 	local dtab={}
 	if b1 then
-		table.insert(dtab,aux.Stringid(id,0))
+		table.insert(dtab,aux.Stringid(id,2))
 	end
 	if b2 then
-		table.insert(dtab,aux.Stringid(id,1))
+		table.insert(dtab,aux.Stringid(id,3))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
 	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
