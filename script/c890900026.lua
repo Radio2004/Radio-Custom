@@ -18,7 +18,7 @@ end
 function s.cfilter(c)
 	return c:IsSetCard(0x1fa3) and not c:IsPublic()
 end
-	function s.spfilter(c,e,tp,att)
+	function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1fa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsAttribute(att)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
