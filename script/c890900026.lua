@@ -40,8 +40,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local dtab={}
-	local b1=e:GetLabel()==ATTRIBUTE_FIRE
-	local b2=e:GetLabel()==ATTRIBUTE_WATER
+	local b1=e:GetLabel(c:IsAttribute(ATTRIBUTE_FIRE)) > 0
+	local b2=e:GetLabel(c:IsAttribute(ATTRIBUTE_WATER)) > 0
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
 	if b1 then
 		table.insert(dtab,aux.Stringid(id,2))
@@ -51,6 +51,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
 	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
+	if not b2 then op=1 end
+	if not b1 then op=2 end
 	if op==1 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
