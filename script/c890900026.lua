@@ -21,14 +21,21 @@ end
 	function s.spfilter(c,e,tp,att)
 	return c:IsSetCard(0x1fa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsAttribute(att)
 end
+	function s.regfilter(c,attr)
+	return c:GetAttribute()&attr~=0
+end
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,3,nil) end
 	local ft=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x1fa3)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,3,60,nil)
 	Duel.ConfirmCards(1-tp,g)
-	e:SetLabel(g:GetFirst():GetAttribute())
+	local flag=0
+	if g:IsExists(s.regfilter,1,nil,ATTRIBUTE_FIRE) then flag=flag|0x1 end
+	if g:IsExists(s.regfilter,1,nil,ATTRIBUTE_WATER) then flag=flag|0x2 end
 	Duel.ShuffleHand(tp)
+	e:SetLabel(flag)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -40,13 +47,14 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local dtab={}
+	local flag=e:GetLabel()
 	local b1=e:GetLabel():IsAttribute(ATTRIBUTE_FIRE)
 	local b2=e:GetLabel():IsAttribute(ATTRIBUTE_WATER)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT) > 0 then
-	if b1~=0 then
+	if flag&0x1~=0 then
 		table.insert(dtab,aux.Stringid(id,2))
 	end
-	if b2~=0 then
+	if flag&0x2~=0 then
 		table.insert(dtab,aux.Stringid(id,3))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
