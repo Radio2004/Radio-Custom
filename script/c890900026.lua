@@ -21,17 +21,13 @@ end
 	function s.spfilter(c,e,tp,att)
 	return c:IsSetCard(0x1fa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsAttribute(att)
 end
-	function s.regfilter(c,attr)
-	return c:GetAttribute()&attr~=0
-end
-
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,attr)
+function s.cost(attr,e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,3,nil) end
 	local ft=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x1fa3)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,3,60,nil)
 	Duel.ConfirmCards(1-tp,g)
-	e:SetLabel(g:GetFirst():s.regfilter)
+	e:SetLabel(g:GetFirst():GetAttribute()&attr~=0)
 	Duel.ShuffleHand(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
