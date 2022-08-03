@@ -40,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(flag)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil) or Duel.IsExistingMatchingCard(s.tgfilter,tp,0,LOCATION_REMOVED,1,nil)  end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
@@ -51,10 +51,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dtab={}
 	local flag=e:GetLabel()
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0 then
-	if flag&0x1~=0 then
+	if flag&0x1~=0 and Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil) then
 		table.insert(dtab,aux.Stringid(id,2))
 	end
-	if flag&0x2~=0 then
+	if flag&0x2~=0 and Duel.IsExistingMatchingCard(s.tgfilter,tp,0,LOCATION_REMOVED,1,nil) then
 		table.insert(dtab,aux.Stringid(id,3))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
