@@ -72,7 +72,7 @@ end
 	elseif op==2 then
 	local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,0,LOCATION_REMOVED,1,1,nil)
 	if #tg>0 then
-	Duel.SendtoHand(tg,REASON_EFFECT+REASON_RETURN)
+	Duel.SendtoHand(tg,REASON_EFFECT)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,ATTRIBUTE_WATER)
 	if #tc>0 then
