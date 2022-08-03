@@ -27,7 +27,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,3,60,nil)
 	Duel.ConfirmCards(1-tp,g)
-	e:SetLabel(g:GetFirst():GetAttribute()&attr~=0)
+	e:SetLabel(g:GetFirst():GetAttribute()~=0)
 	Duel.ShuffleHand(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
