@@ -51,7 +51,4 @@ end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
 	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
-	end
 end
-
-
