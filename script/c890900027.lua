@@ -47,7 +47,7 @@ end
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,890900015),tp,LOCATION_FZONE,0,1,nil)
 end
 	function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x22c3) or c:IsSetCard(0x1fa3) or c:IsSetCard(0x38d) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return (c:IsSetCard(0x22c3) or c:IsSetCard(0x1fa3) or c:IsSetCard(0x38d)) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
