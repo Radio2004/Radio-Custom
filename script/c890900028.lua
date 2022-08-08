@@ -4,7 +4,54 @@
 	--link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),2,2,s.lcheck)
 	c:EnableReviveLimit()
+	--search
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCountLimit(1,{id,0})
+	e1:SetCondition(s.thcon)
+	e1:SetCost(s.thcost)
+	e1:SetTarget(s.thtg)
+	e1:SetOperation(s.thop)
+	c:RegisterEffect(e1)
 end
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
 end
+	function s.thfilter(c,cd)
+	return c:IsSetCard(0x3dd) and c:IsType(TYPE_FIELD) and not c:IsCode(cd) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
+end
+  
+	function s.cfilter1(c,tp)
+	return c:IsType(TYPE_FIELD) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x3dd)
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+end
+
+
+	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+end
+
+	function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_FZONE,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local sg=Duel.SelectMatchingCard(tp,s.cfilter1,tp,LOCATION_FZONE,0,1,1,nil,tp)
+	Duel.SendtoGrave(sg,REASON_COST)
+	e:SetLabel(sg:GetFirst():GetCode())
+end
+
+	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+end
+
+	function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
+	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	end
+end
+
+
