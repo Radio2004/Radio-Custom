@@ -25,11 +25,20 @@
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.discon)
 	e2:SetCost(s.discost)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
+	--atkup
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetValue(s.atkval)
+	c:RegisterEffect(e3)
 end
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
@@ -98,4 +107,11 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 	end
+end
+	function s.atkfilter(c)
+	return c:IsSetCard(0x3dd) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
+	
+	function s.atkval(e,c)
+	return Duel.GetMatchingGroupCount(atkfilter,0,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)*400
 end
