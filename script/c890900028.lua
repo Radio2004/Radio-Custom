@@ -108,10 +108,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 	end
 end
-	function s.atkfilter(c)
-	return c:IsSetCard(0x3dd) and c:IsType(TYPE_SPELL+TYPE_TRAP) and 
-end
-	
+   
 	function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,0x3dd,TYPE_SPELL+TYPE_TRAP)*400
 end
