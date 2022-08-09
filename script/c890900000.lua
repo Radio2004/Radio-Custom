@@ -66,7 +66,6 @@ end
 			if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2)
 			and c:IsRelateToEffect(e) then
 				Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
-	end
 	else	 
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
@@ -76,3 +75,4 @@ end
 end
 	end
 end
+	end
