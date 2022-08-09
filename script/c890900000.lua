@@ -69,7 +69,7 @@ end
 	end
 	else	 
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
+		if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
 end
