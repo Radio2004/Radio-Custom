@@ -26,9 +26,9 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-	local atk=tc:GetFirst():GetTextAttack()
+	local atk=tc:GetTextAttack()
 	if atk<0 then atk=0 end
-		if Duel.Destroy(tc:GetFirst(),REASON_EFFECT)~=0 then
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 			Duel.Recover(tp,atk,REASON_EFFECT)
 		end
 	end
