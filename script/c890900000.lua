@@ -41,9 +41,7 @@ end
 		local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 	end
 	function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -67,9 +65,12 @@ end
 			and c:IsRelateToEffect(e) then
 				Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
-	else	 
-		local tc=Duel.GetFirstTarget()
-		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
+	else
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		local tc=g:GetFirst()
+		if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
 			Duel.SpecialSummonComplete()
