@@ -48,7 +48,7 @@ end
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local fc=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,nil,tp,fc):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp,fc):GetFirst()
 	if tc then 
 		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
