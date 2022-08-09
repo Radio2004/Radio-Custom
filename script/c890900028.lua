@@ -33,8 +33,8 @@ end
 	function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if chkc then return false end
-	if chk==0 then return tc and tc:IsFaceup() and tc:IsSetCard(0x3dd) and tc:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp,tc:GetCode()) end
-	e:SetLabel(tc:GetFirst():GetCode())
+	if chk==0 then return tc and tc:IsFaceup() and tc:IsSetCard(0x3dd) and tc:IsAbleToGraveAsCost() and tc:IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp,tc:GetCode()) end
+	Duel.SetTargetCard(tc)
 end
 
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -42,7 +42,7 @@ end
 end
 
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabel()
+	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoGrave(tc,REASON_COST)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel()):GetFirst()
