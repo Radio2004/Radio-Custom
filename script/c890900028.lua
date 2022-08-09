@@ -22,7 +22,7 @@ end
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
 end
 	function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_FIELD) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x3dd) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c,tp,c:GetCode())
+	return c:IsFaceup() and c:IsType(TYPE_FIELD) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x3dd) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c,tp)
 end
 
 	function s.thfilter(c,tp,code)
