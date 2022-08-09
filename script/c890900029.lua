@@ -32,3 +32,4 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Recover(tp,atk,REASON_EFFECT)
 		end
 	end
+end
