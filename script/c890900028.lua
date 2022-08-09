@@ -113,5 +113,5 @@ end
 end
 	
 	function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(atkfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)*400
+	return Duel.GetMatchingGroupCount(atkfilter,e:GetControler(),LOCATION_GRAVE,0,nil)*400
 end
