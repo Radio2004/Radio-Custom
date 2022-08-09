@@ -72,6 +72,7 @@ end
 		if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
+		Duel.SpecialSummonComplete()
 end
 	end
 end
