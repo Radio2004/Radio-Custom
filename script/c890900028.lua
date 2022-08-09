@@ -109,9 +109,9 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	function s.atkfilter(c)
-	return c:IsSetCard(0x3dd) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x3dd) and c:IsType(TYPE_SPELL+TYPE_TRAP) and 
 end
 	
 	function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*400
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x3dd,TYPE_SPELL+TYPE_TRAP)*400
 end
