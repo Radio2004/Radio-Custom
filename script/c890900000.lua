@@ -65,6 +65,7 @@ end
 			and c:IsRelateToEffect(e) then
 				Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
+end
 	else
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -76,4 +77,3 @@ end
 			Duel.SpecialSummonComplete()
 end
 	end
-end
