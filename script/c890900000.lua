@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,{id,0})
 	e1:SetCondition(s.atkcon)
 	e1:SetCost(s.atcost)
 	e1:SetTarget(s.atktg)
@@ -62,11 +62,15 @@ end
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
+			if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2)
+			and c:IsRelateToEffect(e) then
+				Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
 	else	 
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
+			Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
 end
 	end
+end
