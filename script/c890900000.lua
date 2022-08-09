@@ -48,6 +48,7 @@ end
 	end
 	function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
+	local c=e:GetHandler()
 	if op==1 then
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
