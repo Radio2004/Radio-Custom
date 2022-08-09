@@ -22,11 +22,11 @@ end
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
 end
 	function s.thfilter(c,e,tp,code)
-	return c:IsSetCard(0x3dd) and c:IsType(TYPE_FIELD) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true) and not c:IsCode(code)
+	return c:IsSetCard(0x3dd) and c:IsType(TYPE_FIELD) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
   
 	function s.cfilter1(c,tp)
-	return c:IsType(TYPE_FIELD) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x3dd) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+	return c:IsType(TYPE_FIELD) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x3dd) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 
 
@@ -39,7 +39,7 @@ end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg=Duel.SelectMatchingCard(tp,s.cfilter1,tp,LOCATION_FZONE,0,1,1,nil,tp):GetFirst()
 	Duel.SendtoGrave(sg,REASON_COST)
-	e:SetLabel(sg:GetCode())
+	e:SetLabel(sg)
 end
 
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,7 +47,8 @@ end
 end
 
 	function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp,e:GetLabel()):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,ct):GetFirst()
 	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
