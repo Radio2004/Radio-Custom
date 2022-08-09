@@ -17,6 +17,19 @@
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
+	--Negate activation
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_CHAINING)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.discon)
+	e2:SetCost(s.discost)
+	e2:SetTarget(s.distg)
+	e2:SetOperation(s.disop)
+	c:RegisterEffect(e2)
 end
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
@@ -53,3 +66,36 @@ end
 		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 	end
+	function s.tfilter(c,tp)
+	return c:IsOnField() and c:IsControler(tp)
+end
+function s.discon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.GetTurnPlayer()~=tp
+end
+function s.disfilter(c,g)
+	return g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsSetCard(0x3dd)
+end
+function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local lg=e:GetHandler():GetLinkedGroup()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.disfilter,1,false,nil,nil,lg) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.disfilter,1,1,false,nil,nil,lg)
+	Duel.Release(g,REASON_COST)
+end
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local rc=re:GetHandler()
+	local relation=rc:IsRelateToEffect(re)
+	if chk==0 then return rc:IsAbleToRemove(tp)
+		or (not relation and Duel.IsPlayerCanRemove(tp)) end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if relation then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,rc:GetControler(),rc:GetLocation())
+	else
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,0,rc:GetPreviousLocation())
+	end
+end
+
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+	end
+end
