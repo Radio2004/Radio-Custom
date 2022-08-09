@@ -113,5 +113,5 @@ end
 end
 	
 	function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x3dd,TYPE_SPELL+TYPE_TRAP)*400
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,0x3dd,TYPE_SPELL+TYPE_TRAP)*400
 end
