@@ -21,7 +21,7 @@ end
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
 end
-	function s.thfilter(c,tp,code)
+	function s.thfilter(c,e,tp,code)
 	return c:IsSetCard(0x3dd) and c:IsType(TYPE_FIELD) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true) and not c:IsCode(code)
 end
   
