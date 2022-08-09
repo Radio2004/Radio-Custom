@@ -37,9 +37,9 @@ end
 	function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_FZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg=Duel.SelectMatchingCard(tp,s.cfilter1,tp,LOCATION_FZONE,0,1,1,nil,tp)
+	local sg=Duel.SelectMatchingCard(tp,s.cfilter1,tp,LOCATION_FZONE,0,1,1,nil,tp):GetFirst()
 	Duel.SendtoGrave(sg,REASON_COST)
-	e:SetLabel(sg:GetFirst():GetCode())
+	e:SetLabel(sg:GetCode())
 end
 
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
