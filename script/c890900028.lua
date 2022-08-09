@@ -32,10 +32,9 @@ end
 	function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if chkc then return false end
-	if chk==0 then return tc and tc:IsFaceup() and tc:IsSetCard(0x3dd) and tc:IsAbleToGraveAsCost() and tc:IsCanBeEffectTarget() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp,tc:GetCode()) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	if chk==0 then return tc and tc:IsFaceup() and tc:IsSetCard(0x3dd) and tc:IsAbleToGraveAsCost() and Duel.SendtoGrave(tc,REASON_COST) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp,tc:GetCode()) end
 	Duel.SetTargetCard(tc)
-	Duel.SendtoGrave(sg,REASON_COST)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tc,1,0,0)
 end
 
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
