@@ -6,15 +6,18 @@ function s.initial_effect(c)
 	--banish
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-   
+	e1:SetCondition(s.atkcon)
 	e1:SetCost(s.atcost)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-	
+	function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_MAIN1
+end
 	function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -22,7 +25,7 @@ end
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 end
 	function s.filter(c,e,tp)
-	return c:IsSetCard(0x3dd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(0x3dd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 
 	function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
