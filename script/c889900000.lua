@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={889900001}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x15b9e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x5eb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
