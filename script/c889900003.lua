@@ -12,7 +12,7 @@
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk up/destroy
+	--destroy spell/trap card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
@@ -50,14 +50,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-
 function s.filter(c,e)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e) then
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
+		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil,e)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=g:Select(tp,1,1,nil)
