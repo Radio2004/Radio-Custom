@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)   
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
@@ -56,21 +56,26 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,0)})
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)	
-   Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,k,1,0,0)  
-   Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+   if op==1 then
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+   else
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 end
+	end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
-	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if #g>0 then
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)   
 		end  
 	else
-	 local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local c=e:GetHandler()
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
@@ -87,6 +92,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-end
+	end
 
 	
