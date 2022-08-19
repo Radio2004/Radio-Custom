@@ -43,9 +43,6 @@ end
 end
 	function s.spchk(c,e,tp)
 	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
-	if c:IsLocation(LOCATION_EXTRA) then
-		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
-	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 	function s.rescon(sg,e,tp,mg)
