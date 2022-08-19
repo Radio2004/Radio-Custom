@@ -35,7 +35,6 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local att=aux.AnnounceAnotherAttribute(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
-		e:SetLabel(op,att)
 		Duel.SetTargetCard(sel)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
@@ -44,6 +43,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
+	e:SetLabel(op,att)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local op,att=e:GetLabel()
