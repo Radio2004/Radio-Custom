@@ -38,12 +38,13 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 		Duel.SetTargetCard(sel)
 		e:SetLabel(att)
+	end
 	if op==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-end
 	end
+end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		local tc=Duel.GetFirstTarget()
