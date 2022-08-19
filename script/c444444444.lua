@@ -30,12 +30,12 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
-	e:SetLabel(op,att)
 	if op==1 then
 		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
 		local att=aux.AnnounceAnotherAttribute(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
+		e:SetLabel(op,att)
 		Duel.SetTargetCard(sel)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
