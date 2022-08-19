@@ -26,6 +26,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 	local b1=g1
 	local b2=g2
+	local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
 	local att=aux.AnnounceAnotherAttribute(g,tp)
 	if chk==0 then return b1 or b2 end
 	local op=aux.SelectEffect(tp,
@@ -33,7 +34,6 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,1)})
 		e:SetLabel(op,att)
 	if op==1 then
-		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 		Duel.SetTargetCard(sel)
