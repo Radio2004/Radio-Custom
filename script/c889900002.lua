@@ -66,7 +66,7 @@ end
 		if Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			local oc=sg-tg
 			local tc=tg:GetFirst()
-			Duel.Overlay(tc,oc)
+			Duel.SpecialSummon(oc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 	end
