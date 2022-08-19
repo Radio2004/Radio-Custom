@@ -31,15 +31,12 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(s.tg)
-	e4:SetValue(s.tgval)
+	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
 function s.tg(e,c)
-	return c:IsSetCard(0x1BC) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:GetCode()~=id
 	end
-	function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP+TYPE_MONSTER) and rp==1-e:GetHandlerPlayer()
-end
 s.listed_series={0x1BC}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x1BC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -69,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)	
+		Duel.ConfirmCards(1-tp,g)   
 		end  
 	else
 	 local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
