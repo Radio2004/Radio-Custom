@@ -61,11 +61,10 @@ end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
 	if aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) then
 		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_SELECT)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local tg=sg:Filter(s.spchk,nil,e,tp):Select(tp,1,1,nil)
-		if Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		if Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)~=0 then
 			local oc=sg-tg
-			local tc=tg:GetFirst()
 			Duel.SpecialSummon(oc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
