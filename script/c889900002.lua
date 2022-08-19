@@ -52,6 +52,8 @@ end
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TARGET)
+	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 	function s.spop2(e,tp,eg,ep,ev,re,r,rp)
