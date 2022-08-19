@@ -29,12 +29,12 @@ end
 	s.listed_series={0x1BC}
 	function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1BC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	end
+end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end
-	local g1= Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) 
-	local g2= Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil) 
+	local g2=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -42,14 +42,15 @@ if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) a
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
-   Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,k,1,0,0)
+   if op==1 then
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+   else
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE)
 end
+	end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)		 
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+   local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if ft>2 then ft=2 end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
@@ -57,13 +58,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,ft,nil,e,tp)
 	if #g~=0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-	end 
+	end
 	else
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	 local k=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,1,nil)
-	 local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)end  
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
 	function s.hspfilter(c)
