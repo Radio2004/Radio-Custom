@@ -59,19 +59,21 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
+   if op==1 then
 	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)
+  else
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
+	end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then 
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)
 	Duel.Damage(p,ct*300,REASON_EFFECT)
 	else
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_SZONE,0,1,1,nil)
 	if #dg==0 then return end
@@ -81,8 +83,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
+			end
 		end
 	end
-	end
-	end
+end
  
