@@ -42,7 +42,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
-		e:SetLabel(op,att)
+end
+	e:SetLabel(op,att)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local op,att=e:GetLabel()
