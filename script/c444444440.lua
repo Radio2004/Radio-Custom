@@ -44,10 +44,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP,zones)
 end
 function s.desfilter(c)
-	return  c:IsSetCard(0x1BC)and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS
+	return c:IsSetCard(0x1BC) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsFaceup()
 	end
 	function s.filter1(c,e,tp)
-	return c:IsSetCard(0x1BC) and c:IsCode(444444445)or c:IsCode(444444457) or c:IsCode(444444458)  and c:IsAbleToHand()
+	return c:IsSetCard(0x1BC) and c:IsCode(444444445)or c:IsCode(444444457) or c:IsCode(444444458) and c:IsAbleToHand() 
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
