@@ -57,15 +57,12 @@ end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 	function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetTargetCards(e)
 	local c=e:GetHandler() 
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
-	if aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) then
-		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TARGET)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local tg=sg:Filter(s.spchk,nil,e,tp):Select(tp,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local tg=g:Filter(s.spchk,nil,e,tp):Select(tp,1,1,nil)
 		if Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)~=0 then
-			local oc=sg-tg
+			local oc=g-tg
 			Duel.SpecialSummon(oc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-	end
