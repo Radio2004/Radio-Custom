@@ -33,7 +33,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local att=0
 	if op==1 then
 		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
-		local att=aux.AnnounceAnotherAttribute(g,tp)
+		att=aux.AnnounceAnotherAttribute(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 		Duel.SetTargetCard(sel)
