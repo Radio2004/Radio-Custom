@@ -72,8 +72,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)   
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)   
 		end  
 	else
 		local c=e:GetHandler()
