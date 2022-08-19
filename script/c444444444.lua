@@ -42,7 +42,6 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 end
 	end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
