@@ -22,31 +22,32 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
-	local g2=Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+	local g2=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
+	local g1=Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
 	local op=aux.SelectEffect(tp,
-		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,1)})
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,0)})
 	e:SetLabel(op)
-	if op==1 then
+	if op==2 then
 		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
 		local att=aux.AnnounceAnotherAttribute(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 		Duel.SetTargetCard(sel)
 		e:SetLabel(att)
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
-	if op==2 then
+	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==1 then
+	if e:GetLabel()==2 then
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -58,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		end
 	end
-	if e:GetLabel()==2 then
+	if e:GetLabel()==1 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
