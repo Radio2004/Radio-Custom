@@ -1,15 +1,16 @@
 --Alice, Novella Girl
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+   --Special Summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetDescription(aux.Stringid(alias,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(s.condition)
-	e1:SetValue(s.spval)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
+	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--effect
 	local e2=Effect.CreateEffect(c)
@@ -27,26 +28,20 @@ function s.initial_effect(c)
 	end
 	s.listed_series={0x1BC}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsLinkMonster() and c:GetSequence()>4
+	return c:IsType(TYPE_LINK) and c:IsSetCard(0x1bc) and c:IsFaceup() and c:GetSequence()>4
 end
-function s.spzone(tp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local zone=0
-	for c in aux.Next(g) do
-		zone=zone|c:GetLinkedZone(tp)
-	end
-	return zone&0x1f
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
-function s.condition(e,c)
-	if c==nil then return true end
-	local tp=e:GetHandlerPlayer()
-	local zone=s.spzone(tp)
-	return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local zones=aux.GetMMZonesPointedTo(tp,nil,LOCATION_MZONE,0)
+	if chk==0 then return zones>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zones) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_HAND)
 end
-function s.spval(e,c)
-	local tp=e:GetHandlerPlayer()
-	local zone=s.spzone(tp)
-	return 0,zone
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local zones=aux.GetMMZonesPointedTo(tp,nil,LOCATION_MZONE,0)
+	if not e:GetHandler():IsRelateToEffect(e) or zones==0 then return end
+	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP,zones)
 end
 function s.desfilter(c)
 	return  c:IsSetCard(0x1BC)and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS
