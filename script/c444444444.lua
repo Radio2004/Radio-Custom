@@ -30,6 +30,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
+	local att=nil
 	if op==1 then
 		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
 		local att=aux.AnnounceAnotherAttribute(g,tp)
@@ -42,7 +43,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
-e:SetLabel(op,att)
+	e:SetLabel(op,att)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local op,att=e:GetLabel()
