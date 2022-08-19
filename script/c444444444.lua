@@ -56,7 +56,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(e:GetLabel())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		end
 	else
 		local tc=Duel.GetFirstTarget()
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
@@ -69,3 +68,4 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	end
+end
