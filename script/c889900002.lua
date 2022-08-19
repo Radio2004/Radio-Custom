@@ -38,25 +38,34 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-	function s.filter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x5eb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) 
+	function s.spfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x5eb)
+end
+	function s.spchk(c,e,tp)
+	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
+	if c:IsLocation(LOCATION_EXTRA) then
+		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	end
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+end
+	function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(s.spchk,1,nil,e,tp) and sg:GetClassCount(Card.GetCode)==#sg
 end
 	function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,2,2,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,2,2,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-	function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if #sg>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg1=sg:Select(tp,1,1,nil)
-		local c=e:GetHandler()
-		if Duel.Remove(sg1,nil,0,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
-			sg:Sub(sg1)
-			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-		end
+	function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler() 
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
+	if aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) then
+		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_SELECT)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local tg=sg:Filter(s.spchk,nil,e,tp):Select(tp,1,1,nil)
+		if Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)~=0 then
+			local oc=sg-tg
+			local tc=tg:GetFirst()
+			Duel.Overlay(tc,oc)
 	end
 end
