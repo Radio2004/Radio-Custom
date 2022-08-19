@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP,zones)
 end
 function s.desfilter(c)
-	return c:IsSetCard(0x1BC) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsFaceup()
+	return c:IsSetCard(0x1BC) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsFaceup() and c:IsDestructable()
 	end
 	function s.filter1(c,e,tp)
 	return c:IsSetCard(0x1BC) and c:IsCode(444444445)or c:IsCode(444444457) or c:IsCode(444444458) and c:IsAbleToHand() 
@@ -64,7 +64,8 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)
   else
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 	end
