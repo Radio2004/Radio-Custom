@@ -49,6 +49,7 @@ end
 	return sg:IsExists(s.spchk,1,nil,e,tp) and sg:GetClassCount(Card.GetCode)==#sg
 end
 	function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
@@ -57,7 +58,7 @@ end
 	local c=e:GetHandler() 
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
 	if aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) then
-		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_SELECT)
+		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local tg=sg:Filter(s.spchk,nil,e,tp):Select(tp,1,1,nil)
 		if Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)~=0 then
