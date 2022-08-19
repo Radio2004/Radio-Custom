@@ -15,14 +15,15 @@
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--Special summon
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_SPSUMMON_PROC)
-	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_HAND)
-	e3:SetCondition(s.spcon)
-	e3:SetOperation(s.spop)
+	e3:SetCost(s.hspcost)
+	e3:SetTarget(s.hsptg)
+	e3:SetOperation(s.hspop)
 	c:RegisterEffect(e3)
 end
 	s.listed_series={0x1BC}
@@ -47,7 +48,7 @@ if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) a
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)		  
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)		 
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if ft>2 then ft=2 end
@@ -65,22 +66,22 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)end  
 	end
 end
-function s.rfilter(c)
-	return c:IsSetCard(0x1BC) and c:IsAttribute(ATTRIBUTE_WIND)
-	end
-	function s.spcon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1
-		and Duel.CheckReleaseGroup(c:GetControler(),s.rfilter,1,nil)
+	function s.hspfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WIND)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(c:GetControler(),s.rfilter,1,1,nil)
-	if Duel.Release(g,REASON_COST) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1BC+RESET_PHASE+PHASE_END)
-		e:GetHandler():RegisterEffect(e1)
-		Duel.SpecialSummonComplete()
+	function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,hspfilter,1,false,aux.ReleaseCheckMMZ,nil) end
+	local g=Duel.SelectReleaseGroupCost(tp,hspfilter,1,1,false,aux.ReleaseCheckMMZ,nil)
+	Duel.Release(g,REASON_COST)
+end
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+end
+function s.hspop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	end
+end
