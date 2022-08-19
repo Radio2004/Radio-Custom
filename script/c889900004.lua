@@ -84,7 +84,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 	end
-end
 	function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x5eb) and c:IsLocation(LOCATION_EXTRA)
 end
