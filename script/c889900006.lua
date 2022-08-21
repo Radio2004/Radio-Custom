@@ -56,7 +56,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 	function s.thfilter(c)
-	return aux.IsArchetypeCodeListed(c,0x5eb) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end
+	return aux.IsArchetypeCodeListed(c,0x5eb)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
