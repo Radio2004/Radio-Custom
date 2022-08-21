@@ -23,6 +23,7 @@
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x5eb}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x5eb)
 end

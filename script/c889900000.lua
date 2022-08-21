@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={889900001}
+s.listed_series={0x5eb}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x5eb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
