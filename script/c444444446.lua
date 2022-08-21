@@ -1,5 +1,4 @@
 --Myra Emerald, Novella Girl
-Duel.LoadScript("customutility.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -31,22 +30,22 @@ end
 s.listed_series={0x1BC}
 s.listed_names={444444447}
 	function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev)
-		and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0))and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
-		end
-		function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-			local rc=re:GetHandler()
-		if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED)
-		and Duel.GetLocationCount(tp,LOCATION_HAND)
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false)
-		and rc:IsLocation(LOCATION_HAND) end
+	return ep~=tp and re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev) and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
+	end
+
+   function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local rc=re:GetHandler()
+	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED)
+	and Duel.GetLocationCount(tp,LOCATION_HAND)
+	and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	and rc:IsLocation(LOCATION_HAND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)   
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)   
 	end
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 	local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)~=0 then
+		if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
 		c:CompleteProcedure()
 	end
 end 
