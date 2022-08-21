@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 	function s.thfilter(c)
-	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end
+	if c:IsAbleToHand() then return false end
 	return aux.IsArchetypeCodeListed(c,0xc008)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
