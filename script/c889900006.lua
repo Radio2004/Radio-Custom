@@ -10,9 +10,16 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_REMOVE)
 	e6:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e6:SetCountLimit(1,id)
+	e6:SetCondition(s.spcon)
 	e6:SetTarget(s.sptg)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
+end
+	function s.cfilter(c,tp)
+	return c:IsSetCard(0x5eb)
+end
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
