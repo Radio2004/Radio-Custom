@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x5eb}
 	function s.cfilter(c,tp)
 	return c:IsSetCard(0x5eb)
 end
@@ -57,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	function s.thfilter(c)
 	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end
-	return aux.IsArchetypeCodeListed(c,0x5eb)
+	return aux.IsArchetypeCodeListed(c,0xc008)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
