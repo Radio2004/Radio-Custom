@@ -6,7 +6,6 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	
 	e1:SetCountLimit(1,{id,0})
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
