@@ -79,7 +79,6 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,500,REASON_EFFECT)
 	end
 end
-end
 	function s.thfilter(c)
 	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end
 	return aux.HasListedSetCode(c,0x5eb)
