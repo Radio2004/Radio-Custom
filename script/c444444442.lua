@@ -34,16 +34,19 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x1BC}
 function s.tg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:GetCode()~=id
 	end
-s.listed_series={0x1BC}
+
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x1BC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	end
+
 	function s.thfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 	end
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	local g1=Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
@@ -68,6 +71,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 end
 	end
+
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 	local tc=Duel.GetFirstTarget()

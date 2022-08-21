@@ -26,29 +26,40 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 	end
-	s.listed_series={0x1BC}
+s.listed_series={0x1BC}
+s.listed_names={444444445,444444457,444444458}
 function s.filter(c)
 	return c:IsType(TYPE_LINK) and c:IsSetCard(0x1bc) and c:IsFaceup() and c:GetSequence()>4
 end
+
+
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
+
+
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zones=aux.GetMMZonesPointedTo(tp,nil,LOCATION_MZONE,0)
 	if chk==0 then return zones>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zones) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_HAND)
 end
+
+
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zones=aux.GetMMZonesPointedTo(tp,nil,LOCATION_MZONE,0)
 	if not e:GetHandler():IsRelateToEffect(e) or zones==0 then return end
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP,zones)
 end
+
+
 function s.desfilter(c)
 	return c:IsSetCard(0x1BC) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsFaceup() and c:IsDestructable()
 	end
 	function s.filter1(c,e,tp)
 	return c:IsSetCard(0x1BC) and c:IsCode(444444445)or c:IsCode(444444457) or c:IsCode(444444458) and c:IsAbleToHand() 
 end
+
+
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
 	local g2=Duel.IsExistingTarget(s.desfilter,tp,LOCATION_SZONE,0,1,nil)and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil,e,tp)
@@ -69,6 +80,8 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 	end
+
+
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then 
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)

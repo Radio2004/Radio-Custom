@@ -20,6 +20,8 @@ s.listed_series={0x1BC}
 function s.schfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
+
+
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSummon(tp)
 	local g2=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
@@ -34,6 +36,8 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 	end
+
+
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())

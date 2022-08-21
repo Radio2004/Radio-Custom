@@ -21,6 +21,8 @@ s.listed_series={0x1BC}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC)
 end
+
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 	local g2=Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
@@ -33,8 +35,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local att=0
 	if op==1 then
 		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
-		att=aux.AnnounceAnotherAttribute(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		att=aux.AnnounceAnotherAttribute(g,tp)
 		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 		Duel.SetTargetCard(sel)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -45,6 +47,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	e:SetLabel(op,att)
 end
+
+
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local op,att=e:GetLabel()
 	if op==1 then
