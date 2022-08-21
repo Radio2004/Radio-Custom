@@ -13,6 +13,17 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
+	--Token
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCode(EVENT_REMOVE)
+	e3:SetCountLimit(1,{id,1})
+	e3:SetTarget(s.bantg)
+	e3:SetOperation(s.banop)
+	c:RegisterEffect(e3)
 	--SpecialSummon
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
@@ -21,7 +32,7 @@ function s.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_DELAY)
 	e6:SetCode(EVENT_REMOVE)
 	e6:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e6:SetCountLimit(1,{id,1})
+	e6:SetCountLimit(1,{id,2})
 	e6:SetCondition(s.spcon)
 	e6:SetTarget(s.sptg)
 	e6:SetOperation(s.spop)
@@ -54,6 +65,20 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()
+end
+function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
+end
+function s.banop(e,tp,eg,ep,ev,re,r,rp)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	if Duel.Recover(tp,1000,REASON_EFFECT)~=0 then
+		Duel.BreakEffect()
+		Duel.Damage(p,500,REASON_EFFECT)
+	end
+end
 end
 	function s.thfilter(c)
 	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end
