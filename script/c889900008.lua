@@ -35,6 +35,17 @@ function s.initial_effect(c)
 	e3:SetCondition(s.recon)
 	e3:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e3)
+	--Link summon
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCode(EVENT_REMOVE)
+	e4:SetCountLimit(1,{id,1})
+	e4:SetTarget(s.bantg)
+	e4:SetOperation(s.banop)
+	c:RegisterEffect(e4)
 end
 
 	function s.recon(e)
@@ -73,5 +84,32 @@ end
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	end
+end
+
+	function s.filter(c,e,tp,mc)
+		return c:IsSetCard(0x5eb) and c:IsLinkMonster() and c:IsLinkBelow(3) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
+end
+
+	function s.tdfilter(c,fc)
+		return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+end
+
+	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	Duel.ConfirmCards(1-tp,g)
+	e:SetLabel(g:GetFirst():GetLink())
+end
+
+
+	function s.banop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ln=e:GetLabel()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_REMOVED,0,ln,ln,c)
+	if #g>0 then
+		Duel.SpecialSummon(ln,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)>0 
 	end
 end
