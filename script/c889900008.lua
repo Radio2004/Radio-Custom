@@ -33,7 +33,7 @@ end
 end
 
 
-	function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
