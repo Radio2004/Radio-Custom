@@ -87,49 +87,49 @@ end
 	end
 end
 
-function s.filter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and c:GetLink()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetLink()) 
+function s.tgfilter(c,e,tp)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
-function s.spfilter(c,e,tp,lk)
-	return c:IsSetCard(0x5eb) and c:IsLinkMonster() and c:GetLink()<lk
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
+function s.spfilter(c,e,tp,mc)
+	return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 
 
 
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetTargetCard(g)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 
 
 	function s.banop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCountFromEx(tp)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc:GetLink()):GetFirst()
-		if sc and Duel.SpecialSummonStep(sc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP) then
-			--Unaffected by opponent's card effects
-			local e1=Effect.CreateEffect(c)
-			e1:SetDescription(3110)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_IMMUNE_EFFECT)
-			e1:SetRange(LOCATION_MZONE)
-			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
-			e1:SetValue(s.efilter)
-			e1:SetOwnerPlayer(tp)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			sc:RegisterEffect(e1,true)
-			sc:CompleteProcedure()
-		end
-	Duel.SpecialSummonComplete()
+	if not tc:IsRelateToEffect(e) then return end
+	if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)==0 or not tc:IsLocation(LOCATION_EXTRA) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
+	if #g>0 and Duel.SpecialSummon(g,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)>0 then
+		local sc=g:GetFirst()
+		local c=e:GetHandler()
+		--Cannot attack directly this turn
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3207)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		sc:RegisterEffect(e1)
+		--Cannot be destroyed by battle this turn
+		local e2=e1:Clone()
+		e2:SetDescription(3000)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e2:SetValue(1)
+		sc:RegisterEffect(e2)
+		sc:CompleteProcedure()
 	end
-end
-function s.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
