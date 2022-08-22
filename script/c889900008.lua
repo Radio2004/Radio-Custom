@@ -87,6 +87,11 @@ end
 	end
 end
 
+	function s.filter1(c,e,tp)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x119)
+		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
+end
+
 	function s.filter(c,e,tp,mc)
 		return c:IsSetCard(0x5eb) and c:IsLinkMonster() and c:IsLinkBelow(3) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
@@ -98,7 +103,7 @@ end
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
 	Duel.ConfirmCards(1-tp,g)
 	e:SetLabel(g:GetFirst():GetLink())
 end
