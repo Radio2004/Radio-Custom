@@ -104,7 +104,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	else
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local tc=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-	if #tc>0 then  
+	if tc then  
 		Duel.SSet(tp,tc)
 		end
 	end
