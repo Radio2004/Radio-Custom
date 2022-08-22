@@ -46,7 +46,7 @@ end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 	function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(s.spchk,1,nil,e,tp) and sg:GetClassCount(Card.GetCode)==#sg
+	return sg:IsExists(s.spchk,1,nil,e,tp)
 end
 	function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
