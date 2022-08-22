@@ -92,15 +92,15 @@ function s.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 
-function s.spfilter(c,e,tp,mc,ct)
-	return ct>=c:GetLink() and c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3)
+function s.spfilter(c,e,tp,mc)
+	local ct=Duel.GetMatchingGroupCount(s.tgfilter,tp,LOCATION_REMOVED,0,e:GetHandler())
+	return ct>0 and c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3) and ct>=c:GetLink()
 end
 
 
 
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(s.tgfilter,tp,LOCATION_REMOVED,0,e:GetHandler())
-	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,ct) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,g)
