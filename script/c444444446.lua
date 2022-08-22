@@ -68,7 +68,7 @@ s.listed_names={444444447}
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
-   if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then
+   if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			end
