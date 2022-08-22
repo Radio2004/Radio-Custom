@@ -66,7 +66,7 @@ end
 end
 
 	function s.matcon(e,tp,eg,ep,ev,re,r,rp)
-	return r & REASON_LINK == REASON_LINK and e:GetHandler():GetReasonCard():IsLinkMonster() and c:IsSetCard(0x5eb)
+	return r & REASON_LINK == REASON_LINK and e:GetHandler():GetReasonCard():IsLinkMonster() and e:GetHandler():IsSetCard(0x5eb)
 end
 
 	function s.matop(e,tp,eg,ep,ev,re,r,rp)
