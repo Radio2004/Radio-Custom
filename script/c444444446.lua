@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.condition)
-	e1:SetCountLimit(1)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -42,7 +41,8 @@ s.listed_names={444444447}
 	and rc:IsLocation(LOCATION_HAND) end
 	Duel.SetTargetCard(rc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)   
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	e:SetCountLimit(1)
 	end
 
 
