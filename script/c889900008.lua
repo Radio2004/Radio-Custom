@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.banop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x5eb}
 
 	function s.recon(e)
 	return e:GetHandler():IsFaceup() and e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
