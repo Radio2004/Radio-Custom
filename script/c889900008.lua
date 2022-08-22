@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-   
+	e2:SetCondition(s.atkcon)
 	e2:SetTarget(s.atktg)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
