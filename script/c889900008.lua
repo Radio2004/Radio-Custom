@@ -99,7 +99,7 @@ end
 
 
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,nil)>=2  end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and Duel.GetMatchingGroupCount(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,nil)>=2  end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,g)
