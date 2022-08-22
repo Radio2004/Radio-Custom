@@ -93,7 +93,7 @@ end
 
 function s.spfilter(c,e,tp,mc)
 	local lv=c:GetLink()
-	return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3) and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_REMOVED,0,1,nil,tp,c)
+	return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3)
 end
 
 
