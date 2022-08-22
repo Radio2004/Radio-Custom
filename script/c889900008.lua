@@ -90,6 +90,7 @@ end
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
+
 function s.spfilter(c,e,tp,mc)
 	return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
@@ -110,7 +111,7 @@ end
 	local tg=e:GetLabelObject():GetLink()
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=g:Select(tp,2,2,nil)
+	local sg=g:Select(tp,tg,tg,nil)
 	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 	if #sg>0 then
 		Duel.SpecialSummon(tc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)
