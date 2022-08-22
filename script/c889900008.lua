@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 
 	function s.atkcon(e)
-	return e:GetHandler():GetMutualLinkedGroupCount()>0
+	return e:GetHandler():GetLinkedGroup()>0
 end
 
 	function s.atktg(e,c)
