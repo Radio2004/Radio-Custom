@@ -23,11 +23,20 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsLinked))
+	e2:SetCondition(s.atkcon)
+	e2:SetTarget(s.atktg)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 end
 
+	function s.atkcon(e)
+	return e:GetHandler():GetMutualLinkedGroupCount()>0
+end
+
+	function s.atktg(e,c)
+	local g=e:GetHandler():GetMutualLinkedGroup()
+	return c==e:GetHandler() or g:IsContains(c)
+end
 
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
