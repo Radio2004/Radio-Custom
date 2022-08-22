@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCondition(EVENT_DESTROYED)
+	e3:SetCondition(s.recon)
 	e3:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e3)
 end
