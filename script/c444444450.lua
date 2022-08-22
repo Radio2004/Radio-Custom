@@ -69,8 +69,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		end
    else   
    local g=Duel.GetTargetCards(e)
-	if #g>0 then
+   if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
 	end
-end
