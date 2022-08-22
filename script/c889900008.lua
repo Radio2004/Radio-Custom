@@ -23,7 +23,7 @@ end
 end
 		
 	function s.cfilter(c)
-	return c:IsSetCard(0x5eb) and c:IsAbleToRemove()
+	return c:IsSetCard(0x5eb) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 
 
