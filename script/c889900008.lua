@@ -29,14 +29,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 
-	function s.atkcon(e)
-	return e:GetHandler():GetLinkedGroup()>0
+	ffunction s.atkcon(e)
+	return e:GetHandler():GetMutualLinkedGroupCount()>0
+end
+function s.atktg(e,c)
+	local g=e:GetHandler():GetMutualLinkedGroup()
+	return c==e:GetHandler() or g:IsContains(c) and IsSetCard(0x5eb) and c:IsType(TYPE_LINK)
 end
 
-	function s.atktg(e,c)
-	local g=e:GetHandler():GetLinkedGroup()
-	return c==e:GetHandler() or g:IsContains(c)
-end
 
 	function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
