@@ -27,6 +27,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
+	--Banish itself 
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_DESTROY_REPLACE)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCondition(function(e)return e:GetHandler():IsFaceup()end)
+	e3:SetValue(LOCATION_REMOVED)
+	c:RegisterEffect(e3)
 end
 
 	function s.atkcon(e)
