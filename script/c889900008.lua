@@ -111,7 +111,7 @@ end
 	local tg=e:GetLabelObject():GetLink()
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,c)
-	if g>=tg then
+	if #g>=tg then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,tg,tg,c)
 	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
