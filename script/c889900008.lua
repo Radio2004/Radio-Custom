@@ -109,9 +109,10 @@ end
 	function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	local tg=e:GetLabelObject():GetLink()
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=g:Select(tp,tg,tg,nil)
+	local sg=g:Select(tp,tg,tg,c)
 	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 	if #sg>0 then
 		Duel.SpecialSummon(tc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)
