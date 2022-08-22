@@ -38,7 +38,7 @@ end
 end
 
 	function s.filter(c)
-	return c:IsSetCard(0x5eb) and c:IsAbleToGrave()
+	return c:IsSetCard(0x5eb) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 
 
