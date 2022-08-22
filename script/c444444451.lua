@@ -124,7 +124,7 @@ end
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
-	local rec=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x5eb),tp,LOCATION_MZONE,0,nil)*300
+	local rec=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)*300
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Recover(p,rec,REASON_EFFECT)
 	else
