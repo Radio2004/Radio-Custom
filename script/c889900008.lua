@@ -34,7 +34,7 @@ end
 end
 
 	function s.atktg(e,c)
-	local g=e:GetHandler():GetMutualLinkedGroup()
+	local g=e:GetHandler():GetLinkedGroup()
 	return c==e:GetHandler() or g:IsContains(c)
 end
 
