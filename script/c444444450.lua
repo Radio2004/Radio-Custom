@@ -53,8 +53,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_SZONE,1,ct,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)  
-		end 
-	end
+	end 
 end
 
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -73,4 +72,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
    if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
+	end
+end
 	end
