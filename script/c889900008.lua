@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 
 	function s.recon(e)
-	return e:GetHandler():IsFaceup() and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return e:GetHandler():IsFaceup() and e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 
 
