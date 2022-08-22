@@ -93,14 +93,14 @@ end
 end
 
 
-	function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1BC)
+	function s.desfilter(c,e)
+	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsDestructable(e)
 	end
 
 
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
-	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)
+	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1>0 or b2 end
@@ -127,7 +127,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,rec,REASON_EFFECT)
 	else
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil,e)
+	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,e)
 	if Duel.Destroy(g,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
