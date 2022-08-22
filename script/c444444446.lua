@@ -39,6 +39,7 @@ s.listed_names={444444447}
 	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 	and rc:IsLocation(LOCATION_HAND) end
+	Duel.SetTargetCard(rc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)   
 	end
@@ -46,7 +47,8 @@ s.listed_names={444444447}
 
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		local tc=re:GetHandler()
+		local tc=Duel.GetFirstTarget()
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
