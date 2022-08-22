@@ -36,12 +36,14 @@ s.listed_names={444444447}
    function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED)
-	and Duel.GetLocationCount(tp,LOCATION_HAND)
+	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 	and rc:IsLocation(LOCATION_HAND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)   
 	end
+
+
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 	local c=e:GetHandler()
@@ -49,6 +51,8 @@ s.listed_names={444444447}
 		c:CompleteProcedure()
 	end
 end 
+
+
 function s.setfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 	end
@@ -67,6 +71,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 	end
+
+
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -83,7 +89,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local fid=c:GetFieldID()
 		Duel.SSet(tp,tc)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		end
 	end
-end
 end
 
