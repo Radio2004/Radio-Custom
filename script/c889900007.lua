@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-
+s.listed_series={0x5eb}
 
 	function s.costfilter(c,g)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and g:IsContains(c)
