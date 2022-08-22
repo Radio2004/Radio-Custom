@@ -109,7 +109,7 @@ end
 	local ln=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_REMOVED,0,ln,ln,c)
-	if #g>0 then
+	if g>0 then
 		Duel.SpecialSummon(ln,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)>0 
 	end
 end
