@@ -88,9 +88,7 @@ end
 end
 
 function s.filter(c,e,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousSetCard(0x5eb) and c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsCanBeEffectTarget(e) and c:GetLink()
+	return c:IsCanBeEffectTarget(e) and c:GetLink()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetLink()) 
 end
 function s.spfilter(c,e,tp,lk)
@@ -101,10 +99,9 @@ end
 
 
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
