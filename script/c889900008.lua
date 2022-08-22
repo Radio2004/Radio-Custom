@@ -30,11 +30,11 @@ function s.initial_effect(c)
 end
 
 	function s.atkcon(e)
-	return e:GetHandler():GetMutualLinkedGroupCount()>0
+	return e:GetHandler():IsLinked()>0
 end
 
 	function s.atktg(e,c)
-	local g=e:GetHandler():GetMutualLinkedGroup()
+	local g=e:GetHandler():IsLinked()
 	return c==e:GetHandler() or g:IsContains(c)
 end
 
