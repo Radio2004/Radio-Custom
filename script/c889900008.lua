@@ -106,7 +106,7 @@ end
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,g)
 	e:SetLabelObject(g:GetFirst())
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,ct,#ct,0,0)
+   
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 
