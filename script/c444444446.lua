@@ -40,6 +40,7 @@ s.listed_names={444444447}
 	and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 	and rc:IsLocation(LOCATION_HAND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)   
 	end
 
@@ -48,6 +49,7 @@ s.listed_names={444444447}
 		local c=e:GetHandler()
 		local tc=re:GetHandler()
 		if tc:IsRelateToEffect(e) and not tc:IsDisabled() then
+		Duel.NegateEffect(ev)
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
