@@ -92,14 +92,16 @@ function s.tgfilter(c)
 end
 
 function s.spfilter(c,e,tp,mc)
-	return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3)
-
+	local lv=c:GetLink()
+	return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3) and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_REMOVED,0,1,nil,tp,c)
 end
 
 
 
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and Duel.GetMatchingGroupCount(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,nil)>1  end
+	if chk==0 then 
+	local pg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,c)
+	return #pg<=0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,g)
@@ -112,6 +114,7 @@ end
 	local tg=e:GetLabelObject():GetLink()
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tgfilter),tp,LOCATION_REMOVED,0,c)
+	if #g>0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,tg,tg,c)
 	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
