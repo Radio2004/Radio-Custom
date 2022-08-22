@@ -29,9 +29,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 
-	ffunction s.atkcon(e)
+	function s.atkcon(e)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
+
+
 function s.atktg(e,c)
 	local g=e:GetHandler():GetMutualLinkedGroup()
 	return c==e:GetHandler() or g:IsContains(c) and IsSetCard(0x5eb) and c:IsType(TYPE_LINK)
