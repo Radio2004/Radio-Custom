@@ -63,8 +63,10 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if sc~=nil then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.ShuffleDeck(tp)
+		else
+			Duel.Destroy(sc,REASON_EFFECT)
 		end
-		Duel.ShuffleDeck(tp)
    else   
    local g=Duel.GetTargetCards(e)
 	if #g>0 then
