@@ -102,7 +102,7 @@ end
 	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)
 	local b1=g1
 	local b2=g2
-	if chk==0 then return b1 or b2 end
+	if chk==0 then return b1>0 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
@@ -112,7 +112,7 @@ end
 	e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(b1)
-	if b1>0 then Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,b1) end
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,b1)
 	else
 	e:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
