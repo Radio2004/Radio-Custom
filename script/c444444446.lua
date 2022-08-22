@@ -47,7 +47,6 @@ s.listed_names={444444447}
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local tc=re:GetHandler()
-		if not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -69,7 +68,7 @@ s.listed_names={444444447}
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
-		if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then
+   if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			end
