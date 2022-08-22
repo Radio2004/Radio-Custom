@@ -74,7 +74,6 @@ s.listed_names={444444447}
 			end
 		end 
 	end
-end
 
 function s.setfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL) and c:IsSSetable()
