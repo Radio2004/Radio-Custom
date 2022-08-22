@@ -33,6 +33,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==2 then
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 	end
