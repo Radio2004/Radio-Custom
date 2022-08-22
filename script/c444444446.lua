@@ -48,7 +48,8 @@ s.listed_names={444444447}
 	function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		if not c:IsRelateToEffect(e) then return end
+		if tc and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -63,20 +64,12 @@ s.listed_names={444444447}
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-	if tc:IsType(TYPE_TRAPMONSTER) then
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-		e3:SetReset(RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3)
    if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			end
 		end 
 	end
-end
 
 function s.setfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL) and c:IsSSetable()
