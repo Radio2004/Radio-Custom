@@ -100,11 +100,14 @@ end
 
 
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ct=Duel.GetMatchingGroupCount(s.tgfilter,tp,LOCATION_REMOVED,0,e:GetHandler())
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,g)
 	e:SetLabelObject(g:GetFirst())
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,ct,#ct,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 
 
