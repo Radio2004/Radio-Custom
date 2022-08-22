@@ -93,7 +93,7 @@ end
 end
 
 	function s.filter(c,e,tp,mc)
-		return c:IsSetCard(0x5eb) and c:IsLinkMonster() and c:IsLinkBelow(3) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
+		return c:IsSetCard(0x5eb) and c:IsCode(mc:GetCode()) and mc:IsCanBeLinkMaterial(c,tp) and c:IsLinkMonster() and c:IsLinkBelow(3) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 
 	function s.tdfilter(c,fc)
@@ -105,16 +105,20 @@ end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
 	Duel.ConfirmCards(1-tp,g)
-	e:SetLabel(g:GetFirst():GetLink())
+	e:SetLabel(g:GetFirst():GetLink(),g:GetFirst())
 end
 
 
 	function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ln=e:GetLabel()
+	local ln,sp=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_REMOVED,0,ln,ln,c)
 	if g>0 then
-		Duel.SpecialSummon(ln,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP) 
+		sp:SetMaterial(Group.FromCards(g))
+		Duel.SendtoDeck(g,REASON_EFFECT+REASON_MATERIAL+REASON_LINK)
+		Duel.BreakEffect()
+		Duel.SpecialSummon(sp,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)
+		sp:CompleteProcedure()
 	end
 end
