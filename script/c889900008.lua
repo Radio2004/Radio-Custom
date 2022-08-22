@@ -93,7 +93,7 @@ function s.tgfilter(c)
 end
 
 function s.spfilter(c,e,tp,mc,ct)
-	return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3) and ct>=c:GetLink()
+	return ct>=c:GetLink() and c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and c:IsSetCard(0x5eb) and c:IsLinkBelow(3)
 end
 
 
