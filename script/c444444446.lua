@@ -36,7 +36,7 @@ s.listed_names={444444447}
    function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED)
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	and Duel.GetLocationCount(tp,LOCATION_HAND)
 	and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 	and rc:IsLocation(LOCATION_HAND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
