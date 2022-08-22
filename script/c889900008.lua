@@ -36,7 +36,7 @@ end
 
 function s.atktg(e,c)
 	local g=e:GetHandler():GetMutualLinkedGroup()
-	return c==e:GetHandler() or g:IsContains(c) and IsSetCard(0x5eb) and c:IsType(TYPE_LINK)
+	return c==e:GetHandler() or g:IsContains(c) and c:IsType(TYPE_LINK)
 end
 
 
