@@ -87,38 +87,52 @@ end
 	end
 end
 
-	function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x119)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
+function s.filter(c,e,tp)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousSetCard(0x12b) and c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
+		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsCanBeEffectTarget(e) and c:GetLink()
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetLink()) 
+end
+function s.spfilter(c,e,tp,lk)
+	return c:IsSetCard(0x12b) and c:IsLinkMonster() and c:GetLink()<lk
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 
-	function s.filter(c,e,tp,mc)
-		return c:IsSetCard(0x5eb) and c:IsCode(mc:GetCode()) and mc:IsCanBeLinkMaterial(c,tp) and c:IsLinkMonster() and c:IsLinkBelow(3) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
-end
 
-	function s.tdfilter(c,fc)
-		return c:IsFaceup() and c:IsType(TYPE_MONSTER)
-end
 
 	function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
-	Duel.ConfirmCards(1-tp,g)
-	e:SetLabel(g:GetFirst():GetLink(),g:GetFirst())
+	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
+	if chk==0 then return eg:IsExists(s.filter,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
+	Duel.SetTargetCard(g)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 
 
 	function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ln,sp=e:GetLabel()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_REMOVED,0,ln,ln,c)
-	if g>0 then
-		sp:SetMaterial(Group.FromCards(g))
-		Duel.SendtoDeck(g,REASON_EFFECT+REASON_MATERIAL+REASON_LINK)
-		Duel.BreakEffect()
-		Duel.SpecialSummon(sp,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)
-		sp:CompleteProcedure()
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCountFromEx(tp)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc:GetLink()):GetFirst()
+		if sc and Duel.SpecialSummonStep(sc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP) then
+			--Unaffected by opponent's card effects
+			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3110)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_IMMUNE_EFFECT)
+			e1:SetRange(LOCATION_MZONE)
+			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
+			e1:SetValue(s.efilter)
+			e1:SetOwnerPlayer(tp)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			sc:RegisterEffect(e1,true)
+			sc:CompleteProcedure()
+		end
+	Duel.SpecialSummonComplete()
 	end
+end
+function s.efilter(e,re)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
