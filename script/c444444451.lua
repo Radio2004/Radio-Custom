@@ -37,7 +37,6 @@ function s.initial_effect(c)
 		--effects
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetCategory(CATEGORY_RECOVER+CATEGORY_DESTROY+CATEGORY_DRAW)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_SUMMON_SUCCESS)
@@ -109,10 +108,12 @@ end
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==1 then
+	e:SetCategory(CATEGORY_RECOVER)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(g1)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g1)
 	else
+	e:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
