@@ -88,6 +88,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==1 then
+	e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 	end

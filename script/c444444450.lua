@@ -46,8 +46,10 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==1 then
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	else
+		e:SetCategory(CATEGORY_TOHAND)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)

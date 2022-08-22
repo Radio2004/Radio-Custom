@@ -45,8 +45,10 @@ if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) a
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
    if op==1 then
+	e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
    else
+	e:SetCategory(CATEGORY_REMOVE)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE)
 end
 	end

@@ -60,17 +60,17 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		{b2,aux.Stringid(id,0)})
 	e:SetLabel(op)
    if op==1 then
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e:SetCategory(CATEGORY_TOHAND)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e:SetCategory(CATEGORY_TOHAND)
    else
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 end
 	end
 

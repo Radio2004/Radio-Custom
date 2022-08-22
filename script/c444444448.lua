@@ -52,10 +52,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==1 then
+	e:SetCategory(CATEGORY_RECOVER)
 	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-	 Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetAttack())
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetAttack())
 	end
 end
 
