@@ -71,13 +71,11 @@ s.listed_names={444444447}
 		tc:RegisterEffect(e3)
 		if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then
 		Duel.BreakEffect()
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
-		c:CompleteProcedure()
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			end
 		end 
 	end
 end
-	end
 
 function s.setfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL) and c:IsSSetable()
