@@ -18,7 +18,7 @@ end
 
 
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1BC) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 
 
