@@ -91,15 +91,15 @@ function s.cfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER)
  end
 
-	function s.costfilter(c,tp)
-	return c:IsSetCard(0x1bc) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	function s.costfilter(c,ft,tp)
+	return c:IsSetCard(0x1bc) and ft>0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local g2=nil 
 	if e:GetLabel()==9 then
-		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
+		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,tp)
 	else
 		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
@@ -115,7 +115,7 @@ end
 	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	 local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
-	else
+	elseif op==2 then
 		if e:GetLabel()==9 then
 		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,tp)
 		Duel.Release(sg,REASON_COST)
@@ -144,8 +144,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)
-	   end
-	else
+	elseif e:GetLabel()==2 then
 		local e4=Effect.CreateEffect(e:GetHandler())
 		e4:SetType(EFFECT_TYPE_FIELD)
 		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -155,6 +154,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetValue(aux.tgoval)
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
+			end
 		end
 	end
 end
