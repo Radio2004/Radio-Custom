@@ -145,7 +145,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)
-	else then
+	else 
 		local e4=Effect.CreateEffect(e:GetHandler())
 		e4:SetType(EFFECT_TYPE_FIELD)
 		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
