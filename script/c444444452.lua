@@ -90,10 +90,8 @@ end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged(true)
 end
-function s.cfilter(c,tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)
-	if c:IsControler(tp) and c:GetSequence()<5 then ft=ft+1 end
-	return ft>0 and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,c)
+function s.cfilter(c)
+	return c:IsSetCard(0x1bc)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -102,8 +100,7 @@ end
 	if e:GetLabel()==9 then
 		  b2=Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp)
 	else
-		  b2=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0
-			and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,nil)
+		  b2=1
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
@@ -120,9 +117,6 @@ end
 		local rg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp)
 			Duel.Release(rg,REASON_COST)
 		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-		local g=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil)
-		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	end
 	e:SetLabel(op)
 end
@@ -131,7 +125,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if e:GetLabel()==0 then
+	if e:GetLabel()==1 then
 	if tc and aux.disfilter3(tc) and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
@@ -150,6 +144,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	else 
-		Duel.GetControl(tc,tp,PHASE_END,1)
+		--cannot be target
+		local e4=Effect.CreateEffect(e:GetHandler())
+		e4:SetDescription(aux.Stringid(id,5))
+		e4:SetType(EFFECT_TYPE_FIELD)
+		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
+		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e4:SetTargetRange(LOCATION_MZONE,0)
+		e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1bc))
+		e4:SetValue(aux.tgoval)
+		e4:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e4,tp)
 	end
 end
