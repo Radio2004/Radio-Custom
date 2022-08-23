@@ -16,16 +16,14 @@
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--Remove counters
+	--Remove all counter
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetCategory(CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetCountLimit(1,{id,1})
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCost(s.spcost)
-	e4:SetTarget(s.sptg)
-	e4:SetOperation(s.spop)
+	e4:SetCountLimit(1,id)
+	e4:SetTarget(s.tgtg)
+	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
 end
 s.counter_place_list={0x382}
@@ -46,34 +44,60 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x382,1)
 end
-   function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	c:RemoveCounter(tp,0x382,c:GetCounter(0x382),REASON_COST)
+	function s.schfilter(c)
+	return c:IsSetCard(0x3dd) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
-	function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	function s.atkfilter(c)
+	return c:IsSetCard(0x3dd) and c:IsFaceup() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+end
+	function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x382)
-	local b1=Duel.RemoveCounter(tp,1,0,0x382,5,REASON_COST)
-	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x382,7,REASON_COST)
-		and Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
-	if chk==0 then return ct>0 and (b1 or b2) end
-	local op=0
-	if b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif b1 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
+	local g1=Duel.IsCanRemoveCounter(tp,1,0,0x382,1,REASON_COST) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	local g2=Duel.IsCanRemoveCounter(tp,1,0,0x382,3,REASON_COST) and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
+	local g3=Duel.IsCanRemoveCounter(tp,1,0,0x382,5,REASON_COST) and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil)
+	local b1=g1  
+	local b2=g2
+	local b3=g3 
+	if chk==0 then return b1 or b2 or b3 end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)})
+		e:SetLabel(op,ct)
+	local g=(op==1 and g1 or g2 or g3)
+	Duel.RemoveCounter(tp,1,0,0x382,ct,REASON_COST)
 	end
-	e:SetLabel(op)
-	if op==0 then
-		e:SetCategory(CATEGORY_DAMAGE)
-		Duel.RemoveCounter(tp,1,0,0x35,5,REASON_COST)
-		Duel.SetTargetPlayer(1-tp)
-		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*300)
-	else
-		e:SetCategory(CATEGORY_REMOVE)
-		Duel.RemoveCounter(tp,1,0,0x35,7,REASON_COST)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE)
+	function s.filter(c)
+	return c:IsSetCard(0x3dd) and c:IsAbleToGrave() 
+end
+   function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local op,ct=e:GetLabel()
+	if not c:IsRelateToEffect(e) then return end
+	if op==1 then
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoGrave(g,REASON_EFFECT)
+		end
+	elseif op==2 then
+		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x3dd),tp,LOCATION_MZONE,0,nil)
+		for tc in aux.Next(atkg) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(ct*200)
+		tc:RegisterEffect(e1)
+		end
+	elseif op==3 then
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,ct,math.floor(ct/2),nil)
+		if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
+	end
