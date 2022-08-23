@@ -69,6 +69,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Destroy(sc,REASON_EFFECT)
 		end
 		Duel.ShuffleDeck(tp)
+	   end
    else   
    local g=Duel.GetTargetCards(e)
    if #g>0 then
@@ -76,4 +77,3 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-	end
