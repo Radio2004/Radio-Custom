@@ -86,8 +86,6 @@ end
 
 	function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
-	Duel.Release(sg,REASON_COST)
 end
 
 
@@ -113,7 +111,8 @@ function s.cfilter(c)
 	 local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else
-		s.cost(e,tp,eg,ep,ev,re,r,rp,1)
+		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
+		Duel.Release(sg,REASON_COST)
 	end
 end
 
