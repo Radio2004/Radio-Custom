@@ -104,7 +104,7 @@ end
 		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local op=0
+	local sel=0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
@@ -113,7 +113,7 @@ end
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	end
-	if op==0 then
+	if sel==0 then
 	 e:SetCategory(CATEGORY_DISABLE)
 	 e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
@@ -125,7 +125,7 @@ end
 		Duel.Release(sg,REASON_COST)
 		end
 	end
-	e:SetLabel(op)
+	e:SetLabel(sel)
 end
 
 
@@ -148,17 +148,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)
-	   end
 	else
-		local e4=Effect.CreateEffect(e:GetHandler())
+		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD)
 		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e4:SetTargetRange(LOCATION_MZONE,0)
 		e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1BC))
 		e4:SetValue(aux.tgoval)
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
+			end
 		end
 	end
 end
