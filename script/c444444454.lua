@@ -49,6 +49,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		g1=e:GetHandler():IsReleasable()
 	else
 		g1=ft>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp)
+end
 	local g2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 	local b1=g1
 	local b2=g2
@@ -56,7 +57,6 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
-	e:SetLabel(op)
 	if op==1 then
 		if e:GetLabel()==9 then
 			Duel.Release(e:GetHandler(),REASON_COST)
@@ -67,6 +67,7 @@ end
 	e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	end
+	e:SetLabel(op)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
