@@ -152,8 +152,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)
+	   end
 	else 
 		Duel.GetControl(tc,tp,PHASE_END,1)
 			end
 		end
-	end
