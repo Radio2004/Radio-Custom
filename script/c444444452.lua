@@ -98,9 +98,7 @@ end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
-		if e:GetLabel()==0 then
-			true
-		else
+		if e:GetLabel()==1 then
 			return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter2(chkc)
 		end
 	end
