@@ -105,6 +105,7 @@ end
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=0
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	elseif b1 then
@@ -149,16 +150,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3)
 	   end
 	else
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetTargetRange(LOCATION_ONFIELD,0)
-		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1BC))
-		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
+		local e4=Effect.CreateEffect(e:GetHandler())
+		e4:SetType(EFFECT_TYPE_FIELD)
+		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e4:SetTargetRange(LOCATION_MZONE,0)
+		e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1BC))
+		e4:SetValue(1)
+		e4:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e4,tp)
 		end
 	end
 end
