@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCountLimit(1,id)
 	e5:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(s.cost)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
@@ -81,27 +81,29 @@ function s.filter1(c)
 	return eg:IsExists(s.filter1,1,nil)
 end
 
-	function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
 
 
-function s.cfilter(c)
-	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER)
- end
-
-	function s.costfilter(c)
-	return c:IsSetCard(0x1bc)
+function s.filter2(c)
+	return c:IsFaceup() and c:IsControlerCanBeChanged(true)
+end
+function s.cfilter(c,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)
+	if c:IsControler(tp) and c:GetSequence()<5 then ft=ft+1 end
+	return ft>0 and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,c)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local g2=nil 
 	if e:GetLabel()==9 then
-		  g2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,aux.ReleaseCheckMMZ,nil)
+		  g2=Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp)
 	else
-		  g2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		  g2=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0
+			and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,nil)
 	end
 	local b1=g1
 	local b2=g2
@@ -117,10 +119,12 @@ end
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else 
 		if e:GetLabel()==9 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,aux.ReleaseCheckMMZ,nil)
-		Duel.Release(sg,REASON_COST)
+		local rg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp)
+			Duel.Release(rg,REASON_COST)
 		end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+		local g=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	end
 	e:SetLabel(op)
 end
@@ -128,8 +132,8 @@ end
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if e:GetLabel()==1 then
 	local tc=Duel.GetFirstTarget()
+	if e:GetLabel()==1 then
 	if tc and aux.disfilter3(tc) and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
@@ -146,15 +150,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)
 	else 
-		local e4=Effect.CreateEffect(e:GetHandler())
-		e4:SetType(EFFECT_TYPE_FIELD)
-		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
-		e4:SetTargetRange(LOCATION_MZONE,0)
-		e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1BC))
-		e4:SetValue(aux.tgoval)
-		e4:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e4,tp)
+		Duel.GetControl(tc,tp,PHASE_END,1)
 			end
 		end
 	end
