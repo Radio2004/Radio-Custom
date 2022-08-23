@@ -63,6 +63,7 @@ end
 end
 
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if e:GetLabel()==1 then
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
