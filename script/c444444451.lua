@@ -18,13 +18,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)	
 	--cannot destroy
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetCountLimit(1)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
+	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5eb))
+	e3:SetValue(s.indct)
 	c:RegisterEffect(e3)
 		--def up
 	local e4=Effect.CreateEffect(c)
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 		--effects
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetCategory(CATEGORY_RECOVER+CATEGORY_DESTROY+CATEGORY_DRAW)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_SUMMON_SUCCESS)
@@ -52,13 +50,19 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e6)
 end
-function s.exstg(e,c)
-	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER)
-	end
-function s.val(e,c)
+
+	function s.indct(e,re,r,rp)
+	if (r&REASON_BATTLE)~=0 then
+		return 1
+	else return 0 end
+end
+
+	function s.val(e,c)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)*200
 end
-function s.tg(e,c,tp)
+
+
+	function s.tg(e,c,tp)
 	if not c:IsSetCard(0x1BC) then return false end
 	if c:GetFlagEffect(1)==0 then
 		c:RegisterFlagEffect(1,0,0,0)
@@ -76,56 +80,59 @@ function s.tg(e,c,tp)
 	end
 	return true
 end
-function s.filter1(c)
+
+
+	function s.filter1(c)
 	return c:IsFaceup()and c:IsSetCard(0x1BC)
 	end
+
+
 	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter1,1,nil)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	end
-	function s.operation(e,tp,eg,ep,ev,re,r,rp)
-		local c=e:GetHandler()
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(s.exstg)
-		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
-		end
+
+
 	function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1BC)
+	return c:IsFaceup() and c:IsSetCard(0x1BC) 
 	end
+
+
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
-	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil)and Duel.IsPlayerCanDraw(tp,2)
+	local g1=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
+	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)
 	local b1=g1
 	local b2=g2
-	if chk==0 then return b1 or b2 end
+	if chk==0 then return b1>0 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
-		local rec=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
-	Duel.SetTargetParam(rec)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
+	if op==1 then
+	e:SetCategory(CATEGORY_RECOVER)
+	e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(b1)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,b1)
+	else
+	e:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	end
 end
+
+
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
-		local rec=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
+	local rec=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)*300
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Recover(p,rec,REASON_EFFECT)
 	else
-		local k=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,k,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-			Duel.BreakEffect()
-			Duel.Destroy(k,REASON_EFFECT)
-			Duel.Draw(tp,1,REASON_EFFECT)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	if Duel.Destroy(g,REASON_EFFECT)~=0 then
+		Duel.BreakEffect()
+		Duel.Draw(tp,1,REASON_EFFECT)
+		end
 	end
 end
