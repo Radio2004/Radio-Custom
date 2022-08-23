@@ -118,7 +118,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	else
 	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
+		local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			end
