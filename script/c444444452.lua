@@ -97,6 +97,13 @@ function s.cfilter(c,tp)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then
+		if e:GetLabel()==0 then
+			true
+		else
+			return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter2(chkc)
+		end
+	end
 	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local b2=nil 
 	if e:GetLabel()==9 then
