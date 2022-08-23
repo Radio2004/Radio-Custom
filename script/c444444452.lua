@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--effects
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetDescription(aux.Stringid(id,4))
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_SUMMON_SUCCESS)
@@ -97,21 +97,25 @@ function s.cfilter(c,tp)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
-	local g2=nil 
+	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
+	local b2=nil 
 	if e:GetLabel()==9 then
-		  g2=Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp)
+		  b2=Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp)
 	else
-		  g2=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0
+		  b2=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0
 			and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,nil)
 	end
-	local b1=g1
-	local b2=g2
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local op=aux.SelectEffect(tp,
-		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,1)})
-	if op==1 then
+	local sel=0
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
+	if b1 and b2 then
+		sel=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
+	elseif b1 then
+		sel=Duel.SelectOption(tp,aux.Stringid(id,0))
+	else
+		sel=Duel.SelectOption(tp,aux.Stringid(id,1))+
+	end
+	if sel==0 then
 	 e:SetCategory(CATEGORY_DISABLE)
 	 e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
@@ -126,14 +130,14 @@ end
 		local g=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	end
-	e:SetLabel(op)
+	e:SetLabel(sel)
 end
 
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if e:GetLabel()==1 then
+	if e:GetLabel()==0 then
 	if tc and aux.disfilter3(tc) and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
