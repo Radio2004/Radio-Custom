@@ -7,48 +7,94 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCategory(CATEGORY_CONTROL)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
+	e1:SetCost(s.descost)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,g,att)
-	return c:IsFaceup() and c:IsAttribute(att)and g:IsContains(c) 
+	return c:IsFaceup() and c:IsAttribute(att) and g:IsContains(c) 
 end
-function s.filter1(c)
-	return c:IsFaceup()and c:IsControlerCanBeChanged()
+
+
+function s.confilter(c)
+	return c:IsFaceup() and c:IsControlerCanBeChanged()
 end
+
+
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(9)
+	return true
+end
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
-	local g1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,ATTRIBUTE_WATER)
-	local g2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,ATTRIBUTE_WIND)
-	 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
+	local g1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,ATTRIBUTE_WATER) and Duel.IsExistingTarget(s.confilter,tp,0,LOCATION_MZONE,1,nil)
+	local g2=nil
+	if e:GetLabel()==9 then
+		g2=Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil)
+	else
+		g2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,ATTRIBUTE_WIND)
 	local b1=g1
 	local b2=g2
-	if chk==0 then return b1 or b2 end
+	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
+	if op==1 then
+		e:SetCategory(CATEGORY_CONTROL)
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+		local g=Duel.SelectTarget(tp,s.confilter,tp,0,LOCATION_MZONE,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
+	else
+		if e:GetLabel()==9 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
+			Duel.Remove(g,POS_FACEUP,REASON_COST)
+		end
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
+	end
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
 end
+
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==1 then
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,s.filter1,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup()then
+	if e:GetLabel()==1 then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.GetControl(tc,tp,PHASE_END,1)
 end
 	else
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	local sg=g:RandomSelect(tp,1)
-	Duel.Destroy(sg,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
+	if #g==0 then return end
+	local rg=g:RandomSelect(tp,1)
+	local tc=rg:GetFirst()
+	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetLabelObject(tc)
+	e1:SetCondition(s.retcon)
+	e1:SetOperation(s.retop)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 	end
+end
+	function s.retcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffect(id)==0 then
+		e:Reset()
+		return false
+	else
+		return true
+	end
+end
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.SendtoHand(tc,1-tp,REASON_EFFECT)
 end

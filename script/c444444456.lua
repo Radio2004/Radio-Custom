@@ -28,19 +28,28 @@ function s.initial_effect(c)
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
 	end
+s.listed_series={0x1BC}
 	function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and (c:IsType(TYPE_LINK) or c:IsLevel(7))
 	end
+
+
 	function s.condition(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
+
+
 function s.filter1(c,tp)
 	return c:IsSetCard(0x1BC) and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetLevel())
 end
+
+
 function s.filter2(c,lv)
 	return c:IsSetCard(0x1BC)  and c:IsType(TYPE_MONSTER) and c:GetLevel()<lv and c:IsAbleToHand()
 end
+
+
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end 
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_HAND,0,nil,tp)

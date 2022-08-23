@@ -11,6 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1BC}
+
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsAttribute(ATTRIBUTE_WATER+ATTRIBUTE_WIND+ATTRIBUTE_DARK+ATTRIBUTE_EARTH)
 end
@@ -53,7 +55,7 @@ local g4=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIB
 local b1=g1  
 local b2=g2
 local b3=g3
-local b4=g4			  
+local b4=g4		   
 	if chk==0 then return b1 or b2 or b3 or b4 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
