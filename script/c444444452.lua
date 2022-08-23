@@ -91,9 +91,7 @@ end
 	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local b2=nil 
 	if e:GetLabel()==9 then
-		  Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x1bc)
-	else
-		  b2=1
+		  b2=Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x1bc)
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
