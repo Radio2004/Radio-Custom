@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e5:SetCode(EVENT_SUMMON_SUCCESS)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCountLimit(1,id)
@@ -72,23 +72,24 @@ end
 	end
 	return true
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsCanTurnSet()
-	end
+
 	function s.ctfilter(c)
-	return c:IsSetCard(0x1BC) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsAbleToHand()
 	end
+
 	function s.filter1(c)
 	return c:IsFaceup()and c:IsSetCard(0x1BC)
 	end
+
 	function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter1,1,nil)
 end
+
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
-	local g1=Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil)
+	local g1=Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,nil)
 	local g2=Duel.IsExistingTarget(s.ctfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) 
+		and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) 
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -96,23 +97,31 @@ end
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==1 then
-		local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() then
-		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
-		end
-	else
-	local g1=Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local g2=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
-	g1:Merge(g2)
-		local g=Duel.GetTargetCards(e)
-	if #g>0 then
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	if op==1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,1,nil)
+		e:SetCategory(CATEGORY_POSITION)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+		else
+		e:SetCategory(CATEGORY_TOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		local g=Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,1-tp,LOCATION_ONFIELD)
 	end
 end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if e:GetLabel()==1 then
+	if not tc:IsRelateToEffect(e) then return end
+		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+	else
+	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
+		if #g>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			end
+		end
+	end
 end

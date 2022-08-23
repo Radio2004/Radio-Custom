@@ -55,15 +55,15 @@ end
 
 
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==1 then 
+   if e:GetLabel()==1 then 
    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 then return end
-	if ft>2 then ft=2 end
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,ft,nil,e,tp)
-	if #g~=0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+   if ft<=0 then return end
+   if ft>2 then ft=2 end
+   if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+   local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,ft,nil,e,tp)
+   if #g~=0 then
+	   Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 	else
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
