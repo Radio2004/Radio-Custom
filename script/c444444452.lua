@@ -106,7 +106,8 @@ end
 	local b1=g1
 	local b2=g2
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local op=aux.SelectEffect(tp,
+	local op=0
+	op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	if op==1 then
@@ -130,7 +131,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==1 then
 	local tc=Duel.GetFirstTarget()
-	if tc and aux.disfilter3(tc) and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -158,4 +158,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-end
