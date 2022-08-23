@@ -119,7 +119,7 @@ end
 	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	 local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
-	elseif sel==2 then
+	elseif sel==0 then
 		if e:GetLabel()==9 then
 		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,tp)
 		Duel.Release(sg,REASON_COST)
@@ -148,7 +148,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)
-	elseif e:GetLabel()==2 then
+	elseif e:GetLabel()==0 then
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD)
 		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
