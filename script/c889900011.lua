@@ -70,7 +70,7 @@ end
 function s.rescon(sg,e,tp,mg)
 	local ct=#sg
 	sg:AddCard(e:GetHandler())
-	local res=Duel.IsExistingMatchingCard(s.remfilter,tp,0,LOCATION_GRAVE,ct,sg)
+	local res=Duel.IsExistingTarget(s.remfilter,tp,0,LOCATION_GRAVE,ct,sg)
 	sg:RemoveCard(e:GetHandler())
 	return res
 end
@@ -87,16 +87,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(0)
 	local rsg=aux.SelectUnselectGroup(rg,e,tp,nil,2,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
 	local ct=Duel.Remove(rsg,POS_FACEUP,REASON_COST)
-	local g=Duel.GetMatchingGroup(s.remfilter,tp,0,LOCATION_GRAVE,e:GetHandler())
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectTarget(tp,s.remfilter,tp,0,LOCATION_GRAVE,ct,ct,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
-	e:SetLabel(0,ct)
 end
 
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local o,ct=e:GetLabel()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.remfilter,tp,0,LOCATION_GRAVE,ct,ct,e:GetHandler())
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if #g>0 then
-	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 end
