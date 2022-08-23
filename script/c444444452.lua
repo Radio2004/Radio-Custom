@@ -112,7 +112,7 @@ end
 	else
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	end
-	if op==1 then
+	if op==0 then
 	 e:SetCategory(CATEGORY_DISABLE)
 	 e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
