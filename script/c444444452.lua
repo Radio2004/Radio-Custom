@@ -99,7 +99,7 @@ end
 	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local b2=nil 
 	if e:GetLabel()==9 then
-		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
+		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,tp)
 	else
 		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
@@ -121,7 +121,7 @@ end
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else
 		if e:GetLabel()==9 then
-		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
+		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,tp)
 		Duel.Release(sg,REASON_COST)
 		end
 	end
