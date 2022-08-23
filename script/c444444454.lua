@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	   -- Effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,id)
+	e2:SetCost(s.descost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_NOVELLA)
@@ -24,25 +24,43 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x1BC}
+s.listed_names={444444450,444444451,444444452,444444453}
+
 function s.filter(c,e,tp)
 	return c:IsCode(444444450) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+
+
 function s.thfilter(c)
 	return (c:IsCode(444444451) or c:IsCode(444444452) or c:IsCode(444444453))  and c:IsAbleToHand()
-	end
+end
+
+	function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(9)
+	return true
+end
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-	local g1=ft>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp)
+	local g1=nil
+	if e:GetLabel()==9 then
+		g1=e:GetHandler():IsReleasable()
+	else
+		g1=ft>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp)
 	local g2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 	local b1=g1
 	local b2=g2
-	if chk==0 then return b1 or b2 end
+	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==1 then
+		if e:GetLabel()==9 then
+			Duel.Release(e:GetHandler(),REASON_COST)
+end
 	e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK)
 	else
