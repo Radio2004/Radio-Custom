@@ -84,16 +84,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			return aux.SelectUnselectGroup(rg,e,tp,nil,2,s.rescon,0)
 		else return false end
 	end
+	e:SetLabel(0)
 	local rsg=aux.SelectUnselectGroup(rg,e,tp,nil,2,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
 	local ct=Duel.Remove(rsg,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.remfilter,tp,0,LOCATION_GRAVE,ct,ct,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
-	e:SetLabel(0,g)
+	e:SetLabelObject(g)
 end
 
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local o,g=e:GetLabel()
+	local g=e:GetLabelObject()
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 end
