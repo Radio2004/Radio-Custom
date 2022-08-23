@@ -97,11 +97,6 @@ function s.cfilter(c,tp)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then
-		if e:GetLabel()==1 then
-			return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter2(chkc)
-		end
-	end
 	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local b2=nil 
 	if e:GetLabel()==9 then
@@ -140,27 +135,12 @@ end
 
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if e:GetLabel()==0 then
-	if tc and aux.disfilter3(tc) and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetValue(RESET_TURN_SET)
-		tc:RegisterEffect(e2)
-		if tc:IsType(TYPE_TRAPMONSTER) then
-		local e3=e1:Clone()
-		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-		tc:RegisterEffect(e3)
-	else 
-		Duel.GetControl(tc,tp,PHASE_END,1)
-			end
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		if e:GetLabel()==0 then
+			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+		else
+			Duel.GetControl(tc,tp,PHASE_END,1)
 		end
 	end
 end
