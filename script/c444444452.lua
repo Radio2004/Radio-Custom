@@ -106,16 +106,10 @@ end
 			and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,nil)
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local sel=0
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	if b1 and b2 then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif b1 then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		sel=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
-	if sel==0 then
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	if op==1 then
 	 e:SetCategory(CATEGORY_DISABLE)
 	 e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
@@ -130,7 +124,7 @@ end
 		local g=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	end
-	e:SetLabel(sel)
+	e:SetLabel(op)
 end
 
 
@@ -157,5 +151,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	else 
 		Duel.GetControl(tc,tp,PHASE_END,1)
-			end
-		end
+	end
+end
