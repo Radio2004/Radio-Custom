@@ -80,8 +80,8 @@ end
 	else
 	  e:SetCategory(CATEGORY_ATKCHANGE)
 	  Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE,0,1,99,e:GetHandler())
+	end
 end
-
 
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -122,6 +122,7 @@ else
 	e1:SetValue(atk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
-	end
+end
 		Duel.Readjust()
 	end
+end
