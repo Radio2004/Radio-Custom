@@ -88,44 +88,38 @@ end
 
 
 function s.cfilter(c)
-	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 	end
 
-	function s.costfilter(c,ft,tp)
-	return c:IsSetCard(0x1bc) and ft>0  or (c:IsControler(tp) and c:GetSequence()<5) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	function s.costfilter(c,tp)
+	return c:IsSetCard(0x1bc) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local b2=nil 
 	if e:GetLabel()==9 then
-		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,tp)
+		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
 	else
 		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local sel=0
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	if b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif b1 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
-	if sel==1 then
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	if op==1 then
 	 e:SetCategory(CATEGORY_DISABLE)
 	 e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	 local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
-	elseif sel==0 then
+	else
 		if e:GetLabel()==9 then
 		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,tp)
 		Duel.Release(sg,REASON_COST)
 		end
 	end
-	e:SetLabel(sel)
+	e:SetLabel(op)
 end
 
 
@@ -148,17 +142,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)
-	elseif e:GetLabel()==0 then
-		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_FIELD)
-		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
-		e4:SetTargetRange(LOCATION_MZONE,0)
-		e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1BC))
-		e4:SetValue(aux.tgoval)
-		e4:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e4,tp)
-			end
+	   end
+	else
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetTargetRange(LOCATION_ONFIELD,0)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1BC))
+		e1:SetValue(1)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 		end
 	end
 end
