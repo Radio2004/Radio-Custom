@@ -48,6 +48,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 	e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
