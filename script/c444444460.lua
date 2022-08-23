@@ -25,7 +25,7 @@ function s.confilter(c)
 end
 
 
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
