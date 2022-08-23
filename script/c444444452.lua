@@ -156,7 +156,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e4:SetTargetRange(LOCATION_MZONE,0)
 		e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1BC))
-		e4:SetValue(1)
+		e4:SetValue(aux.tgoval)
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
 		end
