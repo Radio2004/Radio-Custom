@@ -37,7 +37,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if e:GetLabel()==9 then
 		g2=Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil)
 	else
-		g2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,ATTRIBUTE_WIND)
+		g2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,ATTRIBUTE_WIND) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil,tp,POS_FACEUP)
 end
 	local b1=g1
 	local b2=g2
