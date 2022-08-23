@@ -121,6 +121,7 @@ end
 	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 	if #sg>0 then
 		Duel.SpecialSummon(tc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP)
+		tc:CompleteProcedure()
 	end
 end
 	end
