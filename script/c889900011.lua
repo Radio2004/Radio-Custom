@@ -18,9 +18,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
    
+	function s.gyfilter(c)
+	return c:IsSetCard(0x5eb) and c:IsType(TYPE_MONSTER)
+end
+
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ct=#(c:GetMutualLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))
+	local ct=#(c:GetMutualLinkedGroup():Filter(s.gyfilter,nil))
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and s.thfilter(chkc) end
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
