@@ -88,11 +88,11 @@ end
 
 
 function s.cfilter(c)
-	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER)
 	end
 
-	function s.costfilter(c,tp)
-	return c:IsSetCard(0x1bc) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	function s.costfilter(c,ft,tp)
+	return c:IsSetCard(0x1bc) and ft>0  or (c:IsControler(tp) and c:GetSequence()<5) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
