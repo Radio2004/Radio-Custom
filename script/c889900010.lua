@@ -55,5 +55,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
+		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3207)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_CANNOT_ATTACK)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e3)
 	end
 end
