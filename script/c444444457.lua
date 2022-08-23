@@ -14,33 +14,42 @@ end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsAttribute(ATTRIBUTE_WATER+ATTRIBUTE_WIND+ATTRIBUTE_DARK+ATTRIBUTE_EARTH)
 end
+
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
+
+
 function s.cfilter2(c,att)
 	return c:IsFaceup() and c:IsAttribute(att) and c:IsSetCard(0x1BC)
 end
+
+
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1BC)
 end
+
+
 function s.cfilter3(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsLinkMonster() and c:IsLinkAbove(0) 
 end
+
+
 function s.filter1(c)
 	return c:IsPosition(POS_FACEUP_ATTACK)
 	end
-function s.setfilter(c)
-	return  c:IsFaceup() and c:IsCanTurnSet()
-	end
+
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 local g1=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WIND)
 local g2=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WATER)
 		and Duel.IsExistingMatchingCard(s.cfilter3,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 local g3=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_DARK)
-		and Duel.IsExistingTarget(s.setfilter,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,nil)
 local g4=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_EARTH)
-		and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil)
 local b1=g1  
 local b2=g2
 local b3=g3
@@ -59,8 +68,19 @@ local b4=g4
 	elseif op==2 then
 		local g=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE,nil)
 		local ct=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetLink)
+	elseif op==3 then
+		e:SetCategory(CATEGORY_POSITION)
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+	else
+		e:SetCategory(CATEGORY_TOHAND)
+		local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,0,LOCATION_MZONE,nil)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	end
 end
+
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op=e:GetLabel()
@@ -89,19 +109,14 @@ elseif op==2 then
 		tg:RegisterEffect(e1)
 end
 	elseif op==3 then
-	local g=Duel.SelectTarget(tp,s.setfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() then
-		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)end
-	else	
-	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-	local g=Duel.GetFirstTarget()
-	if g:IsRelateToEffect(e) then
+	if not tc:IsRelateToEffect(e) then return end
+		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+	else
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
-		end
 	end
-
-	
+end
