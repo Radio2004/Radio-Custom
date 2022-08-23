@@ -59,6 +59,7 @@ local b4=g4
 	elseif op==2 then
 		local g=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE,nil)
 		local ct=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetLink)
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
