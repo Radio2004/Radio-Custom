@@ -70,7 +70,7 @@ end
 function s.rescon(sg,e,tp,mg)
 	local ct=#sg
 	sg:AddCard(e:GetHandler())
-	local res=Duel.SelectMatchingCard(s.remfilter,tp,0,LOCATION_GRAVE,ct,sg)
+	local res=Duel.IsExistingMatchingCard(s.remfilter,tp,0,LOCATION_GRAVE,ct,sg)
 	sg:RemoveCard(e:GetHandler())
 	return res
 end
