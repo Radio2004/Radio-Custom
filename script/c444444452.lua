@@ -86,19 +86,12 @@ end
 	return true
 end
 
-
-function s.filter2(c)
-	return c:IsFaceup() and c:IsControlerCanBeChanged(true)
-end
-function s.cfilter(c)
-	return c:IsSetCard(0x1bc)
-end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local b2=nil 
 	if e:GetLabel()==9 then
-		  b2=Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp)
+		  b2=Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil)
 	else
 		  b2=1
 	end
@@ -114,8 +107,8 @@ end
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else 
 		if e:GetLabel()==9 then
-		local rg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp)
-			Duel.Release(rg,REASON_COST)
+		local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+		Duel.Release(sg,REASON_COST)
 		end
 	end
 	e:SetLabel(op)
