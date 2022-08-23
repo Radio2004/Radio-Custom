@@ -89,11 +89,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=Duel.Remove(rsg,POS_FACEUP,REASON_COST)
 	local g=Duel.GetMatchingGroup(s.remfilter,tp,0,LOCATION_GRAVE,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
-	e:SetLabelObject(ct)
+	e:SetLabel(0,ct)
 end
 
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ct=e:GetLabelObject()
+	local o,ct=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.remfilter,tp,0,LOCATION_GRAVE,ct,ct,e:GetHandler())
 	if #g>0 then
