@@ -113,7 +113,7 @@ end
 	elseif b1 then
 		sel=Duel.SelectOption(tp,aux.Stringid(id,0))
 	else
-		sel=Duel.SelectOption(tp,aux.Stringid(id,1))+
+		sel=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	end
 	if sel==0 then
 	 e:SetCategory(CATEGORY_DISABLE)
