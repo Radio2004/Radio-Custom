@@ -99,7 +99,7 @@ end
 	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local g2=nil 
 	if e:GetLabel()==9 then
-		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,aux.ReleaseCheckMMZ,nil,tp)
+		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,aux.ReleaseCheckMMZ,nil)
 	else
 		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
@@ -118,7 +118,7 @@ end
 	else 
 		if e:GetLabel()==9 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,aux.ReleaseCheckMMZ,nil,tp)
+		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,aux.ReleaseCheckMMZ,nil)
 		Duel.Release(sg,REASON_COST)
 		end
 	end
