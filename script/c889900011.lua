@@ -72,7 +72,7 @@ end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,e:GetLabel(),0,0)
 end
 
-	function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_GRAVE,nil,TYPE_MONSTER)
 	if #g<ct then return end
