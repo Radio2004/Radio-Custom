@@ -38,6 +38,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		g2=Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil)
 	else
 		g2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,ATTRIBUTE_WIND)
+end
 	local b1=g1
 	local b2=g2
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
