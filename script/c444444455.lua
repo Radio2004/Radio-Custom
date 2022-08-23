@@ -3,7 +3,7 @@ local s,id=GetID()
 	function s.initial_effect(c)
 	 --Special Summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -13,8 +13,7 @@ local s,id=GetID()
 	c:RegisterEffect(e1)
 	--effect
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,4))
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)	
 	e2:SetCountLimit(1,id)
@@ -55,7 +54,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 	function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1BC) and not c:IsType(TYPE_LINK) 
+	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:HasLevel()
 end
 
 
@@ -65,9 +64,8 @@ end
 
 
 	function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	local g1= Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
-	local g2= Duel.IsExistingTarget(s.spfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+	local g1=Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+	local g2=Duel.IsExistingTarget(s.spfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -75,16 +73,21 @@ end
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
+	if op==1 then
+	  e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
+	  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	  Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	else
+	  e:SetCategory(CATEGORY_ATKCHANGE)
+	  Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE,0,1,99,e:GetHandler())
 end
 
 
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==1 then 
-		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-		local tc=Duel.GetFirstTarget()
-		local dg=Group.CreateGroup()
 	local c=e:GetHandler()
+	if e:GetLabel()==1 then 
+	local tc=Duel.GetFirstTarget()
+	local dg=Group.CreateGroup()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local preatk=tc:GetAttack()
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -95,12 +98,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		if preatk~=0 and tc:GetAttack()==0 then dg:AddCard(tc) end
 end
-	 if #dg==0 then return end
+	if #dg==0 then return end
 	Duel.BreakEffect()
 	Duel.Destroy(dg,REASON_EFFECT)
-	else
-local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE,0,1,12,e:GetHandler())
-	local c=e:GetHandler()
+else
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.atkfilter,nil,e)
 	if #g>0 then
 	local atk=0
 		for tc in aux.Next(g) do
@@ -114,13 +116,13 @@ local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE,0,1,12,e:GetHandler())
 			tc:RegisterEffect(e1)   
 		end				  
 	local e1=Effect.CreateEffect(c)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
-   end
-	Duel.Readjust()
-end
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(atk)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
+	end
+		Duel.Readjust()
+	end
 end
