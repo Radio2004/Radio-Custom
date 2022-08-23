@@ -82,7 +82,7 @@ function s.filter1(c)
 end
 
 	function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(2)
+	e:SetLabel(9)
 	return true
 end
 
@@ -98,7 +98,7 @@ end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local g2=nil 
-	if e:GetLabel()==2 then
+	if e:GetLabel()==9 then
 		  g2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,aux.ReleaseCheckMMZ,nil)
 	else
 		  g2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -116,7 +116,7 @@ end
 	 local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else 
-		if e:GetLabel()==2 then
+		if e:GetLabel()==9 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,aux.ReleaseCheckMMZ,nil)
 		Duel.Release(sg,REASON_COST)
