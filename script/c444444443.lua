@@ -77,7 +77,7 @@ end
 
 
 	function s.hspfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WIND)
+	return c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WIND) and (Duel.GetMZoneCount(tp,c,tp)>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 
 
