@@ -125,4 +125,3 @@ else
 	end
 		Duel.Readjust()
 	end
-end
