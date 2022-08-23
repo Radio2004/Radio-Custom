@@ -104,9 +104,14 @@ end
 		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local op=aux.SelectEffect(tp,
-		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,1)})
+	local op=0
+	if b1 and b2 then
+		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
+	elseif b1 then
+		op=Duel.SelectOption(tp,aux.Stringid(id,0))
+	else
+		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
+	end
 	if op==1 then
 	 e:SetCategory(CATEGORY_DISABLE)
 	 e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -125,7 +130,7 @@ end
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if e:GetLabel()==1 then
+	if e:GetLabel()==0 then
 	local tc=Duel.GetFirstTarget()
 	if tc and aux.disfilter3(tc) and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
