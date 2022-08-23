@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5eb))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1bc))
 	e3:SetValue(s.indct)
 	c:RegisterEffect(e3)
 		--def up
