@@ -95,7 +95,7 @@ end
 
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	if #g>0 then
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+	end
 end
-
