@@ -88,21 +88,23 @@ end
 
 
 function s.cfilter(c)
-	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
-	end
+	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER)
+ end
 
 	function s.costfilter(c,tp)
 	return c:IsSetCard(0x1bc) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
-	local b2=nil 
+	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
+	local g2=nil 
 	if e:GetLabel()==9 then
 		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
 	else
 		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
+	local b1=g1
+	local b2=g2
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
