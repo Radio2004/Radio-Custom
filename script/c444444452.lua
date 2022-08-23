@@ -81,10 +81,6 @@ function s.filter1(c)
 	return eg:IsExists(s.filter1,1,nil)
 end
 
-	function s.costfilter(c,tp)
-	return c:IsSetCard(0x5eb) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-end
-
 	function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
@@ -95,7 +91,10 @@ function s.cfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 	end
 
-
+	function s.costfilter(c,tp)
+	return c:IsSetCard(0x1bc) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local b2=nil 
