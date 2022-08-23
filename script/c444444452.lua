@@ -82,7 +82,7 @@ function s.filter1(c)
 end
 
 	function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(9)
+	e:SetLabel(2)
 	return true
 end
 
@@ -98,7 +98,7 @@ end
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
 	local g2=nil 
-	if e:GetLabel()==9 then
+	if e:GetLabel()==2 then
 		  g2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,aux.ReleaseCheckMMZ,nil)
 	else
 		  g2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -106,8 +106,7 @@ end
 	local b1=g1
 	local b2=g2
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local op=0
-	op=aux.SelectEffect(tp,
+	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	if op==1 then
@@ -117,7 +116,7 @@ end
 	 local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else 
-		if e:GetLabel()==9 then
+		if e:GetLabel()==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,aux.ReleaseCheckMMZ,nil)
 		Duel.Release(sg,REASON_COST)
@@ -131,6 +130,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==1 then
 	local tc=Duel.GetFirstTarget()
+	if tc and aux.disfilter3(tc) and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -158,3 +158,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
+end
