@@ -39,7 +39,7 @@ function s.filter1(c,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetLevel())
 end
 function s.filter2(c,lv)
-	return  c:IsSetCard(0x1BC)  and c:IsType(TYPE_MONSTER) and c:GetLevel()<lv and c:IsAbleToHand()
+	return c:IsSetCard(0x1BC)  and c:IsType(TYPE_MONSTER) and c:GetLevel()<lv and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end 
