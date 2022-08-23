@@ -91,8 +91,8 @@ function s.cfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER)
  end
 
-	function s.costfilter(c,tp)
-	return c:IsSetCard(0x1bc) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	function s.costfilter(c)
+	return c:IsSetCard(0x1bc)
 end
 	
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
