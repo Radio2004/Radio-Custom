@@ -84,10 +84,6 @@ end
 	return c:IsSetCard(0x5eb) 
 end
 
-	function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
-end
-
 
 function s.cfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
@@ -96,7 +92,7 @@ function s.cfilter(c)
 
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
-	local g2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	local g2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
