@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e6)
 end
-
+s.listed_series={0x1BC}
 	function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE)~=0 then
 		return 1

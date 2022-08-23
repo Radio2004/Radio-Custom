@@ -22,7 +22,6 @@ function s.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC)
 end
 
-
 function s.thfilter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
