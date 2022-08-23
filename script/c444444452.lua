@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCountLimit(1,id)
 	e5:SetCondition(s.spcon)
+	e1:SetCost(s.spcost)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
@@ -80,8 +81,13 @@ function s.filter1(c)
 	return eg:IsExists(s.filter1,1,nil)
 end
 
-	function s.costfilter(c)
-	return c:IsSetCard(0x5eb) 
+	function s.costfilter(c,tp)
+	return c:IsSetCard(0x5eb) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+
+	function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(9)
+	return true
 end
 
 
@@ -91,15 +97,17 @@ function s.cfilter(c)
 
 
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
-	local g2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
-	local b1=g1
-	local b2=g2
-	if chk==0 then return b1 or b2 end
+	local b1=Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
+	local b2=nil 
+	if e:GetLabel()==9 then
+		  b2=Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
+	else
+		  b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	end
+	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
-	e:SetLabel(op)
 	if op==1 then
 	 e:SetCategory(CATEGORY_DISABLE)
 	 e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -107,9 +115,12 @@ function s.cfilter(c)
 	 local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	 Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else
+		if e:GetLabel()==9 then
 		local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
 		Duel.Release(sg,REASON_COST)
+		end
 	end
+	e:SetLabel(op)
 end
 
 
