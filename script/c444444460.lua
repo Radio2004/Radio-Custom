@@ -86,3 +86,4 @@ end
 		aux.RemoveUntil(hh,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,hh:GetPreviousControler(),REASON_EFFECT) end)
 	end
 end
+	end
