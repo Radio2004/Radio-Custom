@@ -76,7 +76,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 		local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,g)
 		local tc=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_MZONE,1,ct,nil)
-		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,tc,tc,LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,#tc,0,LOCATION_MZONE)
 	end
 end
 
@@ -104,7 +104,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 	else
 	local tc=Duel.GetTargetCards(e)
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() then
+	if tc:IsFaceup() and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
