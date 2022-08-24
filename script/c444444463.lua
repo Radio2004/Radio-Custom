@@ -1,4 +1,4 @@
---Tiba Sisters, Novella Girl
+--Naoki Tiba & Kaede Aoki, Novella Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add attribute
@@ -7,9 +7,9 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(ATTRIBUTE_EARTH+ATTRIBUTE_DARK)
+	e1:SetValue(ATTRIBUTE_FIRE)
 	c:RegisterEffect(e1)
-	   -- Effects
+	-- Effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -25,10 +25,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x1BC}
-s.listed_names={444444450,444444451,444444452,444444453}
 
-function s.filter(c,e,tp)
-	return c:IsCode(444444450) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.filter(c)
+	return c:IsFaceup() and c:IsSetCard(0x1bc) and not c:IsType(TYPE_LINK)
 end
 
 
@@ -42,13 +41,12 @@ end
 end
 
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
 	local g1=nil
 	if e:GetLabel()==9 then
-		g1=e:GetHandler():IsReleasable() and ft>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp)
+		g1=e:GetHandler():IsReleasable() and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 	else
-		g1=ft>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp)
+		g1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 	local g2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 	local b1=g1
@@ -61,8 +59,9 @@ end
 		if e:GetLabel()==9 then
 			Duel.Release(e:GetHandler(),REASON_COST)
 end
-	e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK)
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	else
 	e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
@@ -70,13 +69,18 @@ end
 	e:SetLabel(op)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
 	if e:GetLabel()==1 then
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		end
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3201)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EXTRA_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(1)
+		tc:RegisterEffect(e1)
+end
 	else
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
