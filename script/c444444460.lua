@@ -77,22 +77,22 @@ end
 	if #g==0 then return end
 	local ct=e:GetLabelObject()
 	local rg=g:RandomSelect(tp,1)
-	local tc=rg:GetFirst()
-	local rs=Group.FromCards(ct,tc)
+	local oc=rg:GetFirst()
+	local rs=Group.FromCards(ct,oc)
 	Duel.BreakEffect()
 	if ct:IsLocation(LOCATION_REMOVED) then
 	   aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 	else
-	   aux.RemoveUntil(tc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
+	   aux.RemoveUntil(oc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 		end
-	e:SetLabelObject(tc)
 	end
+   e:SetLabelObject(oc)
 end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
-	if not tc:IsLocation(LOCATION_REMOVED) then
+	if c:IsDisabled() or not tc:IsLocation(LOCATION_REMOVED) then
 		return true
 	else
 		return false
