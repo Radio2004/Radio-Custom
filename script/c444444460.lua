@@ -81,7 +81,7 @@ end
 	local rs=Group.FromCards(ct,oc)
 	Duel.BreakEffect()
 	if ct:IsLocation(LOCATION_REMOVED) then
-	   aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
+		aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 	else
 	   aux.RemoveUntil(oc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 		end
@@ -92,7 +92,7 @@ end
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
-	if c:IsDisabled() or not tc:IsLocation(LOCATION_REMOVED) then
+	if c:IsDisabled() or rg:IsLocation(LOCATION_REMOVED) then
 		return true
 	else
 		return false
