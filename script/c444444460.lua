@@ -55,11 +55,10 @@ end
 	else
 		if e:GetLabel()==9 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,1,1,nil)
-			if #g==0 then return end
-			Duel.HintSelection(g,true)
+			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
+			tc=g:GetFirst()
 			Duel.BreakEffect()
-			aux.RemoveUntil(g,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
+			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,REASON_EFFECT) end)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 	end
