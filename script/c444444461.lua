@@ -54,6 +54,9 @@ function s.spfilter(c,e,tp)
 return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)  
 end
 
+function s.disfilter(c,e)
+	return ((c:IsFaceup() and not c:IsDisabled()) or c:IsType(TYPE_TRAPMONSTER)) and c:IsRelateToEffect(e)
+end
 
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
@@ -76,7 +79,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 		local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,g)
 		local tc=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_MZONE,1,ct,nil)
-		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,#tc,0,LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,#tc,0,0)
 	end
 end
 
@@ -103,8 +106,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 end
 	else
-	local tc=Duel.GetTargetCards(e)
-	if tc:IsFaceup() and not tc:IsDisabled() then
+	local c=e:GetHandler()
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.disfilter,nil,e)
+	local tc=g:GetFirst()
+	for tc in aux.Next(g) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
