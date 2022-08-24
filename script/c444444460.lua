@@ -78,11 +78,11 @@ end
 	local ct=e:GetLabelObject()
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
+	local rs=Group.FromCards(ct,tc)
 	Duel.BreakEffect()
 	aux.RemoveUntil(tc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,1-tp,REASON_EFFECT) end)
-	if ct:IsLocation(LOCATION_REMOVED) and tc:IsLocation(LOCATION_REMOVED) then
-		Duel.SendtoHand(ct,tp,REASON_EFFECT)
-		Duel.SendtoHand(tc,1-tp,REASON_EFFECT)
+	if ct:IsLocation(LOCATION_REMOVED) then
+	   aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,rg:GetPreviousControler(),REASON_EFFECT) end)
 		end
 	end
 end
