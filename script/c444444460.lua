@@ -77,7 +77,7 @@ end
 	if #g==0 then return end
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
-	Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
-	aux.RemoveUntil(tc,POS_FACEUP,REASON_EFFECT,PHASE_END,id,e,1-tp,function(rg) Duel.SendtoHand(rg,REASON_EFFECT) end)
+	Duel.BreakEffect()
+	aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,tp,REASON_EFFECT) end)
 	end
 end
