@@ -87,7 +87,7 @@ end
 	if #g==0 then return end
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
-	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+	Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
 	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,4))
