@@ -59,7 +59,7 @@ end
 			if #g==0 then return end
 			Duel.HintSelection(g,true)
 			Duel.BreakEffect()
-			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
+			aux.RemoveUntil(g,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 	end
