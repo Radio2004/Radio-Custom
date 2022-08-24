@@ -99,7 +99,7 @@ end
 
 function s.banop(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsDisabled() or c:NegateActivation() then
+	if c:IsDisabled() or not c:IsDisabled() then
 	Duel.SendtoHand(rg,tp,REASON_EFFECT) 
 	end
 end
