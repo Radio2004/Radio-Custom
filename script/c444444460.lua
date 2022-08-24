@@ -57,7 +57,7 @@ end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 			tc=g:GetFirst()
-			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,tp,REASON_EFFECT) end,s.bancon)
+			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,s.banop)
 			e:SetLabelObject(tc)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
@@ -92,9 +92,14 @@ function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsDisabled() then
 		return true
-	elseif c:SetCode(EVENT_CHAIN_NEGATED) then
-		Duel.SendtoHand(rg,nil,REASON_EFFECT)
 	else
 		return false
+	end
+end
+
+function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsDisabled() then
+	Duel.SendtoHand(rg,tp,REASON_EFFECT) 
 	end
 end
