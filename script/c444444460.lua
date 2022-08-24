@@ -58,7 +58,8 @@ end
 			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 			tc=g:GetFirst()
 			Duel.Remove(tc,POS_FACEUP,REASON_COST)
-			aux.RemoveUntil(g,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,REASON_EFFECT) end)
+			Duel.BreakEffect()
+			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,REASON_EFFECT) end)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 	end
