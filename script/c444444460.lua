@@ -59,7 +59,7 @@ end
 			tc=g:GetFirst()
 			Duel.Remove(tc,POS_FACEUP,REASON_COST)
 			Duel.BreakEffect()
-			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,REASON_EFFECT) end)
+			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 	end
