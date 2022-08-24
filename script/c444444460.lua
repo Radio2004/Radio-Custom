@@ -75,25 +75,13 @@ end
 	else
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
-	local fid=e:GetLabelObject()
+	local fid=c:GetFieldID()
 	local rg=g:RandomSelect(tp,1)
 	local og=Duel.GetOperatedGroup()
 	local tc=rg:GetFirst()
 	local rs=Group.FromCards(fid,tc)
 	Duel.BreakEffect()
 	aux.RemoveUntil(tc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,1-tp,REASON_EFFECT) end)
-	og:KeepAlive()
-	local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-		e1:SetCountLimit(1)
-		e1:SetLabel(fid)
-		e1:SetLabelObject(og)
-		e1:SetCondition(s.retcon)
-		e1:SetOperation(s.retop)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
-		Duel.RegisterEffect(e1,tp)
 	end
 end
 
