@@ -90,6 +90,6 @@ end
 
 function s.bantg(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
-   if c:IsDisabled() or s.desop==false then
+  if c:IsDisabled() then
    Duel.SendtoHand(rg,tp,REASON_EFFECT) end
 end
