@@ -90,11 +90,11 @@ end
 end
 
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=e:GetLabelObject()
-	if c:IsDisabled() or not tc:IsLocation(LOCATION_REMOVED) then
-		return true
-	else
-		return false
+   local c=e:GetHandler()
+   local tc=e:GetLabelObject()
+   if c:IsDisabled() or not (tc:IsLocation(LOCATION_REMOVED) and c:IsControler(tp))then
+	   return true
+   else
+	   return false
 	end
 end
