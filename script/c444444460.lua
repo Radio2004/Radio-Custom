@@ -86,11 +86,13 @@ end
 	   aux.RemoveUntil(tc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 		end
 	end
+	e:SetLabelObject(tc)
 end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsDisabled() then
+	local tc:e:GetLabelObject()
+	if c:IsDisabled() or not tc:IsLocation(LOCATION_REMOVED) then
 		return true
 	else
 		return false
