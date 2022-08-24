@@ -100,6 +100,7 @@ function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.asd(c)
-	return c:IsControlerCanBeChanged()
+function s.asd(c,e)
+	local tc=e:GetLabelObject()
+	return tc
 end
