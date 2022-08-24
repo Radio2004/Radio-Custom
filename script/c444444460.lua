@@ -90,7 +90,7 @@ end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
-   if c:IsDisabled() or s.desop(e,tp,eg,ep,ev,re,r,rp)==true then
+   if c:IsDisabled() then
    return true
    else
    return false
