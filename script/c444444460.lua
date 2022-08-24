@@ -78,6 +78,6 @@ end
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
 	Duel.BreakEffect()
-	aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,tp,REASON_EFFECT) end)
+	aux.RemoveUntil(tc,POS_FACEUP,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,tp,REASON_EFFECT) end)
 	end
 end
