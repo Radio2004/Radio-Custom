@@ -19,11 +19,6 @@ function s.filter(c,g,att)
 	return c:IsFaceup() and c:IsAttribute(att) and g:IsContains(c) 
 end
 
-function s.costfilter(c,tp)
-	local lg=c:GetLinkedGroup()
-	return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg,ATTRIBUTE_WIND)
-end
-
 
 function s.confilter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()
@@ -40,7 +35,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg,ATTRIBUTE_WATER) and Duel.IsExistingTarget(s.confilter,tp,0,LOCATION_MZONE,1,nil)
 	local g2=nil
 	if e:GetLabel()==9 then
-		g2=Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,tp)
+		g2=Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg,ATTRIBUTE_WIND)
 	else
 		g2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg,ATTRIBUTE_WIND)
 end
@@ -59,7 +54,7 @@ end
 	else
 		if e:GetLabel()==9 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
+			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 			Duel.Remove(g,POS_FACEUP,REASON_COST)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
