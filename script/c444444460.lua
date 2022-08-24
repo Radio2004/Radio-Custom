@@ -79,7 +79,10 @@ end
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
 	local rs=Group.FromCards(gg,tc)
-	Duel.BreakEffect()
-	aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,1-tp,REASON_EFFECT) end)
+	for hh in aux.Next(rs) do
+		if hh==e:GetHandler() then
+		aux.RemoveUntil(hh,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,tp,REASON_EFFECT) end)
+	else
+		aux.RemoveUntil(hh,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,hh:GetPreviousControler(),REASON_EFFECT) end)
 	end
 end
