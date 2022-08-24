@@ -99,8 +99,7 @@ end
 	e1:SetOperation(s.retop2)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)  
-		end
-	end
+   end
 end
 
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
