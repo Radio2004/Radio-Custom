@@ -89,10 +89,10 @@ end
    e:SetLabelObject(oc)
 end
 
-function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
+function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
-	if c:IsDisabled() or rg:IsLocation(LOCATION_REMOVED) then
+	if c:IsDisabled() or not tc:IsLocation(LOCATION_REMOVED) then
 		return true
 	else
 		return false
