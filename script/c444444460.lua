@@ -78,7 +78,7 @@ end
 	local gg=e:GetLabelObject()
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
-	local rs=Group.FromCards(gg,rg)
+	local rs=Group.FromCards(gg,tc)
 	Duel.BreakEffect()
 	aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,1-tp,REASON_EFFECT) end)
 	end
