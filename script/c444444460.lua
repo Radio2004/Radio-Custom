@@ -92,7 +92,7 @@ function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsDisabled() then
 		return true
-	elseif c:NegateActivation() then
+	elseif c:SetCode(EVENT_CHAIN_NEGATED) then
 		Duel.SendtoHand(rg,nil,REASON_EFFECT)
 	else
 		return false
