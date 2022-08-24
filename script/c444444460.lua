@@ -91,7 +91,6 @@ end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
-   local tc=e:GetLabelObject()
    local g=Duel.GetMatchingGroup(s.asd,tp,0,LOCATION_HAND,nil)
    if c:IsDisabled() or #g>0 then
 	   return true
@@ -101,6 +100,5 @@ function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.asd(c,e)
-	local tc=e:GetLabelObject()
-	return tc
+	return c:GetLabelObject()
 end
