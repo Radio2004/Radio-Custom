@@ -57,18 +57,8 @@ end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 			tc=g:GetFirst()
-			Duel.Remove(g,POS_FACEUP,REASON_COST)
-			tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
-			local e1=Effect.CreateEffect(c)
-			e1:SetDescription(aux.Stringid(id,3))
-			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetCode(EVENT_PHASE+PHASE_END)
-			e1:SetCountLimit(1)
-			e1:SetLabelObject(tc)
-			e1:SetCondition(s.retcon2)
-			e1:SetOperation(s.retop2)
-			e1:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
+			Duel.Remove(tc,POS_FACEUP,REASON_COST)
+			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,Duel.SendtoHand)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 	end
@@ -88,42 +78,6 @@ end
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
 	Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,4))
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetCountLimit(1)
-	e1:SetLabelObject(tc)
-	e1:SetCondition(s.retcon)
-	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	aux.RemoveUntil(tc,POS_FACEUP,REASON_EFFECT,PHASE_END,id,e,tp,Duel.SendtoHand)
 	end
-end
-	function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(id)==0 then
-		e:Reset()
-		return false
-	else
-		return true
-	end
-end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.SendtoHand(tc,1-tp,REASON_EFFECT)
-end
-	function s.retcon2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(id+1)==0 then
-		e:Reset()
-		return false
-	else
-		return true
-	end
-end
-function s.retop2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.SendtoHand(tc,tp,REASON_EFFECT)
 end
