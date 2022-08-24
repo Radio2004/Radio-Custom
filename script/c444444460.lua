@@ -19,6 +19,10 @@ function s.filter(c,g,att)
 	return c:IsFaceup() and c:IsAttribute(att) and g:IsContains(c) 
 end
 
+function s.windfilter(c,g)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND) and g:IsContains(c) 
+end
+
 
 function s.confilter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()
@@ -37,7 +41,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if e:GetLabel()==9 then
 		g2=Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil)
 	else
-		g2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg,ATTRIBUTE_WIND)
+		g2=Duel.IsExistingMatchingCard(s.windfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg)
 end
 	local b1=g1
 	local b2=g2
