@@ -88,7 +88,7 @@ end
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
 	Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,4))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -118,7 +118,7 @@ end
 
 function s.retcon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(id)==0 then
+	if tc:GetFlagEffect(id+1)==0 then
 		e:Reset()
 		return false
 	else
