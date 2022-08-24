@@ -91,7 +91,7 @@ end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
-   local tc=e:GetLabelObject()
+   local tc=e:GetLabelObject(oc)
    if c:IsDisabled() or not c:IsLocation(tc,LOCATION_REMOVED) then
 	   return true
    else
