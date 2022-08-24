@@ -41,7 +41,6 @@ end
 end
 
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
 	local g1=nil
 	if e:GetLabel()==9 then
 		g1=e:GetHandler():IsReleasable() and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
