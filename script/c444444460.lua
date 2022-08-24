@@ -99,6 +99,6 @@ function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.asd(c,e)
+function s.asd(c)
 	return c:GetLabelObject()
 end
