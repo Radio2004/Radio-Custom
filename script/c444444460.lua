@@ -91,7 +91,7 @@ end
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsDisabled() or c:SetCode(EVENT_CHAIN_NEGATED) then
-		return true and c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,1,)
+		return true and c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,1)
 	else
 		return false
 	end
