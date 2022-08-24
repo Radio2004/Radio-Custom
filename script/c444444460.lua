@@ -20,7 +20,7 @@ function s.filter(c,g,att)
 end
 
 function s.costfilter(c,tp)
-	local lg=c:GetHandler():GetLinkedGroup()
+	local lg=c:GetLinkedGroup()
 	return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,lg,ATTRIBUTE_WIND)
 end
 
