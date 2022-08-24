@@ -82,23 +82,20 @@ end
 	Duel.BreakEffect()
 	if ct:IsLocation(LOCATION_REMOVED) then
 		aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
+		e:SetLabelObject(oc)
 	else
 	   aux.RemoveUntil(oc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
+	   e:SetLabelObject(oc)
 		end
 	end
-   e:SetLabelObject(oc)
 end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
-   local g=Duel.GetMatchingGroup(s.asd,tp,0,LOCATION_HAND,nil)
-   if c:IsDisabled() or #g>0 then
+   local tc=e:GetLabelObject()
+   if c:IsDisabled() or not tc:IsLocation(LOCATION_REMOVED) then
 	   return true
    else
 	   return false
 	end
-end
-
-function s.asd(c)
-	return c:GetLabelObject()
 end
