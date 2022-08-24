@@ -58,6 +58,7 @@ end
 			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 			tc=g:GetFirst()
 			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,tp,REASON_EFFECT) end)
+			e:SetLabelObject(tc)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 	end
@@ -74,9 +75,48 @@ end
 	else
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
+	local fid=e:GetLabelObject()
 	local rg=g:RandomSelect(tp,1)
+	local og=Duel.GetOperatedGroup()
 	local tc=rg:GetFirst()
+	local rs=Group.FromCards(fid,tc)
 	Duel.BreakEffect()
 	aux.RemoveUntil(tc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,1-tp,REASON_EFFECT) end)
+	og:KeepAlive()
+	local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCountLimit(1)
+		e1:SetLabel(fid)
+		e1:SetLabelObject(og)
+		e1:SetCondition(s.retcon)
+		e1:SetOperation(s.retop)
+		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		Duel.RegisterEffect(e1,tp)
+	end
+end
+
+	function s.retfilter(c,fid)
+	return c:GetFlagEffectLabel(id)==fid
+end
+function s.retcon(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetTurnPlayer()~=tp then return false end
+	local g=e:GetLabelObject()
+	if not g:IsExists(s.retfilter,1,nil,e:GetLabel()) then
+		g:DeleteGroup()
+		e:Reset()
+		return false
+	else return true end
+end
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetLabelObject()
+	local sg=g:Filter(s.retfilter,nil,e:GetLabel())
+	g:DeleteGroup()
+	local tc=sg:GetFirst()
+	for tc in aux.Next(sg) do
+		if tc==e:GetHandler() then
+			Duel.SendtoHand(tc,tc:GetPreviousControler(),REASON_EFFECT)
+		end
 	end
 end
