@@ -57,8 +57,18 @@ end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 			tc=g:GetFirst()
-			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,tp,REASON_EFFECT) end,s.bancon)
-			e:SetLabelObject(tc)
+			Duel.Remove(tc,POS_FACEUP,REASON_COST)
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(aux.Stringid(id,3))
+			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_PHASE+PHASE_END)
+			e1:SetCountLimit(1)
+			e1:SetLabelObject(tc)
+			e1:SetCondition(s.retcon)
+			e1:SetOperation(s.retop)
+			e1:SetReset(RESET_PHASE+PHASE_END)
+			Duel.RegisterEffect(e1,tp)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 	end
@@ -75,24 +85,47 @@ end
 	else
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
-	local ct=e:GetLabelObject()
 	local rg=g:RandomSelect(tp,1)
-	local oc=rg:GetFirst()
-	local rs=Group.FromCards(ct,oc)
-	Duel.BreakEffect()
-	if ct:IsLocation(LOCATION_REMOVED) then
-		aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)   
-	else
-	   aux.RemoveUntil(oc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
+	local tc=rg:GetFirst()
+	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetLabelObject(tc)
+	e1:SetCondition(s.retcon2)
+	e1:SetOperation(s.retop2)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)  
 		end
 	end
 end
 
-function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
-   local c=e:GetHandler()
-   if c:IsDisabled() or s.desop(e,tp,eg,ep,ev,re,r,rp) then
-   return true
-   else
-   return false
+function s.retcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffect(id)==0 then
+		e:Reset()
+		return false
+	else
+		return true
 	end
+end
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.SendtoHand(tc,tp,REASON_EFFECT)
+end
+
+function s.retcon2(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffect(id)==0 then
+		e:Reset()
+		return false
+	else
+		return true
+	end
+end
+function s.retop2(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.SendtoHand(tc,1-tp,REASON_EFFECT)
 end
