@@ -19,8 +19,8 @@ function s.filter(c,g,att)
 	return c:IsFaceup() and c:IsAttribute(att) and g:IsContains(c) 
 end
 
-function s.costfilter(c,e,tp)
-	local lg=e:GetHandler():GetLinkedGroup()
+function s.costfilter(c,tp)
+	local lg=c:GetHandler():GetLinkedGroup()
 	return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,lg,ATTRIBUTE_WIND)
 end
 
