@@ -123,5 +123,5 @@ end
 end
 function s.retop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	Duel.SendtoHand(tc,tp,REASON_COST)
+	Duel.SendtoHand(tc,tp,REASON_EFFECT)
 end
