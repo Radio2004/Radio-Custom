@@ -1,4 +1,5 @@
 --Naoki Tiba & Kaede Aoki, Novella Girl
+Duel.LoadScript("link2.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add attribute
@@ -23,6 +24,12 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(id)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
+	
 end
 s.listed_series={0x1BC}
 
