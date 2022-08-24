@@ -94,3 +94,4 @@ function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
    local tc=e:GetLabelObject()
    return c:IsDisabled()
+end
