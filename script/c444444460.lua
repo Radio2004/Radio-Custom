@@ -90,8 +90,10 @@ end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsDisabled() or c:NegateActivation() then
-		return true and c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,1)
+	if c:IsDisabled() then
+		return true
+	elseif c:NegateActivation() then
+		Duel.SendtoHand(rg,nil,REASON_EFFECT)
 	else
 		return false
 	end
