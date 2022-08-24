@@ -10,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1)   
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -27,27 +26,36 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 	end
+s.listed_series={0x1BC}
 	function s.thfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 	end
+
+
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	end
-	function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)	 
-		end
-		end 
-		function s.filter(c,g)
-		return c:IsFaceup()and c:IsSetCard(0x1BC) and g:IsContains(c) 
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
+
+	function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)   
+	end
+end 
+   function s.filter(c,g)
+   return c:IsFaceup()and c:IsSetCard(0x1BC) and g:IsContains(c) 
+end
+
+
 function s.spfilter(c,e,tp)
 return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)  
-	end
+end
+
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
 	local g1=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
@@ -62,6 +70,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(op)
 	local g=(op==1 and g1 or g2)
 end
+
+
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
