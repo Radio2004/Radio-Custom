@@ -20,6 +20,7 @@
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCost(s.cost)
+	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
@@ -54,6 +55,13 @@ end
 function s.filter(c,e)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable(e)
 end
+	
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+end
+
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e) then
