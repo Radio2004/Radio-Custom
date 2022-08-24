@@ -85,8 +85,8 @@ end
 	else
 	   aux.RemoveUntil(tc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 		end
-	end
 	e:SetLabelObject(tc)
+	end
 end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
