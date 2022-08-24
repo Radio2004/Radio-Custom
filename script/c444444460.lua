@@ -97,6 +97,7 @@ function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:IsLocation(LOCATION_REMOVED)
+	if tc:IsLocation(LOCATION_REMOVED) then
 		Duel.SendtoHand(rg,tp,REASON_EFFECT)
+	end
 end
