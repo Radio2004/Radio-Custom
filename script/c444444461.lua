@@ -15,13 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	 -- Effects
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetDescription(aux.Stringid(id,3))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -47,7 +46,7 @@ end
 	end
 end 
    function s.filter(c,g)
-   return c:IsFaceup()and c:IsSetCard(0x1BC) and g:IsContains(c) 
+   return c:IsFaceup() and c:IsSetCard(0x1BC) and g:IsContains(c) 
 end
 
 
@@ -58,7 +57,7 @@ end
 
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
-	local g1=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	local g2=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g)
 	and Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_MZONE,1,nil)
 	local b1=g1
@@ -68,12 +67,23 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	local g=(op==1 and g1 or g2)
+	if op==1 then
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	else
+		e:SetCategory(CATEGORY_DISABLE)
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
+		local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,g)
+		local tc=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_MZONE,1,ct,nil)
+		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,tc,tc,LOCATION_MZONE)
+	end
 end
 
-
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if e:GetLabel()==1 then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
@@ -93,14 +103,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 end
 	else
-  local g1=e:GetHandler():GetLinkedGroup()
-	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,g1)
-	if ct==0 then return end
-	local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_MZONE,1,ct,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g2=Duel.GetTargetCards(e)
-	local c=e:GetHandler()
-	for tc in aux.Next(g2) do
+	local tc=Duel.GetTargetCards(e)
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -120,8 +125,7 @@ end
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e3)
-	
+			tc:RegisterEffect(e3)	
 			end 
 		end
 	end
