@@ -47,7 +47,7 @@ s.listed_names={444444447}
 	end
 
 
-	function s.disop(e,tp,eg,ep,ev,re,r,rp)
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local tc=Duel.GetFirstTarget()
 		if not c:IsRelateToEffect(e) then return end
@@ -75,7 +75,8 @@ s.listed_names={444444447}
 
 function s.setfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_SPELL) and c:IsSSetable()
-	end
+end
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FAIRY,ATTRIBUTE_WIND)
