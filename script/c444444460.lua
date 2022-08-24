@@ -89,7 +89,8 @@ end
 end
 
 function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
+   local cc=e:GetHandlerPlayer()
    local c=e:GetHandler()
    local tc=e:GetLabelObject()
-   return c:IsDisabled() or Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_HAND)==0
+   return c:IsDisabled() or Duel.GetFieldGroupCount(tc,0,LOCATION_REMOVED)==0
 end
