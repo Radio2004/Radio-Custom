@@ -89,9 +89,8 @@ end
    e:SetLabelObject(oc)
 end
 
-function s.bancon(e,tp,eg,ep,ev,re,r,rp)
+function s.bancon(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
-   local tc=e:GetLabelObject()
    if c:IsDisabled() then
 	   return true
    else
