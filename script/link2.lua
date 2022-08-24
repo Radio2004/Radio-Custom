@@ -1,78 +1,30 @@
-if not aux.XyzProcedure then
-	aux.XyzProcedure = {}
-	Xyz = aux.XyzProcedure
+--444444463
+if not aux.LinkProcedure then
+	aux.LinkProcedure = {}
+	Link = aux.LinkProcedure 
 end
-if not Xyz then
-	Xyz = aux.XyzProcedure
+if not Link then
+	Link = aux.LinkProcedure 
 end
-function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
-	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp) or (c:IsControler(1-tp) and not c:IsHasEffect(EFFECT_XYZ_MATERIAL)) 
-		or (op and not op(e,tp,0,c)) then return false end
-	if xyzc:IsLocation(LOCATION_EXTRA) then
-		return Duel.GetLocationCountFromEx(tp,tp,c,xyzc)>0
-	else
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:GetSequence()<5
-	end
-end
---Xyz monster, lv k*n
-function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
-	--exchk for special xyz, checking other materials
-	--mustbemat for Startime Magician
-	if not maxct then maxct=ct end	
-	if c.xyz_filter==nil then
-		local mt=c:GetMetatable()
-		mt.xyz_filter=function(mc,ignoretoken,xyz,tp) return mc and (not f or f(mc,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or mc:IsXyzLevel(c,lv)) and (not mc:IsType(TYPE_TOKEN) or ignoretoken) end
-		mt.xyz_parameters={mt.xyz_filter,lv,ct,alterf,desc,maxct,op,mustbemat,exchk}
-		mt.minxyzct=ct
-		mt.maxxyzct=maxct
-	end
-	
-	local chk1=Effect.CreateEffect(c)
-	chk1:SetType(EFFECT_TYPE_SINGLE)
-	chk1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
-	chk1:SetCode(946)
-	chk1:SetCondition(Xyz.Condition(f,lv,ct,maxct,mustbemat,exchk))
-	chk1:SetTarget(Xyz.Target(f,lv,ct,maxct,mustbemat,exchk))
-	chk1:SetOperation(Xyz.Operation(f,lv,ct,maxct,mustbemat,exchk))
-	c:RegisterEffect(chk1)
+
+--Link Summon
+function Link.AddProcedure(c,f,min,max,specialchk,desc)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetDescription(1173)
+	if desc then
+		e1:SetDescription(desc)
+	else
+		e1:SetDescription(1174)
+	end
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCondition(Xyz.Condition(f,lv,ct,maxct,mustbemat,exchk))
-	e1:SetTarget(Xyz.Target(f,lv,ct,maxct,mustbemat,exchk))
-	e1:SetOperation(Xyz.Operation(f,lv,ct,maxct,mustbemat,exchk))
-	e1:SetValue(SUMMON_TYPE_XYZ)
-	e1:SetLabelObject(chk1)
+	if max==nil then max=c:GetLink() end
+	e1:SetCondition(Link.Condition(f,min,max,specialchk))
+	e1:SetTarget(Link.Target(f,min,max,specialchk))
+	e1:SetOperation(Link.Operation(f,min,max,specialchk))
+	e1:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e1)
-	if alterf then
-		local chk2=chk1:Clone()
-		chk2:SetDescription(desc)
-		chk2:SetCondition(Xyz.Condition2(alterf,op))
-		chk2:SetTarget(Xyz.Target2(alterf,op))
-		chk2:SetOperation(Xyz.Operation2(alterf,op))
-		c:RegisterEffect(chk2)
-		local e2=e1:Clone()
-		e2:SetDescription(desc)
-		e2:SetCondition(Xyz.Condition2(alterf,op))
-		e2:SetTarget(Xyz.Target2(alterf,op))
-		e2:SetOperation(Xyz.Operation2(alterf,op))
-		c:RegisterEffect(e2)
-	end
-	if not xyztemp then
-		xyztemp=true
-		xyztempg0=Group.CreateGroup()
-		xyztempg0:KeepAlive()
-		xyztempg1=Group.CreateGroup()
-		xyztempg1:KeepAlive()
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_STARTUP)
-		e3:SetOperation(Xyz.MatGenerate)
-		Duel.RegisterEffect(e3,0)
-	end
 end
 function Xyz.MatGenerate(e,tp,eg,ep,ev,re,r,rp)
 	local tck0=Duel.CreateToken(0,946)
@@ -82,98 +34,76 @@ function Xyz.MatGenerate(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 --Xyz Summon(normal)
-function Xyz.MatFilter2(c,f,lv,xyz,tp)
-	if c:IsLocation(LOCATION_GRAVE) and not c:IsHasEffect(511002793) then return false end
-	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return false end
-	return Xyz.MatFilter(c,f,lv,xyz,tp)
+function Link.ConditionFilter(c,f,lc,tp)
+	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 end
-function Xyz.MatFilter(c,f,lv,xyz,tp)
-	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp) 
-		and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL))
+function Link.GetLinkCount(c)
+	if c:IsLinkMonster() and c:GetLink()>1 then
+		return 1+0x10000*c:GetLink()
+	else return 1 end
 end
-function Xyz.SubMatFilter(c,fil,lv,xg,xyz,tp)
-	if not lv then return false end
-	--Solid Overlay-type
-	local te=c:GetCardEffect(511000189)
-	if not te then return false end
-	local f=te:GetValue()
-	if type(f)=='function' then
-		if f(te)~=lv then return false end
-	else
-		if f~=lv then return false end
-	end
-	return xg:IsExists(Xyz.SubFilterChk,1,nil,fil,xyz,tp)
-end
-function Xyz.SubFilterChk(c,f,xyz,tp)
-	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp))
-end
-function Xyz.CheckValidMultiXyzMaterial(c,xyz)
-	if not c:IsHasEffect(444444463) then return false end
-	local eff={c:GetCardEffect(444444463)}
-	for i=1,#eff do
-		local te=eff[i]
-		local tgf=te:GetOperation()
-		if not tgf or tgf(te,xyz) then return true end
-	end
-	return false
-end
-function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
-	local xct=ct
-	local rg=Group.CreateGroup()
-	if not c:IsHasEffect(511002116) then
-		xct=xct+1
-	end
-	local xmatct=matct+1
-	local eff={c:GetCardEffect(EFFECT_XYZ_MAT_RESTRICTION)}
-	for i,f in ipairs(eff) do
-		if matg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then
-			mg:Merge(rg)
+function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
+	if #sg>maxc then return false end
+	filt=filt or {}
+	sg:AddCard(c)
+	for _,filt in ipairs(filt) do
+		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
+			sg:RemoveCard(c)
 			return false
 		end
-		local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-		rg:Merge(sg2)
-		mg:Sub(sg2)
 	end
-	local g2=matg:Filter(Card.IsHasEffect,nil,EFFECT_XYZ_MAT_RESTRICTION)
-	if #g2>0 then
-		local tc=g2:GetFirst()
-		while tc do
-			local eff={tc:GetCardEffect(EFFECT_XYZ_MAT_RESTRICTION)}
-			for i,f in ipairs(eff) do
-				if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then
-					mg:Merge(rg)
-					return false
-				end
-			end
-			tc=g2:GetNext()
-		end	
+	if not og:IsContains(c) then
+		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
+		if not res then
+			sg:RemoveCard(c)
+			return false
+		end
 	end
-	if xct>max or xmatct>maxc then mg:Merge(rg) return false end
-	if not c:IsHasEffect(511002116) then
-		matg:AddCard(c)
-	end
+	local res=Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
+		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
+	sg:RemoveCard(c)
+	return res
+end
+function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
+	if #sg>maxc then return false end
 	sg:AddCard(c)
-	local res=nil
-	if xct>=min and xmatct>=minc then
-		local ok=true
-		if matg:IsExists(Card.IsHasEffect,1,nil,91110378) then
-			ok=Xyz.MatNumChkF(matg)
-		end
-		if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,86466163) then
-			ok=Xyz.MatNumChkF2(matg,lv,xyz)
-		end
-		if ok and exchk then
-			if #matg>0 and not exchk(matg,tp,xyz) then ok=false end
-		end
-		if not matg:Includes(mustg) then ok=false end
-		if ok then
-			if xyz:IsLocation(LOCATION_EXTRA) then
-				res = Duel.GetLocationCountFromEx(tp,tp,matg,xyz)>0
-			else
-				res = Duel.GetMZoneCount(tp,matg,tp)>0
-			end
+	for _,filt in ipairs(filt) do
+		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
+			sg:RemoveCard(c)
+			return false
 		end
 	end
+	if not og:IsContains(c) then
+		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
+		if not res then
+			sg:RemoveCard(c)
+			return false
+		end
+	end
+	if #(sg2-sg)==0 then
+		if secondg and #secondg>0 then
+			local res=secondg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})
+			sg:RemoveCard(c)
+			return res
+		else
+			local res=Link.CheckGoal(tp,sg,lc,minc,f,specialchk,{table.unpack(filt)})
+			sg:RemoveCard(c)
+			return res
+		end
+	end
+	local res=Link.CheckRecursive2((sg2-sg):GetFirst(),tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
+	sg:RemoveCard(c)
+	return res
+end
+function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
+	for _,filt in ipairs(filt) do
+		if not sg:IsExists(filt[2],1,nil,filt[3],tp,sg,Group.CreateGroup(),lc,filt[1],1) then
+			return false
+		end
+	end
+	return #sg>=minc and sg:CheckWithSumEqual(Link.GetLinkCount,lc:GetLink(),#sg,#sg)
+		and (not specialchk or specialchk(sg,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
+end
 	local retchknum={0}
 	local retchk={mg:IsExists(Xyz.RecursionChk1,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct,mustbemat,exchk,f,mustg,lv)}
 	if not res and c:IsHasEffect(444444463) and not mustbemat then
