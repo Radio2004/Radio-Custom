@@ -57,6 +57,7 @@ end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 			if #g==0 then return end
+			Duel.HintSelection(g,true)
 			Duel.BreakEffect()
 			aux.RemoveUntil(tc,POS_FACEUP,REASON_COST,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
 		end
