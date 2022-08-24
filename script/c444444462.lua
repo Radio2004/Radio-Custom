@@ -31,7 +31,7 @@ c:EnableReviveLimit()
 	e3:SetCode(EVENT_SUMMON)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.condition)
-	e3:SetCost(s.cost)
+	e3:SetCost(s.spcost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -87,7 +87,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end
 
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
