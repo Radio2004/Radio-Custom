@@ -16,7 +16,7 @@ c:EnableReviveLimit()
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
@@ -31,6 +31,7 @@ c:EnableReviveLimit()
 	e3:SetCode(EVENT_SUMMON)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.condition)
+	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -48,11 +49,13 @@ c:EnableReviveLimit()
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1,id)
 	e6:SetCondition(s.con)
-	e6:SetTarget(s.tg)
 	e6:SetCost(s.cost)
+	e6:SetTarget(s.tg)
 	e6:SetOperation(s.activate)
 	c:RegisterEffect(e6)
 	end
+s.listed_series={0x1BC}
+s.listed_names={id}
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.mzfilter,1,nil,lc,sumtype,tp)
 end
@@ -65,34 +68,41 @@ end
 function s.thfilter(c,e,tp)
 	return c:IsSetCard(0x1BC) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	end
+
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end
+
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+end
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,#eg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,#eg,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
-local g=Duel.SelectMatchingCard(tp,Card.IsDiscardable,tp,LOCATION_HAND,0,1,1,nil)
-	if #g>0 then
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	Duel.BreakEffect()
-	Duel.SendtoGrave(g,REASON_EFFECT)
+	local c=e:GetHandler()
+	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.NegateSummon(eg)
-	Duel.Destroy(eg,REASON_EFFECT)	  
-	end
-	end
+	Duel.Destroy(eg,REASON_EFFECT)
+end
 	function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
@@ -104,8 +114,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,g)
-	or Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,g) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
@@ -119,6 +128,6 @@ end
 function s.filter(c,g)
 	return c:IsFaceup()and g:IsContains(c) 
 end
-function s.spcostfilter(c,ft,tp)
-	return c:IsAbleToRemoveAsCost()and c:IsType(TYPE_MONSTER+TYPE_TRAP+TYPE_SPELL)
+function s.spcostfilter(c)
+	return c:IsAbleToRemoveAsCost() 
 end
