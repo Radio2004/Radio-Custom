@@ -81,15 +81,15 @@ end
 	local rs=Group.FromCards(ct,oc)
 	Duel.BreakEffect()
 	if ct:IsLocation(LOCATION_REMOVED) then
-		aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)   
+		aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 	else
-	   aux.RemoveUntil(oc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg) Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
+	   aux.RemoveUntil(oc,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg)Duel.SendtoHand(rg,nil,REASON_EFFECT) end)
 		end
 	end
 end
 
 function s.bantg(rg,e,tp,eg,ep,ev,re,r,rp)
    local c=e:GetHandler()
-   if c:IsDisabled() then
+   if c:IsDisabled() or s.desop==false then
    Duel.SendtoHand(rg,tp,REASON_EFFECT) end
 end
