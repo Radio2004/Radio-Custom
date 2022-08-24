@@ -81,7 +81,7 @@ end
 	local rs=Group.FromCards(ct,tc)
 	Duel.BreakEffect()
 	if ct:IsLocation(LOCATION_REMOVED) then
-	   aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg,tp)Duel.SendtoHand(rg,rg:GetPreviousControler(),REASON_EFFECT) end)
+	   aux.RemoveUntil(rs,POS_FACEDOWN,REASON_EFFECT,PHASE_END,id,e,tp,function(rg,e,tp,eg,ep,ev,re,r,rp) Duel.SendtoHand(rg,rg:GetPreviousControler(),REASON_EFFECT) end)
 		end
 	end
 end
