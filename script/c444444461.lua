@@ -29,7 +29,7 @@ function s.initial_effect(c)
 s.listed_series={0x1BC}
 	function s.thfilter(c)
 	return c:IsSetCard(0x1BC) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
-	end
+end
 
 
 	function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
