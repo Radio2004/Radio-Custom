@@ -87,5 +87,5 @@ end
 end
 
 function s.tgval(e,c)
-	return c:IsSetCard(0xe5)
+	return c:IsSetCard(0x1bc)
 end

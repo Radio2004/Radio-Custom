@@ -33,7 +33,8 @@ function Link.GetLinkCount(c)
 	elseif c:IsHasEffect(444444463) then
 	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
-		return 1+0x10000*f
+	local tgf=te:GetOperation()
+		return 1+0x10000*f and tgf
 	else return 1 end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
