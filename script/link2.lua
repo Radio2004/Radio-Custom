@@ -30,13 +30,10 @@ end
 function Link.GetLinkCount(c,lc)
 	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
-	elseif c:IsHasEffect(444444463) then
+	elseif c:IsHasEffect(444444463) and c:IsHasEffect(444444463):GetCondition(lc) then
 	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
-	local f,con=te:GetValue(),te:GetCondition()
-	if con(lc) then
    		return 1+0x10000*f
-	end
    	else return 1 end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
