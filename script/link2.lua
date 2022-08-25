@@ -35,7 +35,6 @@ function Link.GetLinkCount(c)
 	local f=te:GetValue()
 	local tf=te:GetOperation()
 		return 1+0x10000*f and c:IsSetCard(0x1BC)
-	end
 	else return 1 end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
