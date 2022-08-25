@@ -99,8 +99,34 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 			for _,v in ipairs(retchknum) do
 				if v==val then redun=true break end
 			end
+			if not redun and val>0 and (not tgf or tgf(te,filt)) then
+				if xct>=min and xmatct+val>=minc and xct<=max and xmatct+val<=maxc then
+					local ok=true
+					
+					if not matg:Includes(mustg) then ok=false end
+					if ok then
+						if xyz:IsLocation(LOCATION_EXTRA) then
+							res = Duel.GetLocationCountFromEx(tp,tp,matg,filt)>0
+						else
+							res = Duel.GetMZoneCount(tp,matg,tp)>0
+						end
+					end
+				end
+				if xmatct+val<=maxc then
+					table.insert(retchknum,val)
+					table.insert(retchk,mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
+				end
+			end
 		end
 	end
+	for i=1,#retchk do
+		if retchk[i] then res=true break end
+	end
+	matg:RemoveCard(c)
+	sg:RemoveCard(c)
+	mg:Merge(rg)
+	return res
+end
 	if #(sg2-sg)==0 then
 		if secondg and #secondg>0 then
 			local res=secondg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})
