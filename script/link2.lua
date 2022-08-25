@@ -32,7 +32,11 @@ function Link.GetLinkCount(c)
 	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
 	elseif c:IsHasEffect(444444463) then
-		return 2
+	local eff={c:GetCardEffect(444444463)}
+	for i=1,#eff do
+		local te=eff[i]
+		local tgf=te:GetOperation()
+		if not tgf or tgf(te,xyz) then return true en
 	else return 1 end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
