@@ -156,7 +156,7 @@ function Link.Target(f,minc,maxc,specialchk)
 					end
 					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,{table.unpack(filters)})
 					if #cg==0 then break end
-					local eff={sg:GetCardEffect(444444463)}
+					local eff={cg:GetCardEffect(444444463)}
 					for i=1,#eff do
 					local te=eff[i]
 					local tgf=te:GetOperation()
