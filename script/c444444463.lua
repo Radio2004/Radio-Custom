@@ -79,6 +79,7 @@ end
 		 local e2=Effect.CreateEffect(c)
 		 e2:SetType(EFFECT_TYPE_SINGLE)
 		 e2:SetCode(id)
+		 e2:SetOperation(s.tgval)
 		 e2:SetValue(2)
 		 e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		 c:RegisterEffect(e2)
