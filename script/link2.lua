@@ -1,4 +1,4 @@
---444444463
+--c:IsHasEffect(444444463)
 if not aux.LinkProcedure then
 	aux.LinkProcedure = {}
 	Link = aux.LinkProcedure
@@ -31,19 +31,10 @@ end
 function Link.GetLinkCount(c)
 	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
+	elseif c:IsHasEffect(444444463) then
+		return 1+0x10000*c:GetValue()
 	else return 1 end
 end
-function Link.CheckValidMultiLinkMaterial(c,lc)
-	if not c:IsHasEffect(444444463) then return false end
-	local eff={c:GetCardEffect(444444463)}
-	for i=1,#eff do
-		local te=eff[i]
-		local tgf=te:GetOperation()
-		if not tgf or tgf(te,lc) then return true end
-	end
-	return false
-end
-
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
 	filt=filt or {}
@@ -65,19 +56,6 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
 	sg:RemoveCard(c)
 	return res
-	local retchknum={0}
-	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
-	if not res and c:IsHasEffect(444444463) and not mustbemat then
-		local eff={c:GetCardEffect(444444463)}
-		for i,te in ipairs(eff) do
-			local tgf=te:GetOperation()
-			local val=te:GetValue()
-			local redun=false
-			for _,v in ipairs(retchknum) do
-				if v==val then redun=true break end
-			end	
-		end
-	end
 end
 function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
@@ -109,19 +87,6 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	local res=Link.CheckRecursive2((sg2-sg):GetFirst(),tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	sg:RemoveCard(c)
 	return res
-end
-	local retchknum={0}
-	local retchk={mg:IsExists(Link.CheckRecursive2,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)}
-	if not res and c:IsHasEffect(444444463) and not mustbemat then
-		local eff={c:GetCardEffect(444444463)}
-		for i,te in ipairs(eff) do
-			local tgf=te:GetOperation()
-			local val=te:GetValue()
-			local redun=false
-			for _,v in ipairs(retchknum) do
-				if v==val then redun=true break end
-			end
-		end
 end
 function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 	for _,filt in ipairs(filt) do
@@ -197,12 +162,6 @@ function Link.Target(f,minc,maxc,specialchk)
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
-						elseif sc:IsHasEffect(444444463) then
-									matg:AddCard(tc)
-									ct=ct+1
-									if not Link.CheckValidMultiLinkMaterial(tc,c) or (min>=ct and minc>=matct+1) then
-										matct=matct+1
-									end
 						else
 							sg:RemoveCard(tc)
 						end
