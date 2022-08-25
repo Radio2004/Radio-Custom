@@ -34,11 +34,7 @@ function Link.GetLinkCount(c,f,lc)
 	elseif c:IsHasEffect(444444463) then
 	local te=c:GetCardEffect(444444463)
 	local f=te:GetValue()
-	if type(f)=='function' then
-		if f(te)~=lc then return false end
-	else
-		if f~=lc then return false end
-	end
+		return 1+0x10000*f
 	else return 1 end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
