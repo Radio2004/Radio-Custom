@@ -118,15 +118,6 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 				end
 			end
 		end
-	end
-	for i=1,#retchk do
-		if retchk[i] then res=true break end
-	end
-	matg:RemoveCard(c)
-	sg:RemoveCard(c)
-	mg:Merge(rg)
-	return res
-end
 	if #(sg2-sg)==0 then
 		if secondg and #secondg>0 then
 			local res=secondg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})
