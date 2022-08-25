@@ -36,7 +36,7 @@ function Link.GetLinkCount(c)
 	for i=1,#eff do
 		local te=eff[i]
 		local tgf=te:GetOperation()
-		if not tgf or tgf(te,xyz) then return true en
+		if not tgf or tgf(te,xyz) then return true end
 	else return 1 end
 	end
 end
