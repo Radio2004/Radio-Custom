@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(id)
-	e4:SetLabelObject({})
+	e4:SetLabelObject({s.tgval})
 	e4:SetValue(2)
 	c:RegisterEffect(e4)
 end
@@ -92,6 +92,6 @@ end
 	end
 end
 
-function s.tgval(c)
-	return c:IsSetCard(0x1bc)
+function s.tgval(e)
+	return e:GetHandler():IsSetCard(0x1bc)
 end
