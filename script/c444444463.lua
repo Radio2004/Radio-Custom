@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(id)
+	e1:SetValue(1)
 	c:RegisterEffect(e4)
 	
 end
