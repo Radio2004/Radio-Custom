@@ -79,17 +79,13 @@ end
 		 local e2=Effect.CreateEffect(c)
 		 e2:SetType(EFFECT_TYPE_SINGLE)
 		 e2:SetCode(id)
-		 e2:SetLabelObject({s.extrafil_replacement})
+		 e2:SetOperation(s.tgval)
 		 e2:SetValue(2)
 		 e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		 c:RegisterEffect(e2)
 	end
 end
 
-	function s.extrafil_repl_filter(c)
-	return c:IsMonster() and c:IsAbleToGrave() and c:IsSetCard(0x1bc)
-end
-function s.extrafil_replacement(e,tp,mg)
-	local g=Duel.GetMatchingGroup(s.extrafil_repl_filter,tp,LOCATION_EXTRA,0,nil)
-	return g,s.fcheck_replacement
+function s.tgval(e,c)
+	return c:IsSetCard(0xe5)
 end
