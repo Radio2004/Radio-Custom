@@ -198,7 +198,7 @@ function Link.Target(f,minc,maxc,specialchk)
 						elseif sc:IsHasEffect(444444463) then
 									matg:AddCard(tc)
 									ct=ct+1
-									if not Link.CheckValidMultiXyzMaterial(tc,c) or (min>=ct and minc>=matct+1) then
+									if not Link.CheckValidMultiLinkMaterial(tc,c) or (min>=ct and minc>=matct+1) then
 										matct=matct+1
 									end
 						else
