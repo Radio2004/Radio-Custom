@@ -24,12 +24,6 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(id)
-	e4:SetValue(2)
-	c:RegisterEffect(e4)
-	
 end
 s.listed_series={0x1BC}
 
@@ -37,10 +31,6 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1bc) and not c:IsType(TYPE_LINK)
 end
 
-
-function s.thfilter(c)
-	return (c:IsCode(444444451) or c:IsCode(444444452) or c:IsCode(444444453))  and c:IsAbleToHand()
-end
 
 	function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
@@ -54,7 +44,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		g1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
-	local g2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
+	local g2=true
 	local b1=g1
 	local b2=g2
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
@@ -68,9 +58,6 @@ end
 	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	else
-	e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	end
 	e:SetLabel(op)
 end
@@ -88,11 +75,20 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 end
 	else
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-		end
+		 local e2=Effect.CreateEffect(c)
+		 e2:SetType(EFFECT_TYPE_SINGLE)
+		 e2:SetCode(id)
+		 e2:SetLabelObject({s.extrafil_replacement})
+		 e2:SetValue(2)
+		 e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		 c:RegisterEffect(e2)
 	end
+end
+
+	function s.extrafil_repl_filter(c)
+	return c:IsMonster() and c:IsAbleToGrave() and c:IsSetCard(0x1bc)
+end
+function s.extrafil_replacement(e,tp,mg)
+	local g=Duel.GetMatchingGroup(s.extrafil_repl_filter,tp,LOCATION_EXTRA,0,nil)
+	return g,s.fcheck_replacement
 end
