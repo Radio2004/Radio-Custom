@@ -77,6 +77,7 @@ end
 			for _,v in ipairs(retchknum) do
 				if v==val then redun=true break end
 			end	
+		end
 end
 function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
