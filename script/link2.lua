@@ -27,14 +27,16 @@ end
 function Link.ConditionFilter(c,f,lc,tp)
 	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 end
-function Link.GetLinkCount(c)
-	if c:IsLinkMonster() and c:GetLink()>1 then
-		return 1+0x10000*c:GetLink()
-	elseif c:IsHasEffect(444444463) then
-	local te=c:IsHasEffect(444444463)
-	local f=te:GetValue()
-   		return 1+0x10000*f
-   	else return 1 end
+function Link.GetLinkCount(lc)
+  return function(c)
+    if c:IsLinkMonster() and c:GetLink()>1 then
+      return 1+0x10000*c:GetLink()
+      elseif c:IsHasEffect(444444463) then
+      local te=c:GetCardEffect(444444463)
+      local f,con=te:GetValue(),te:GetCondition()
+      if not con or con(lc) then return 1+0x10000*f end
+      else return 1 end
+    end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
@@ -46,13 +48,6 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 			return false
 		end
 	end
-	if c:IsHasEffect(444444463) then
-	local eff={c:GetCardEffect(444444463)}
-	local tgf=eff:GetOperation()
-	if tgf(eff,lc) then
-		return true
-		end
-end
 	if not og:IsContains(c) then
 		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
@@ -102,7 +97,7 @@ function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 			return false
 		end
 	end
-	return #sg>=minc and sg:CheckWithSumEqual(Link.GetLinkCount,lc:GetLink(),#sg,#sg)
+	return #sg>=minc and sg:CheckWithSumEqual(Link.GetLinkCount(lc),lc:GetLink(),#sg,#sg)
 		and (not specialchk or specialchk(sg,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
 end
 function Link.Condition(f,minc,maxc,specialchk)
