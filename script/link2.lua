@@ -34,7 +34,7 @@ function Link.GetLinkCount(c)
 	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
 	local tf=te:GetOperation()
-	if tf:IsSetCard(0x1bc) then
+	if not tf or tf(te,lc) then
 		return 1+0x10000*f
 	else
 		return 1
