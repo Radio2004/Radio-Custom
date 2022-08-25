@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(id)
-	e4:SetValue(3)
+	e4:SetValue(2)
 	c:RegisterEffect(e4)
 	
 end
@@ -50,7 +50,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=nil
 	if e:GetLabel()==9 then
-		g1=e:GetHandler():IsReleasable() and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
+		g1=e:GetHandler():IsReleasable() and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 	else
 		g1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
