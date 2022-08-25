@@ -36,7 +36,7 @@ function Link.GetLinkCount(c,lc)
 	elseif te then	
    		return 1+0x10000*f
 	end
-   	else return 1 end
+   	else return 1 
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
