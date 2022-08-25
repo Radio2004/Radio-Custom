@@ -34,7 +34,7 @@ function Link.GetLinkCount(c)
 	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
 	local tf=te:GetOperation()
-		return 1+0x10000*f and c:IsSetCard(0x1BC)
+		return 1+0x10000*f
 	else return 1 end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
@@ -52,6 +52,19 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
 			return false
+		end
+	end
+	local retchknum={0}
+	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
+	if and c:IsHasEffect(511001225) then
+		local eff={c:GetCardEffect(511001225)}
+		for i,te in ipairs(eff) do
+			local tgf=te:GetOperation()
+			local val=te:GetValue()
+			local redun=false
+			for _,v in ipairs(retchknum) do
+				if v==val then redun=true break end
+			end
 		end
 	end
 	local res=Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
@@ -73,6 +86,19 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 		if not res then
 			sg:RemoveCard(c)
 			return false
+		end
+	end
+	local retchknum={0}
+	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
+	if and c:IsHasEffect(511001225) then
+		local eff={c:GetCardEffect(511001225)}
+		for i,te in ipairs(eff) do
+			local tgf=te:GetOperation()
+			local val=te:GetValue()
+			local redun=false
+			for _,v in ipairs(retchknum) do
+				if v==val then redun=true break end
+			end
 		end
 	end
 	if #(sg2-sg)==0 then
