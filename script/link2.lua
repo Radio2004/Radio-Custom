@@ -32,6 +32,7 @@ function Link.GetLinkCount(c)
 		return 1+0x10000*c:GetLink()
 	elseif c:IsHasEffect(444444463) then
 	local te=c:IsHasEffect(444444463)
+	local eff={c:GetCardEffect(444444463)}
 	local f=te:GetValue()
 	local tgf=te:GetOperation()
 	for i=1,#eff do
