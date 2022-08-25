@@ -65,7 +65,6 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
 	sg:RemoveCard(c)
 	return res
-end
 	local retchknum={0}
 	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
 	if not res and c:IsHasEffect(444444463) and not mustbemat then
@@ -78,6 +77,7 @@ end
 				if v==val then redun=true break end
 			end	
 		end
+	end
 end
 function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
