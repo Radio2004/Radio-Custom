@@ -33,7 +33,7 @@ function Link.GetLinkCount(lc)
       return 1+0x10000*c:GetLink()
       elseif c:IsHasEffect(444444463) then
       local te=c:GetCardEffect(444444463)
-      local f,con=te:GetValue(),te:GetCondition()
+      local f,con=te:GetValue(),te:GetLabelObject()[1]
       if not con or con(lc) then return 1+0x10000*f end
       else return 1 end
     end
