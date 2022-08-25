@@ -38,6 +38,7 @@ function Link.GetLinkCount(c)
 		local tgf=te:GetOperation()
 		if not tgf or tgf(te,xyz) then return true en
 	else return 1 end
+	end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
