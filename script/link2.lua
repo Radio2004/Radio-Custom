@@ -54,7 +54,6 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 			return false
 		end
 	end
-
 	local res=Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
 	sg:RemoveCard(c)
