@@ -92,6 +92,6 @@ end
 	end
 end
 
-function s.tgval(e)
-	return e:GetHandler():IsSetCard(0x1bc)
+function s.tgval(c)
+	return c:IsSetCard(0x1bc)
 end
