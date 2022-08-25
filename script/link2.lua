@@ -1,4 +1,3 @@
---c:IsHasEffect(444444463)
 if not aux.LinkProcedure then
 	aux.LinkProcedure = {}
 	Link = aux.LinkProcedure
@@ -32,7 +31,7 @@ function Link.GetLinkCount(c)
 	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
 	elseif c:IsHasEffect(444444463) then
-	local te=c:GetCardEffect(444444463)
+	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
 		return 1+0x10000*f
 	else return 1 end
