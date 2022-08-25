@@ -50,7 +50,7 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	local eff={c:GetCardEffect(444444463)}
 	local tgf=eff:GetOperation()
 	if tgf(eff,lc) then
-		true
+		return true
 		end
 end
 	if not og:IsContains(c) then
