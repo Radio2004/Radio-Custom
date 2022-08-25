@@ -67,7 +67,7 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	return res
 end
 	local retchknum={0}
-	local retchk={mg:IsExists(Link.CheckRecursive,1,c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)}
+	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt)}
 	if not res and c:IsHasEffect(444444463) and not mustbemat then
 		local eff={c:GetCardEffect(444444463)}
 		for i,te in ipairs(eff) do
@@ -111,7 +111,7 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	return res
 end
 	local retchknum={0}
-	local retchk={mg:IsExists(Link.CheckRecursive2,1,c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)}
+	local retchk={mg:IsExists(Link.CheckRecursive2,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)}
 	if not res and c:IsHasEffect(444444463) and not mustbemat then
 		local eff={c:GetCardEffect(444444463)}
 		for i,te in ipairs(eff) do
