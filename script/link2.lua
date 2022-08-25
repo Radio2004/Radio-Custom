@@ -28,14 +28,17 @@ function Link.ConditionFilter(c,f,lc,tp)
 	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 end
 function Link.GetLinkCount(lc)
-  return function(c)
-    if c:IsLinkMonster() and c:GetLink()>1 then
-      return 1+0x10000*c:GetLink()
-      elseif c:IsHasEffect(444444463) then
-      local te=c:GetCardEffect(444444463)
-      local f,con=te:GetValue(),te:GetLabelObject()[1]
-      if not con or con(lc) then return 1+0x10000*f end
-      else return 1 end
+    return function(c)
+        local te=c:IsHasEffect(444444463)
+        local f,con
+        if te then
+            f,con=te:GetValue(),te:GetLabelObject()[1]
+            if not con or con(lc) then return 1+0x10000*f end
+        end
+        if c:IsLinkMonster() and c:GetLink()>1 then
+            return 1+0x10000*c:GetLink()
+        end
+        return 1
     end
 end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
