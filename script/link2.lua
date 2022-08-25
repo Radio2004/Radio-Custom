@@ -161,7 +161,7 @@ function Link.Target(f,minc,maxc,specialchk)
 					local te=eff[i]
 					local tgf=te:GetOperation()
 					
-					if not tgf or tgf(te,c)) then return true end
+					if not tgf or tgf(te,c) then return true end
 									
 					finish=#sg>=min and #sg<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters)
 					cancel=not og and Duel.IsSummonCancelable() and #sg==0
