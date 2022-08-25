@@ -133,6 +133,7 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	sg:RemoveCard(c)
 	return res
 end
+end
 function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 	for _,filt in ipairs(filt) do
 		if not sg:IsExists(filt[2],1,nil,filt[3],tp,sg,Group.CreateGroup(),lc,filt[1],1) then
