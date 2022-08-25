@@ -1,3 +1,15 @@
+--function Link.GetLinkCount(c,lc)
+	if c:IsLinkMonster() and c:GetLink()>1 then
+		return 1+0x10000*c:GetLink()
+	elseif c:IsHasEffect(444444463) then
+    	local te=c:IsHasEffect(444444463)
+    	local f=te:GetValue()
+	local tgf=te:GetOperation()
+    		return 1+0x10000*f
+	end
+    	else return 1 end
+end
+
 if not aux.LinkProcedure then
 	aux.LinkProcedure = {}
 	Link = aux.LinkProcedure
@@ -27,21 +39,23 @@ end
 function Link.ConditionFilter(c,f,lc,tp)
 	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 end
-function Link.GetLinkCount(c,sc)
+function Link.GetLinkCount(c)
 	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
-	elseif c:IsHasEffect(444444463) then
-    	local te={c:GetCardEffect(511001225)}
-    	local f=te:GetValue()
-	local tgf=te:GetOperation()
-	if not tgf or tgf(te,sc) then
-    		return 1+0x10000*f
-	else
-		return 1
-	end
     	else return 1 end
+	end
 end
 
+function Link.CheckValidMultiLinkMaterial(c,lc)
+	if not c:IsHasEffect(444444463) then return false end
+	local eff={c:GetCardEffect(444444463)}
+	for i=1,#eff do
+		local te=eff[i]
+		local tgf=te:GetOperation()
+		if not tgf or tgf(te,lc) then return true end
+	end
+	return false
+end
 
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
@@ -170,6 +184,28 @@ function Link.Target(f,minc,maxc,specialchk)
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
+							if tc:IsHasEffect(511001225) then
+								matg:AddCard(tc)
+								ct=ct+1
+							if not Link.CheckValidMultiLinkMaterial(tc,c) or (min>=ct and minc>=matct+1) then
+										matct=matct+1
+									else
+							local multi={}
+							if mg:IsExists(Link.CheckRecursive,1,c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt) then
+											table.insert(multi,1)
+						end
+						local eff={tc:GetCardEffect(444444463)}
+						for i=1,#eff do
+											local te=eff[i]
+											local tgf=te:GetOperation()
+											local val=te:GetValue()
+											if val>0 and (not tgf or tgf(te,c)) then
+												if (min>=ct and minc>=matct+1+val) 
+													or mg:IsExists(Xyz.RecursionChk1,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct+1+val,mustbemat,exchk,f,mustg,lv) then
+													table.insert(multi,1+val)
+												end
+											end
+										end
 						else
 							sg:RemoveCard(tc)
 						end
