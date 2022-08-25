@@ -27,7 +27,7 @@ end
 function Link.ConditionFilter(c,f,lc,tp)
 	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 end
-function Link.GetLinkCount(c,lc)
+function Link.GetLinkCount(c)
 	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
 	local f,con=te:GetValue(),te:GetCondition()
