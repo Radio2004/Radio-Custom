@@ -225,6 +225,7 @@ function Link.Target(f,minc,maxc,specialchk)
 			end
 end	
 end
+end
 function Link.Operation(f,minc,maxc,specialchk)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,g,min,max)
 				local g,filt,emt=e:GetLabelObject():GetTarget()()
