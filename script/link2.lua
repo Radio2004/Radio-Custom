@@ -46,6 +46,13 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 			return false
 		end
 	end
+	if c:IsHasEffect(444444463) then
+	local eff={c:GetCardEffect(444444463)}
+	local tgf=eff:GetOperation()
+	if tgf(eff,lc) then
+		true
+		end
+end
 	if not og:IsContains(c) then
 		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
