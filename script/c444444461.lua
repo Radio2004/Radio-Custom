@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1BC),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1BC),1)
 	-- add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -130,7 +130,7 @@ end
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e3)	
+			tc:RegisterEffect(e3)   
 			end 
 		end
 	end
