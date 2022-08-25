@@ -33,10 +33,10 @@ function Link.GetLinkCount(c)
 	elseif c:IsHasEffect(444444463) then
 	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
-	local tf=te:GetOperation()
 		return 1+0x10000*f
 	else return 1 end
 end
+
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
 	filt=filt or {}
@@ -52,19 +52,6 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
 			return false
-		end
-	end
-	local retchknum={0}
-	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
-	if c:IsHasEffect(444444463) then
-		local eff={c:GetCardEffect(444444463)}
-		for i,te in ipairs(eff) do
-			local tgf=te:GetOperation()
-			local val=te:GetValue()
-			local redun=false
-			for _,v in ipairs(retchknum) do
-				if v==val then redun=true break end
-			end
 		end
 	end
 	local res=Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
@@ -88,36 +75,6 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 			return false
 		end
 	end
-	local retchknum={0}
-	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
-	if c:IsHasEffect(444444463) then
-		local eff={c:GetCardEffect(444444463)}
-		for i,te in ipairs(eff) do
-			local tgf=te:GetOperation()
-			local val=te:GetValue()
-			local redun=false
-			for _,v in ipairs(retchknum) do
-				if v==val then redun=true break end
-			end
-			if not redun and val>0 and (not tgf or tgf(te,filt)) then
-				if xct>=min and xmatct+val>=minc and xct<=max and xmatct+val<=maxc then
-					local ok=true
-					
-					if not matg:Includes(mustg) then ok=false end
-					if ok then
-						if xyz:IsLocation(LOCATION_EXTRA) then
-							res = Duel.GetLocationCountFromEx(tp,tp,matg,filt)>0
-						else
-							res = Duel.GetMZoneCount(tp,matg,tp)>0
-						end
-					end
-				end
-				if xmatct+val<=maxc then
-					table.insert(retchknum,val)
-					table.insert(retchk,mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
-				end
-			end
-		end
 	if #(sg2-sg)==0 then
 		if secondg and #secondg>0 then
 			local res=secondg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})
@@ -132,7 +89,6 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	local res=Link.CheckRecursive2((sg2-sg):GetFirst(),tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	sg:RemoveCard(c)
 	return res
-end
 end
 function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 	for _,filt in ipairs(filt) do
