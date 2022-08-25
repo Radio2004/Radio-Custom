@@ -120,6 +120,7 @@ end
 			for _,v in ipairs(retchknum) do
 				if v==val then redun=true break end
 			end
+		end
 end
 function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 	for _,filt in ipairs(filt) do
