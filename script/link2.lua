@@ -30,7 +30,7 @@ end
 function Link.GetLinkCount(c,lc)
 	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
-	elseif c:IsHasEffect(444444463) and c:IsHasEffect(444444463):GetCondition(lc) then
+	elseif c:IsHasEffect(444444463) and c:IsHasEffect(444444463):GetCondition(te,lc) then
 	local te=c:IsHasEffect(444444463)
 	local f=te:GetValue()
    		return 1+0x10000*f
