@@ -86,6 +86,6 @@ end
 	end
 end
 
-function s.tgval(c)
+function s.tgval(e,c)
 	return c:IsSetCard(0x1bc)
 end
