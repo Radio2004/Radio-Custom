@@ -195,11 +195,12 @@ function Link.Target(f,minc,maxc,specialchk)
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
-					elseif sc:IsHasEffect(444444463) then
+						elseif sc:IsHasEffect(444444463) then
 									matg:AddCard(tc)
 									ct=ct+1
 									if not Link.CheckValidMultiXyzMaterial(tc,c) or (min>=ct and minc>=matct+1) then
 										matct=matct+1
+									end
 						else
 							sg:RemoveCard(tc)
 						end
