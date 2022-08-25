@@ -1,14 +1,14 @@
 --function Link.GetLinkCount(c,lc)
-	if c:IsLinkMonster() and c:GetLink()>1 then
-		return 1+0x10000*c:GetLink()
-	elseif c:IsHasEffect(444444463) then
-    	local te=c:IsHasEffect(444444463)
-    	local f=te:GetValue()
-	local tgf=te:GetOperation()
-    		return 1+0x10000*f
-	end
-    	else return 1 end
-end
+--	if c:IsLinkMonster() and c:GetLink()>1 then
+--		return 1+0x10000*c:GetLink()
+--	elseif c:IsHasEffect(444444463) then
+ --  	local te=c:IsHasEffect(444444463)
+  --  	local f=te:GetValue()
+--	local tgf=te:GetOperation()
+   -- 		return 1+0x10000*f
+--	end
+    --	else return 1 end
+--end
 
 if not aux.LinkProcedure then
 	aux.LinkProcedure = {}
