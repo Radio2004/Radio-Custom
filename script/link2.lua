@@ -56,8 +56,8 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	end
 	local retchknum={0}
 	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
-	if and c:IsHasEffect(511001225) then
-		local eff={c:GetCardEffect(511001225)}
+	if and c:IsHasEffect(444444463) then
+		local eff={c:GetCardEffect(444444463)}
 		for i,te in ipairs(eff) do
 			local tgf=te:GetOperation()
 			local val=te:GetValue()
@@ -90,8 +90,8 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	end
 	local retchknum={0}
 	local retchk={mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)})}
-	if and c:IsHasEffect(511001225) then
-		local eff={c:GetCardEffect(511001225)}
+	if and c:IsHasEffect(444444463) then
+		local eff={c:GetCardEffect(444444463)}
 		for i,te in ipairs(eff) do
 			local tgf=te:GetOperation()
 			local val=te:GetValue()
