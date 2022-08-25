@@ -34,7 +34,7 @@ function Link.GetLinkCount(c,sc)
     	local te=c:IsHasEffect(444444463)
     	local f=te:GetValue()
 	local tgf=te:GetOperation()
-	if not tgf or tgf(sc) then
+	if not tgf or tgf(te,sc) then
     		return 1+0x10000*f
 	else
 		return 1
