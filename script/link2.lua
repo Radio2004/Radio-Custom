@@ -156,6 +156,13 @@ function Link.Target(f,minc,maxc,specialchk)
 					end
 					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,{table.unpack(filters)})
 					if #cg==0 then break end
+					local eff={sc:GetCardEffect(444444463)}
+					for i=1,#eff do
+					local te=eff[i]
+					local tgf=te:GetOperation()
+					
+					if not tgf or tgf(te,c)) then return true end
+									
 					finish=#sg>=min and #sg<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters)
 					cancel=not og and Duel.IsSummonCancelable() and #sg==0
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
@@ -183,6 +190,7 @@ function Link.Target(f,minc,maxc,specialchk)
 				end
 			end
 end
+	end
 function Link.Operation(f,minc,maxc,specialchk)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,g,min,max)
 				local g,filt,emt=e:GetLabelObject():GetTarget()()
