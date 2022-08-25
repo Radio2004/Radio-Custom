@@ -108,6 +108,7 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	local res=Link.CheckRecursive2((sg2-sg):GetFirst(),tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	sg:RemoveCard(c)
 	return res
+end
 	local retchknum={0}
 	local retchk={mg:IsExists(Link.CheckRecursive2,1,c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)}
 	if not res and c:IsHasEffect(444444463) and not mustbemat then
