@@ -31,9 +31,14 @@ function Link.GetLinkCount(c,sc)
 	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
 	elseif c:IsHasEffect(444444463) then
-    	local te=c:GetCardEffect(444444463)
-    	local f,con=te:GetValue(),te:GetCondition()
-    	if con(sc) then return 1+0x10000*f end
+    	local te=c:IsHasEffect(444444463)
+    	local f=te:GetValue()
+	local tgf=te:GetOperation()
+	if not tgf or tgf(sc) then
+    		return 1+0x10000*f
+	else
+		return 1
+	end
     	else return 1 end
 end
 
