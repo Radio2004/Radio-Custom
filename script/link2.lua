@@ -188,7 +188,7 @@ function Link.Target(f,minc,maxc,specialchk)
 								ct=ct+1
 							if not Link.CheckValidMultiLinkMaterial(tc,c) or (min>=ct and minc>=matct+1) then
 										matct=matct+1
-									else
+							emd
 							local multi={}
 							if mg:IsExists(Link.CheckRecursive,1,c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt) then
 											table.insert(multi,1)
@@ -224,8 +224,6 @@ function Link.Target(f,minc,maxc,specialchk)
 				end
 			end
 end	
-end
-end
 function Link.Operation(f,minc,maxc,specialchk)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,g,min,max)
 				local g,filt,emt=e:GetLabelObject():GetTarget()()
