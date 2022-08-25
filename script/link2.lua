@@ -223,6 +223,7 @@ function Link.Target(f,minc,maxc,specialchk)
 					return false
 				end
 			end
+end	
 end
 function Link.Operation(f,minc,maxc,specialchk)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,g,min,max)
