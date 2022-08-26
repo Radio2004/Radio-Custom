@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--destruction replacement
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DESTROY_REPLACE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTarget(s.reptg2)
@@ -81,8 +81,7 @@ end
 
 function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
-		and eg:IsExists(s.repfilter,1,nil,tp) and c:GetDestination()==LOCATION_REMOVED end
+	if chk==0 then return c:GetDestination()==LOCATION_REMOVED end
 	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
 end
 
