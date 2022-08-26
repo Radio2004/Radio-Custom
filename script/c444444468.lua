@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_SEND_REPLACE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTarget(s.reptg2)
+	e4:SetValue(s.repval)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x1bc}
@@ -84,8 +85,4 @@ function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 		return true
 	else return false end
-end
-
-function s.repval2(e,c)
-	return s.repfilter(c,e:GetHandlerPlayer())
 end
