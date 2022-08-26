@@ -27,7 +27,7 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dnc=math.min(g:GetClassCount(Card.GetCode))
 	local b1=dnc>3 and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler())
 	local b2=dnc>6 and Duel.IsPlayerCanDraw(tp,1)
-	local b3=dnc>9
+	local b3=dnc>9 and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
@@ -40,18 +40,13 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	else
+		e:SetCategory(CATEGORY_TODECK)
+		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	end
 end
-function s.banlocop(tp,loc,gf)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,loc,nil)
-	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=gf(g,tp,1,1,nil)
-		Duel.HintSelection(sg,true)
-		return Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
-	end
-	return 0
-end
+
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op=e:GetLabel()
@@ -89,12 +84,11 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	  end
 end
 	else
-		 if not e:GetHandler():IsRelateToEffect(e) then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_GRAVE,0,1,1,c)
-		if #g>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,1,nil)
+		if #sg>0 then
+		Duel.HintSelection(sg)
+		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 		end
 	end
 end
