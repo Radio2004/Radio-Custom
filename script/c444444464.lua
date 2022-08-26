@@ -106,7 +106,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_SPELL) and c:IsControler(tp) and c:IsLocation(LOCATION_SZONE)
+	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_SPELL) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 
