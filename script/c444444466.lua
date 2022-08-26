@@ -15,15 +15,15 @@ end
 s.listed_series={0x1bc}
 	function s.smfilter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
-		   and c:IsSetCard(0x1bc)
+		   and c:IsSetCard(0x1bc) and not c:IsCode(id)
 end
 
 function s.schfilter(c)
-	return c:IsSetCard(0x1BC) and c:IsAbleToHand()
+	return c:IsSetCard(0x1BC) and c:IsAbleToHand() and not c:IsCode(id)
 end
 
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_GRAVE,0,e:GetHandler(),tp)
+	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	local dnc=math.min(g:GetClassCount(Card.GetCode))
 	local b1=dnc>3 and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler())
 	local b2=dnc>6
