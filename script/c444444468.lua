@@ -53,7 +53,7 @@ end
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
-		and eg:IsExists(s.repfilter,1,nil,tp) and e:GetHandler():IsAbleToRemove() or c:GetDestination()==LOCATION_REMOVED end
+		and eg:IsExists(s.repfilter,1,nil,tp) or c:GetDestination()==LOCATION_REMOVED and e:GetHandler():IsAbleToGrave()end
 	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
 end
 
