@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x1BC}
-
+s.listed_names={444444450}
 function s.filter(c,e,tp)
 	return c:IsCode(444444450) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
