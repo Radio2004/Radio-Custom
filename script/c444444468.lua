@@ -30,9 +30,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DESTROY_REPLACE)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetTarget(s.reptg2)
 	e4:SetValue(s.repval2)
-	e4:SetOperation(s.repop2)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x1bc}
@@ -82,7 +80,10 @@ end
 function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetDestination()==LOCATION_REMOVED end
-	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
+	if Duel.SelectYesNo(tp,aux.Stringid(77631175,0)) then
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		return true
+	else return false end
 end
 
 function s.repval2(e,c)
