@@ -24,6 +24,9 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetValue(s.val)
 	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e4)
 end
 	function s.tg(e,c,tp)
 	if not c:IsSetCard(0x1BC) then return false end
