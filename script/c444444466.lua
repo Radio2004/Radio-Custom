@@ -32,7 +32,7 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)},
-		{b3,aux.Stringid(id,2)}),
+		{b3,aux.Stringid(id,2)})
 	e:SetLabel(op)
 	if op==1 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
