@@ -48,7 +48,7 @@ end
 
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_EFFECT) or c:GetDestination()==LOCATION_REMOVED and not c:IsReason(REASON_REPLACE)
 end
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
