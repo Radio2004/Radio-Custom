@@ -133,7 +133,7 @@ end
 		e3:SetValue(1)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		g:RegisterEffect(e3,true)
-			end
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
