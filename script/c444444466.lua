@@ -83,7 +83,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 			end
 	  end
 end
-	elseif op==3 and dnc>3 then
+	elseif op==3 and dnc>9 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if #sg>0 then
