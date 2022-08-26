@@ -15,6 +15,15 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
+	--destruction replacement
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_DESTROY_REPLACE)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetTarget(s.reptg)
+	e3:SetValue(s.repval)
+	e3:SetOperation(s.repop)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x1BC}
 
@@ -29,7 +38,7 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0   
-	local g2= Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(s.tofilter,tp,LOCATION_GRAVE,0,3,nil)
+	local g2=Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(s.tofilter,tp,LOCATION_GRAVE,0,3,nil)
 	local b1=g1
 	local b2=g2   
 	if chk==0 then return b1 or b2 end
@@ -94,4 +103,21 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end
+end
+
+function s.repfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x1bc) c:IsControler(tp) and c:IsLocation(LOCATION_SZONE)
+		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+end
+
+function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
+		and eg:IsExists(s.repfilter,1,nil,tp) and e:GetHandler():IsAbleToRemove() end
+	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
+end
+function s.repval(e,c)
+	return s.repfilter(c,e:GetHandlerPlayer())
+end
+function s.repop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 end
