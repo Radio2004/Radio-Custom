@@ -25,9 +25,15 @@ function s.initial_effect(c)
 	e3:SetValue(s.repval)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
-	local e5=e3:Clone()
-	e5:SetCode(EFFECT_SEND_REPLACE)
-	c:RegisterEffect(e5)
+	--destruction replacement
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_DESTROY_REPLACE)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetTarget(s.reptg2)
+	e4:SetValue(s.repval2)
+	e4:SetOperation(s.repop2)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x1bc}
 	function s.tg(e,c,tp)
@@ -58,6 +64,25 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
 		and eg:IsExists(s.repfilter,1,nil,tp) or c:GetDestination()==LOCATION_REMOVED end
+	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
+end
+
+function s.repval(e,c)
+	return s.repfilter(c,e:GetHandlerPlayer())
+end
+
+function s.repop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+end
+
+function s.repfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:GetDestination()==LOCATION_REMOVED 
+end 
+
+function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
+		and eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
 end
 
