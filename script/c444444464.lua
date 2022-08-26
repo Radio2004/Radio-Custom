@@ -22,11 +22,14 @@ function s.filter(c,e,tp)
 	return c:IsSetCard(0x1BC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 
+function s.tofilter(c)
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x1BC) and c:IsAbleToDeck()
+end
 
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-	 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0   
-	local g2=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
+	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0   
+	local g2= Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(s.tofilter,tp,LOCATION_GRAVE,0,3,nil)
 	local b1=g1
 	local b2=g2   
 	if chk==0 then return b1 or b2 end
@@ -40,9 +43,13 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-	if op==2 then
-		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	else
+	e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,s.tofilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 	end
 
@@ -50,6 +57,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if e:GetLabel()==1 then
 		if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
@@ -76,12 +84,14 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 	else
-		if not e:GetHandler():IsRelateToEffect(e) then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if #g>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+		if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
+		Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+		local g=Duel.GetOperatedGroup()
+		if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
+		local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+		if ct==3 then
+		Duel.BreakEffect()
+		Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end
 end
