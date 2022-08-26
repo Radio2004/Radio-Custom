@@ -24,12 +24,6 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(id)
-	e4:SetLabelObject({s.tgval})
-	e4:SetValue(2)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x1BC}
 
@@ -85,7 +79,7 @@ end
 		 local e2=Effect.CreateEffect(c)
 		 e2:SetType(EFFECT_TYPE_SINGLE)
 		 e2:SetCode(id)
-		 e2:SetCondition(s.tgval)
+		 e2:SetLabelObject({s.tgval})
 		 e2:SetValue(2)
 		 e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		 c:RegisterEffect(e2)
