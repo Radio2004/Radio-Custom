@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x1BC}
-
+s.listed_names={444444461}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1bc) and not c:IsType(TYPE_LINK)
 end
