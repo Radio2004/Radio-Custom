@@ -47,20 +47,21 @@ s.listed_series={0x1bc}
 end
 
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) or c:GetDestination()==LOCATION_REMOVED 
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
-		and eg:IsExists(s.repfilter,1,nil,tp) or c:GetDestination()==LOCATION_REMOVED and e:GetHandler():IsAbleToGrave()end
+		and eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
 end
 
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
+
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 end
