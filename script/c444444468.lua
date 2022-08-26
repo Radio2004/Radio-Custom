@@ -79,7 +79,7 @@ end
 
 function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetDestination()==LOCATION_REMOVED and c:IsSetCard(0x1bc) end
+	if chk==0 then return eg:IsExists(s.repfilter2,1,nil,tp) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 		return true
