@@ -33,7 +33,7 @@ end
 
 
 function s.thfilter(c)
-	return (c:IsCode(444444451) or c:IsCode(444444452) or c:IsCode(444444453))  and c:IsAbleToHand()
+	return c:IsSetCard(0x1BC) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS  and c:IsAbleToHand()
 end
 
 	function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
