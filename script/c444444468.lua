@@ -51,13 +51,13 @@ end
 
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_EFFECT) or c:GetDestination()==LOCATION_REMOVED and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
-		and eg:IsExists(s.repfilter,1,nil,tp) end
+		and eg:IsExists(s.repfilter,1,nil,tp) or c:GetDestination()==LOCATION_REMOVED end
 	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
 end
 
