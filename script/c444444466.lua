@@ -52,7 +52,7 @@ end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op=e:GetLabel()
-	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_GRAVE,0,c,tp)
+	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	local dnc=g:GetClassCount(Card.GetCode)
 	if dnc==0 then return end
 	if op==1 then
