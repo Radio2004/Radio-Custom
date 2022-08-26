@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	--destruction replacement
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_DESTROY_REPLACE)
+	e4:SetCode(EFFECT_SEND_REPLACE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTarget(s.reptg2)
 	c:RegisterEffect(e4)
