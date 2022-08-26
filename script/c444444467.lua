@@ -112,18 +112,19 @@ end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if Duel.SpecialSummonStep(g,0,tp,tp,false,false,POS_FACEUP) then
-		Duel.Recover(tp,g:GetAttack()/2,REASON_EFFECT)
+	local tc=g:GetFirst()
+	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		Duel.Recover(tp,tc:GetAttack()/2,REASON_EFFECT)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		g:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		g:RegisterEffect(e2)
+		tc:RegisterEffect(e2)
 		--Cannot be used as link material
 		local e3=Effect.CreateEffect(c)
 		e3:SetDescription(3312)
@@ -132,7 +133,7 @@ end
 		e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e3:SetValue(1)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		g:RegisterEffect(e3,true)
+		tc:RegisterEffect(e3,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
