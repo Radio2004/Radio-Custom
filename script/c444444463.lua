@@ -93,5 +93,5 @@ end
 end
 
 function s.tgval(c)
-	return c:IsSetCard(0x1bc)
+	return c:IsCode(444444461)
 end
