@@ -105,6 +105,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.dsop)
 		Duel.RegisterEffect(e1,tp)
 end
+Duel.SpecialSummonComplete()
 	else
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.disfilter,nil,e)
