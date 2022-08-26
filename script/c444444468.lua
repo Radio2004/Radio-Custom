@@ -25,6 +25,17 @@ function s.initial_effect(c)
 	e3:SetValue(s.repval)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
+	--banish replace
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCode(EFFECT_SEND_REPLACE)
+	e4:SetTarget(s.reptg)
+	e4:SetOperation(s.repop)
+	c:RegisterEffect(e4)
+	local e5=e4:Clone()
+	e5:SetCode(EFFECT_SEND_REPLACE)
+	c:RegisterEffect(e5)
 end
 s.listed_series={0x1bc}
 	function s.tg(e,c,tp)
@@ -48,7 +59,7 @@ end
 
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_EFFECT) or c:GetDestination()==LOCATION_REMOVED  and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_EFFECT) or c:GetDestination()==LOCATION_REMOVED and not c:IsReason(REASON_REPLACE)
 end
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
