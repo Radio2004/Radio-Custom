@@ -1,4 +1,5 @@
 --Xeno, Novella Girl
+Duel.LoadScript("customutility.lua")
 local s,id=GetID()
 	function s.initial_effect(c)
 	 --Special Summon
@@ -114,7 +115,7 @@ else
 			e1:SetValue(0)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)   
-		end				  
+		end			   
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
