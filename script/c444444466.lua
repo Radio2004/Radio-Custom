@@ -53,7 +53,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	local dnc=g:GetClassCount(Card.GetCode)
 	if dnc==0 then return end
-	if op==1 then
+	if op==1 and dnc>3 then
 		if not e:GetHandler():IsRelateToEffect(e) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_GRAVE,0,1,1,c)
@@ -61,7 +61,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 	end
-	elseif op==2 then
+	elseif op==2 and dnc>6 then
 	   if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	   local tc=Duel.GetOperatedGroup():GetFirst()
 	   if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1bc) then
@@ -83,7 +83,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 			end
 	  end
 end
-	else
+	elseif op==3 and dnc>3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if #sg>0 then
