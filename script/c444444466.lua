@@ -26,7 +26,7 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	local dnc=math.min(g:GetClassCount(Card.GetCode))
 	local b1=dnc>3 and Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler())
-	local b2=dnc>6
+	local b2=dnc>6 and Duel.IsPlayerCanDraw(tp,1)
 	local b3=dnc>9
 	if chk==0 then return b1 or b2 or b3 end
 	local op=aux.SelectEffect(tp,
@@ -37,6 +37,9 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if op==1 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+	elseif op==2 then
+		e:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
 end
 function s.banlocop(tp,loc,gf)
@@ -64,13 +67,14 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 	end
 	elseif op==2 then
-		if not e:GetHandler():IsRelateToEffect(e) then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_GRAVE,0,1,1,c)
-		if #g>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
-	end
+	   if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
+	   local tc=Duel.GetOperatedGroup():GetFirst()
+	   if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x1bc) then
+	   if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	   if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+			Duel.ConfirmCards(1-tp,tc)
+	   end
+end
 	else
 		 if not e:GetHandler():IsRelateToEffect(e) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
