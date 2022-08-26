@@ -75,21 +75,21 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 end
 
-function s.repfilter(c,tp)
+function s.repfilter2(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:GetDestination()==LOCATION_REMOVED 
 end 
 
-function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
-		and eg:IsExists(s.repfilter,1,nil,tp) end
+		and eg:IsExists(s.repfilter2,1,nil,tp) end
 	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
 end
 
-function s.repval(e,c)
+function s.repval2(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
+function s.repop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 end
