@@ -122,10 +122,8 @@ end
 
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)
-	local params ={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0xdf),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
-					extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 	local g1=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,g,nil)
-	local g2=Fusion.SummonEffTG(params)
+	local g2=s.fustg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -137,7 +135,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetCategory(CATEGORY_REMOVE)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 		else
-	   e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -151,7 +149,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
 	else
-	Fusion.SummonEffOP(params)
+	s.fusop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
@@ -165,3 +163,7 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
+local params ={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0xdf),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+					extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
+s.fustg=Fusion.SummonEffTG(params)
+s.fusop=Fusion.SummonEffOP(params)
