@@ -145,7 +145,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)
 	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,ct,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,ct,nil)
 	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
