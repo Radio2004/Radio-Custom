@@ -79,7 +79,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
-		and eg:IsExists(s.repfilter,1,nil,tp) end
+		and eg:IsExists(s.repfilter,1,nil,tp) and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	return Duel.SelectYesNo(tp,aux.Stringid(id,2))
 end
 
@@ -97,7 +97,7 @@ end
 
 function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return eg:IsExists(s.repfilter2,1,nil,tp) end
+	if chk==0 then return eg:IsExists(s.repfilter2,1,nil,tp) and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 		return true
