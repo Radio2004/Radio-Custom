@@ -69,11 +69,13 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==1 then
+	local lg=e:GetHandler():GetLinkedGroup()
+	local tc=Duel.GetMatchingGroupCount(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg)
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(s.atkval)
+			e1:SetValue(tc*200)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			c:RegisterEffect(e1)
 end
@@ -86,8 +88,4 @@ end
 			Duel.ConfirmCards(1-tp,g)
 		end
 	end
-end
-
-function s.atkval(e,c)
-	return c:GetLinkedGroup():FilterCount(Card.IsSetCard,nil,0x1bc)*200
 end
