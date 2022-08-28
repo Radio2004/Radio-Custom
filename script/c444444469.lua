@@ -15,19 +15,28 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_SEND_REPLACE)
+	e2:SetCountLimit(1,{id,1})
 	e2:SetTarget(s.reptg)
 	c:RegisterEffect(e2)
-	--Decrease ATK/DEF
+	--destroy replace
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetValue(s.val)
+	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_DESTROY_REPLACE)
+	e3:SetCountLimit(1,{id,1})
+	e3:SetTarget(s.reptg2)
+	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_UPDATE_DEFENSE)
+	--Decrease ATK/DEF
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_UPDATE_ATTACK)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTargetRange(0,LOCATION_MZONE)
+	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
+	local e5=e4:Clone()
+	e5:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e5)
 	--Banish
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
@@ -73,16 +82,28 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.desrepfilter(c)
+function s.repfilter(c)
 	return c:IsAbleToDeck() and aux.nvfilter(c)
 end
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetDestination()==LOCATION_REMOVED and Duel.IsExistingMatchingCard(s.desrepfilter,tp,LOCATION_REMOVED,0,1,nil) end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+	if chk==0 then return c:GetDestination()==LOCATION_REMOVED and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_REMOVED,0,1,nil) end
+	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local g=Duel.SelectMatchingCard(tp,s.desrepfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_REPLACE)
+		return true
+	else return false end
+end
+
+function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsOnField() and c:IsFaceup()
+		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_REMOVED,0,1,c,e) end
+	if Duel.SelectEffectYesNo(tp,c,96) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
+		local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end
