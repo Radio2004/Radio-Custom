@@ -94,8 +94,8 @@ end
 		e1:SetCode(EVENT_BATTLE_START)
 		e1:SetLabel(att)
 		e1:SetOwnerPlayer(tp)
-		e1:SetCondition(s.descon)
-		e1:SetOperation(s.desop)
+		e1:SetCondition(s.destcon)
+		e1:SetOperation(s.destop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1,true)
 		if reg then
@@ -107,11 +107,11 @@ end
 	end
 end
 
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
+function s.destcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	return tp==e:GetOwnerPlayer() and tc and tc:IsControler(1-tp) and tc:IsAttribute(e:GetLabel())
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.destop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	Duel.Destroy(tc,REASON_EFFECT)
 end
