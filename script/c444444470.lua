@@ -91,7 +91,7 @@ end
 		local att=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_BATTLE_START)
+		e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 		e1:SetLabel(att)
 		e1:SetOwnerPlayer(tp)
 		e1:SetCondition(s.destcon)
