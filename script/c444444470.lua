@@ -52,7 +52,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()
 	local g1=Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg)
-	local g2=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
+	local g2=true
 	local b1=g1
 	local b2=g2   
 	if chk==0 then return b1 or b2 end
@@ -62,6 +62,13 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(op)
 	if op==1 then
 		e:SetCategory(CATEGORY_ATKCHANGE)
+	else
+		local val=ATTRIBUTE_ALL
+		local reg=e:GetHandler():GetFlagEffectLabel(id)
+		if reg then val=val&(~reg) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+		local att=Duel.AnnounceAttribute(tp,1,val)
+		Duel.SetTargetParam(att)
 end
 	end
 
@@ -81,11 +88,30 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 	else
 		if not e:GetHandler():IsRelateToEffect(e) then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if #g>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+		local att=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_BATTLE_START)
+		e1:SetLabel(att)
+		e1:SetOwnerPlayer(tp)
+		e1:SetCondition(s.descon)
+		e1:SetOperation(s.desop)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1,true)
+		if reg then
+			reg=(reg|att)
+			c:SetFlagEffectLabel(id,reg)
+		else
+			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,att)
 		end
 	end
+end
+
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetHandler():GetBattleTarget()
+	return tp==e:GetOwnerPlayer() and tc and tc:IsControler(1-tp) and tc:IsAttribute(e:GetLabel())
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetHandler():GetBattleTarget()
+	Duel.Destroy(tc,REASON_EFFECT)
 end
