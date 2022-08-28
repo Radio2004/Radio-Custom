@@ -24,7 +24,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetTarget(s.reptg2)
-	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 	--Decrease ATK/DEF
 	local e4=Effect.CreateEffect(c)
@@ -100,7 +99,7 @@ end
 function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsOnField() and c:IsFaceup()
-		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_REMOVED,0,1,c,e) end
+		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_REMOVED,0,1,nil,e) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_REMOVED,0,1,1,nil)
