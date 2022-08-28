@@ -52,6 +52,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_series={0x1bc}
+s.listed_names={444444469}
 	function s.tg(e,c,tp)
 	if not c:IsSetCard(0x1BC) then return false end
 	if c:GetFlagEffect(1)==0 then

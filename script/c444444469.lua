@@ -48,7 +48,6 @@ function s.initial_effect(c)
 	e6:SetOperation(s.remop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x1bc}
 s.material_setcode=0x1bc
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
 	return c:IsSetCard(0x1bc,fc,sumtype,tp) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
