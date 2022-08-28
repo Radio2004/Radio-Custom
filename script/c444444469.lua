@@ -10,6 +10,13 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
+	--banish replace
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_SEND_REPLACE)
+	e2:SetTarget(s.reptg)
+	c:RegisterEffect(e2)
 	--Decrease ATK/DEF
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -64,4 +71,19 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(sg1,true)
 		Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)
 	end
+end
+
+function s.desrepfilter(c)
+	return c:IsAbleToDeck() and aux.nvfilter(c)
+end
+
+function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetDestination()==LOCATION_REMOVED and Duel.IsExistingMatchingCard(s.desrepfilter,tp,LOCATION_REMOVED,0,1,nil) end
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		local g=Duel.SelectMatchingCard(tp,s.desrepfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_REPLACE)
+		return true
+	else return false end
 end
