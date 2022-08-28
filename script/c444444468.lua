@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCountLimit(1,{id,1})
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--Change Attribute to EARTH
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
-	--destruction replacement
+	--banish replacement
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_SEND_REPLACE)
@@ -77,7 +77,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.repfilter2(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetDestination()==LOCATION_REMOVED 
+	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetDestination()==LOCATION_REMOVED and not c:IsReason(REASON_REPLACE)
 end 
 
 function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
