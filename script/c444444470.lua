@@ -13,6 +13,16 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
+	 -- Effects
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,4))
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetCountLimit(1)
+	e2:SetTarget(s.destg)
+	e2:SetOperation(s.desop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x1bc}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -33,4 +43,51 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+end
+function s.atkfilter(c,g)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1bc) and g:IsContains(c)
+end
+
+
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local lg=e:GetHandler():GetLinkedGroup()
+	local g1=Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg)
+	local g2=Duel.IsExistingMatchingCard(s.schfilter,tp,LOCATION_DECK,0,1,nil) 
+	local b1=g1
+	local b2=g2   
+	if chk==0 then return b1 or b2 end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	e:SetLabel(op)
+	if op==1 then
+		e:SetCategory(CATEGORY_ATKCHANGE)
+end
+	end
+
+
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if e:GetLabel()==1 then
+		if c:IsRelateToEffect(e) and c:IsFaceup() then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(s.atkval)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			c:RegisterEffect(e1)
+end
+	else
+		if not e:GetHandler():IsRelateToEffect(e) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,s.schfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if #g>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
+	end
+end
+
+function s.atkval(e,c)
+	return c:GetLinkedGroup():FilterCount(Card.IsSetCard,nil,0x1bc)*200
 end
