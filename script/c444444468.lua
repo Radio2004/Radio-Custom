@@ -163,7 +163,7 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
-local params ={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0xdf),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+local params ={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x1bc),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
 					extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 s.fustg=Fusion.SummonEffTG(params)
 s.fusop=Fusion.SummonEffOP(params)
