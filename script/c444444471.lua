@@ -12,18 +12,12 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.thcon)
 	e1:SetTarget(s.thtg)
-	e1:SetCost(s.descost)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x1bc}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
-end
-
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 
 function s.desfilter(c)
