@@ -93,7 +93,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
-	local atk=tc:GetFirst():GetLevel()
+	local atk=tc:GetLevel()
 	if tc==e:GetHandler() then tc=Duel.GetAttackTarget() end
 	if chk==0 then return tc and tc:IsRelateToBattle() and tc:HasLevel() end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
