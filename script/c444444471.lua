@@ -99,7 +99,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	local atk=tc:GetFirst():GetLevel()
 	if tc==e:GetHandler() then tc=Duel.GetAttackTarget() end
-	if chk==0 then return tc and tc:IsRelateToBattle() end
+	if chk==0 then return tc and tc:IsRelateToBattle() and tc:HasLevel() end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(atk)
