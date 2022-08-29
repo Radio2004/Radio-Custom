@@ -47,8 +47,7 @@ function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=c:GetReasonCard()
-	local rc=g:GetFirst()
+	local rc=c:GetReasonCard()
 	if not rc then return end
 	local e1=Effect.CreateEffect(rc)
 	e1:SetDescription(aux.Stringid(id,0))
