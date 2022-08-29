@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,{id,0})
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x5eb}
 	function s.drfilter(c)
 	return c:IsSetCard(0x5eb)  and c:IsAbleToDeck()
 end

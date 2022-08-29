@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-   
+s.listed_series={0x5eb}
 	function s.gyfilter(c)
 	return c:IsSetCard(0x5eb) and c:IsType(TYPE_MONSTER)
 end
