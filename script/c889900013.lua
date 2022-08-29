@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(s.setcon)
-	e2:SetTarget(s.settg)
-	e2:SetOperation(s.setop)
+	e2:SetCondition(s.atkcon)
+	e2:SetTarget(s.atktg)
+	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 	--ret&draw
 	local e3=Effect.CreateEffect(c)
@@ -56,7 +56,7 @@ end
 	function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x5eb) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousControler(tp)
 end
-function s.setcon(e,tp,eg,ep,ev,re,r,rp)
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
