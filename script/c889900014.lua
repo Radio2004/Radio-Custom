@@ -43,11 +43,11 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_LINK and eg:IsExists(Card.IsSetCard,1,nil,0x5eb)
+	return r & REASON_LINK == REASON_LINK and e:GetHandler():GetReasonCard():IsLinkMonster() and e:GetHandler():IsSetCard(0x5eb)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x5eb)
+	local g=c:GetReasonCard()
 	local rc=g:GetFirst()
 	if not rc then return end
 	local e1=Effect.CreateEffect(rc)
