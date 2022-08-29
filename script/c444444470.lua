@@ -1,4 +1,4 @@
---Novella: Friendship Forever
+--Sagiri Tiba, Novella Girl
 local s,id=GetID()
 function s.initial_effect(c)
 --Link summon 

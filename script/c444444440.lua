@@ -63,7 +63,7 @@ end
 
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
-	local g2=Duel.IsExistingTarget(s.desfilter,tp,LOCATION_SZONE,0,1,nil)and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil,e,tp)
+	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil)and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil,e,tp)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -79,8 +79,8 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct)
   else
 	e:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_SZONE,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,LOCATION_SZONE)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 	end
@@ -93,7 +93,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,ct,REASON_EFFECT)
 	else
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	if #dg==0 then return end
 	if Duel.Destroy(dg,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
