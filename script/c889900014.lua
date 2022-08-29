@@ -66,7 +66,6 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_PIERCE)
-	c:RegisterEffect(e2)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e2,true)
 	if not rc:IsType(TYPE_EFFECT) then
