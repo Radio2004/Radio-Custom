@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2,4,s.lcheck)
 	c:EnableReviveLimit()
 end
+s.listed_names={889900001}
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
