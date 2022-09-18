@@ -114,7 +114,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),0,LOCATION_MZONE,nil)*500
+	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)*500
 end
 function s.filter(c)
 	return c:IsCode(889900001) and c:IsFaceup()
