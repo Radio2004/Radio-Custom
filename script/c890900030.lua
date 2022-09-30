@@ -54,10 +54,12 @@ end
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==1 then
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 		local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
-	else 
+	else
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 	end
