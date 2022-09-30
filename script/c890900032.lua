@@ -94,10 +94,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if tc and tc:IsFaceup() and c:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(lv)
