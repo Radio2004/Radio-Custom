@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,s.tfilter,1,1,Synchro.NonTunerEx(s.sfilter),1,1)
+	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1)
 	c:EnableReviveLimit()
 end
 s.material={890900035,890900036}
