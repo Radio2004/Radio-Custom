@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={890900001}
+s.listed_series={0x3dd}
 function s.cfilter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsSetCard(0x3dd)
 end
