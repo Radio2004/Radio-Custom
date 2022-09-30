@@ -89,12 +89,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp,1,6,g:GetFirst():GetLevel())
-	e:SetLabelObject(g:GetFirst())
+	e:SetLabel(g:GetFirst())
 	Duel.SetTargetParam(lv)
 end
 
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
+	local tc=e:SetLabel()
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
