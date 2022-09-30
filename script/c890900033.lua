@@ -40,9 +40,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_GRAVE,0,1,nil) end
 	local rt=Duel.GetTargetCount(nil,tp,0,LOCATION_ONFIELD,nil)
 	if rt>2 then rt=2 end
-	local cg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_GRAVE,0,1,rt,nil)
-	Duel.Remove(cg,POS_FACEUP,REASON_COST)
-	e:SetLabel(cg:GetFirst())
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_GRAVE,0,1,rt,nil)
+	local cg=Duel.Remove(g,POS_FACEUP,REASON_COST)
+	e:SetLabel(cg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
