@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetOperation(s.subop)
@@ -113,7 +113,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.subfilter(c)
-	return c:IsFaceup() and c:HasLevel()
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x3dd)
 end
 
 function s.subop(e,tp,eg,ep,ev,re,r,rp)
