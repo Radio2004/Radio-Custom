@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_ADJUST)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e4:SetCondition(s.dircon)
 	e4:SetOperation(s.subop)
 	c:RegisterEffect(e4)
 end
@@ -113,6 +114,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
+function s.dircon(e)
+	local tp=e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,890900001),tp,LOCATION_ONFIELD,0,1,nil)
+end
+
 function s.subfilter(c)
 	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x3dd)
 end
