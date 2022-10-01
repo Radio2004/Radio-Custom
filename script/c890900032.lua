@@ -119,7 +119,7 @@ function s.dircon(e)
 end
 
 function s.subfilter(c)
-	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x22cd)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x3dd)
 end
 
 function s.subop(e,tp,eg,ep,ev,re,r,rp)
