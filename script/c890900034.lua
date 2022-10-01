@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_LEAVE_FIELD)
+	e5:SetRange(LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_DECK)
 	e5:SetTarget(s.target)
 	e5:SetCondition(s.condition)
 	e5:SetOperation(s.operation)
@@ -91,8 +92,9 @@ function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	return #eg==1 and (tc:IsCode(890900033) or e:GetHandler()) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
+	local cd=c:GetPreviousCodeOnField()
+	return (cd==890900033 or cd==id) and c:IsPreviousLocation(LOCATION_ONFIELD)
+		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
