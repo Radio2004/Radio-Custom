@@ -30,6 +30,13 @@ function s.initial_effect(c)
 	e4:SetCondition(s.con)
 	e4:SetOperation(s.op)
 	c:RegisterEffect(e4)
+	--reduce atk
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e5:SetCode(EVENT_LEAVE_FIELD)
+	e5:SetCondition(s.condition)
+	e5:SetOperation(s.operation)
+	c:RegisterEffect(e5)
 end
 s.listed_names={890900033}
 function s.atkfilter(c)
@@ -80,5 +87,23 @@ function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	if tl==LOCATION_ONFIELD then
 		Duel.NegateEffect(ev)
+	end
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	return #eg==1 and (tc:IsCode(890900033) or c:IsCode(id)) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local cg=Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,0)*-400
+	local ac=g:GetFirst()
+	while ac do
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(cg)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		ac:RegisterEffect(e1)
+		ac=g:GetNext()
 	end
 end
