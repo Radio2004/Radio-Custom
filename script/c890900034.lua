@@ -91,7 +91,7 @@ function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and (tc:IsCode(890900033) or c:IsCode(id)) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
+	return #eg==1 and tc:IsCode(890900033) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
