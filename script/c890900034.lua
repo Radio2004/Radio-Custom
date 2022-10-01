@@ -93,7 +93,7 @@ function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsCode(890900033) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
+	return #eg==1 and (tc:IsCode(890900033) or e:GetHandler()) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
