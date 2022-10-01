@@ -99,8 +99,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	local cg=Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)*-400
+	local cg=Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,0)*-400
 	local ac=g:GetFirst()
 	while ac do
 		local e1=Effect.CreateEffect(e:GetHandler())
