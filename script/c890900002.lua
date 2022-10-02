@@ -108,7 +108,7 @@ end
 	return Duel.CheckLPCost(tp,500)
 end
 	function s.atop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsAttackCostPaid()~=1 and e:GetHandler():IsLocation(LOCATION_MZONE) then
+	if e:GetHandler():IsLocation(LOCATION_MZONE) then
 		Duel.PayLPCost(tp,500)
 		Duel.AttackCostPaid()
 	end
