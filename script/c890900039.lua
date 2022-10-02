@@ -7,6 +7,15 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,{id,0},EFFECT_COUNT_CODE_OATH)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
+	--Change Attribute to DARK
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetRange(LOCATION_FZONE)
+	e2:SetTargetRange(LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+	e2:SetTarget(s.tg)
+	e2:SetValue(ATTRIBUTE_DARK)
+	c:RegisterEffect(e2)
 	--Effects
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
@@ -19,7 +28,26 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-	function s.costfilter(c)
+s.listed_series={0x26aa,0x3dd,0x2704}
+function s.tg(e,c)
+	if not c:IsSetCard(0x26aa) then return false end
+	if c:GetFlagEffect(1)==0 then
+		c:RegisterFlagEffect(1,0,0,0)
+		local eff
+		if c:IsLocation(LOCATION_MZONE) then
+			eff={Duel.GetPlayerEffect(c:GetControler(),EFFECT_NECRO_VALLEY)}
+		else
+			eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
+		end
+		c:ResetFlagEffect(1)
+		for _,te in ipairs(eff) do
+			local op=te:GetOperation()
+			if not op or op(e,c) then return false end
+		end
+	end
+	return true
+end
+function s.costfilter(c)
 	return c:IsSetCard(0x3dd) and c:IsDiscardable()
 end
 	function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
