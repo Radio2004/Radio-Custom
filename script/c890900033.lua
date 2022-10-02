@@ -40,8 +40,8 @@ s.material_setcode=0x3dd
 s.listed_series={0x3dd}
 function s.tfilter(c,scard,sumtype,tp)
 	local g=c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
-	Duel.SetTargetParam(g)
 	return g
+	Duel.SetTargetParam(g)
 	end
 function s.sfilter(c,scard,sumtype,tp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
