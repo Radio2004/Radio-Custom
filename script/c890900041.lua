@@ -12,23 +12,29 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+function s.descfilter(c,tp)
+	local tpe=c:GetType()
+	return tpe~=0 and c:IsDiscardable()
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_HAND,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	Duel.DiscardHand(tp,s.descfilter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
+	local g=Duel.GetOperatedGroup()
+	e:SetLabel(g:GetFirst():GetType()&0x7)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
+	local th=e:GetLabel()
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-		local tg=g:FilterSelect(tp,Card.IsType,1,1,nil,TYPE_MONSTER)
+		local tg=g:FilterSelect(tp,Card.IsType,1,1,nil,th)
 		local tc=tg:GetFirst()
 		if tc then
-			local atk=tc:GetAttack()
-			if tc:IsAttackAbove(0) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,atk),tp,LOCATION_MZONE,0,1,nil) then
 				Duel.Destroy(tc,REASON_EFFECT)
 				Duel.Damage(1-tp,500,REASON_EFFECT)
 			else
