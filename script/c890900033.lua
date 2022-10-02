@@ -47,7 +47,7 @@ function s.tfilter(c,scard,sumtype,tp)
 end
 function s.sfilter(c,scard,sumtype,tp)
 	if c:IsHasEffect(890900042,scard,sumtype,tp) then
-	return c:IsSummonCode(scard,sumtype,tp,890900036) 
+	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
 	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or (c:IsHasEffect(890900032) and not c:IsType(TYPE_TUNER))
 	end
