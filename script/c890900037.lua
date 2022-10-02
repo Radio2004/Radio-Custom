@@ -12,5 +12,5 @@ function s.initial_effect(c)
 end
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc:IsSetCard(0x3dd) or ((st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return sc:IsSetCard(0x3dd) or ((st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM)
 end
