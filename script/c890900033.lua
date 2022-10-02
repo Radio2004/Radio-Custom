@@ -40,9 +40,9 @@ s.material_setcode=0x3dd
 s.listed_series={0x3dd}
 function s.tfilter(c,scard,sumtype,tp)
 	local g=c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
+	e:SetLabel(g)
 	return g
 end
-e:SetLabel(g)
 function s.sfilter(c,scard,sumtype,tp)
 	local d=e:GetLabel()
 	if d==c:IsHasEffect(890900042) then
