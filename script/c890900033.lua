@@ -41,11 +41,9 @@ s.listed_series={0x3dd}
 function s.tfilter(c,scard,sumtype,tp)
 	local g=c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
 	return g
-	Duel.SetTargetParam(g)
-	end
+end
 function s.sfilter(c,scard,sumtype,tp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if d==c:IsHasEffect(890900042) then
+	if c:IsHasEffect(890900042) then
 	return c:IsSummonCode(scard,sumtype,tp,890900036) and not c:IsHasEffect(890900042)
 	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
