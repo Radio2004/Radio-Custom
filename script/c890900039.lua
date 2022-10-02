@@ -39,6 +39,15 @@ function s.initial_effect(c)
 	e5:SetTarget(s.target)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
+	--indes
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e6:SetRange(LOCATION_FZONE)
+	e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e6:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x26aa))
+	e6:SetValue(1)
+	c:RegisterEffect(e6)
 end
 s.listed_series={0x26aa,0x3dd,0x2704}
 function s.tg(e,c)
