@@ -97,7 +97,9 @@ function s.ndfilter(c,tp)
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.ndfilter,1,nil,tp)
+	local tc=eg:GetFirst()
+	local lv=tc:GetLevel()
+	return (tc:IsCode(890900033) or e:GetHandler()) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
