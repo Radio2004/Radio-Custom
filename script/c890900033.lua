@@ -43,7 +43,6 @@ function s.tfilter(c,scard,sumtype,tp)
 	return g
 	end
 	e:SetLabel(g)
-end
 function s.sfilter(c,scard,sumtype,tp)
 	local d=e:GetLabel()
 	if d==c:IsHasEffect(890900042) then
