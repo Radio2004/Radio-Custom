@@ -91,11 +91,6 @@ function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.NegateEffect(ev)
 	end
 end
-function s.ndfilter(c,tp)
-	local cd=c:GetPreviousCodeOnField()
-	return (cd==890900033 or cd==id) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local c=e:GetHandler()
