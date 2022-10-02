@@ -39,12 +39,15 @@ s.listed_names={890900035,890900036,890900017,890900025,890900034}
 s.material_setcode=0x3dd
 s.listed_series={0x3dd}
 function s.tfilter(c,scard,sumtype,tp)
-	local g=c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
-	return g
+	return c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
 end
 function s.sfilter(c,scard,sumtype,tp)
+	if s.tfilter(c,scard,sumtype,tp)==c:IsHasEffect(890900042) then
+	return c:IsSummonCode(scard,sumtype,tp,890900036) and not c:IsHasEffect(890900042)
+	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
 	end
+end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x3dd)*200
 end
