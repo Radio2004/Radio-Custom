@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1,s.tfilter1,s.sfilter1)
+	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -38,26 +38,20 @@ s.material={890900035,890900036}
 s.listed_names={890900035,890900036,890900017,890900025,890900034}
 s.material_setcode=0x3dd
 s.listed_series={0x3dd}
-function s.tfilter1(c,scard,sumtype,tp)
-	if c:IsHasEffect(890900042) then
-	return c:IsHasEffect(890900032)
-	else
-	return c:IsHasEffect(890900042) or c:IsHasEffect(890900032)
-	end
-end
 function s.tfilter(c,scard,sumtype,tp)
+	if c:IsHasEffect(890900042)>0 then
 	return c:IsSummonCode(scard,sumtype,tp,890900035)
-end
-function s.sfilter1(c,scard,sumtype,tp)
-	if c:IsHasEffect(890900042) then
-	return c:IsHasEffect(890900042)
 	else
-	return c:IsHasEffect(890900042) or c:IsHasEffect(890900032)
+	return c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900032)
 	end
 end
 function s.sfilter(c,scard,sumtype,tp)
+	if c:IsHasEffect(890900042)>0 then
 	return c:IsSummonCode(scard,sumtype,tp,890900036)
+	else
+	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900032)
 	end
+end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x3dd)*200
 end
