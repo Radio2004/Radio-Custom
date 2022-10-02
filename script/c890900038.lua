@@ -31,7 +31,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if #g>0 and Duel.SpecialSummonStep(g,0,tp,tp,false,false,POS_FACEUP) then
+	if Duel.SpecialSummonStep(g,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
