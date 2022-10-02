@@ -1,6 +1,7 @@
 --Power of Melirria - Green-Eyes Crow
 local s,id=GetID()
 function s.initial_effect(c)
+	c:SetUniqueOnField(1,1,id)
 	c:EnableUnsummonable()
 	--splimit
 	local e1=Effect.CreateEffect(c)
