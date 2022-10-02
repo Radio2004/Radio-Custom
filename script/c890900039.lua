@@ -42,12 +42,15 @@ function s.initial_effect(c)
 	--indes
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e6:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e6:SetRange(LOCATION_FZONE)
 	e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e6:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x26aa))
 	e6:SetValue(1)
 	c:RegisterEffect(e6)
+	local e7=e6:Clone()
+	e7:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x26aa,0x3dd,0x2704}
 function s.tg(e,c)
