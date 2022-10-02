@@ -42,14 +42,14 @@ function s.tfilter(c,scard,sumtype,tp)
 	if c:IsHasEffect(890900042,scard,sumtype,tp) then
 	return c:IsSummonCode(scard,sumtype,tp,890900035)
 	else
-	return c:IsSummonCode(scard,sumtype,tp,890900035) or (c:IsHasEffect(890900042) and c:IsType(TYPE_TUNER))
+	return c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
 	end
 end
 function s.sfilter(c,scard,sumtype,tp)
 	if c:IsHasEffect(890900042,scard,sumtype,tp) then
 	return c:IsSummonCode(scard,sumtype,tp,890900036)
 	else
-	return c:IsSummonCode(scard,sumtype,tp,890900036) or (c:IsHasEffect(890900042) and c:IsType(TYPE_TUNER))
+	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
 	end
 end
 function s.atkval(e,c)
