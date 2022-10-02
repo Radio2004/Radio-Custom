@@ -44,7 +44,7 @@ function s.tfilter(c,scard,sumtype,tp)
 function s.sfilter(c,scard,sumtype,tp)
 	
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
-	ends
+	end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x3dd)*200
 end
