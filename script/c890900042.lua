@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_FUSION_SUBSTITUTE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetCondition(s.subcon)
+	e2:SetRange(LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
 	e2:SetValue(s.subval)
 	c:RegisterEffect(e2)
 end
