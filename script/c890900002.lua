@@ -88,6 +88,7 @@ end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_COST)
@@ -115,15 +116,7 @@ end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsAttackPos()~=1 or c:IsDefensePos()~=1 then
+	if c:IsAttackPos() or c:IsDefensePos() then
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
-
-
-
-
-
-
-
-
