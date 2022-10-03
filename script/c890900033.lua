@@ -45,7 +45,7 @@ function s.sfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
 end
 function s.syncheck(g,sc,tp)
-	return g:CheckSameProperty(Card.IsHasEffect(890900042),sc,SUMMON_TYPE_SYNCHRO,tp)
+	return g:CheckSameProperty(Card.IsHasEffect,sc,SUMMON_TYPE_SYNCHRO,tp,890900042)
 end
 
 function s.atkval(e,c)
