@@ -42,11 +42,7 @@ function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
 end
 function s.sfilter(c,scard,sumtype,tp)
-	if c:IsHasEffect(890900042) then
-	return c:IsSummonCode(scard,sumtype,tp,890900036) and not c:IsHasEffect(890900042)
-	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
-	end
 end
 function s.syncheck(g,sc,tp)
 	return g:IsHasEffect(890900042,sc,SUMMON_TYPE_SYNCHRO,tp)
