@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1)
+	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1,s.tfilter1)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -47,6 +47,23 @@ function s.sfilter(c,scard,sumtype,tp)
 	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
 	end
+end
+function s.filterchk(c)
+	return c:IsFaceup() and c:IsCode(890900035) and c:IsOnField()
+end
+function s.fcheck(tp,sg,fc)
+	if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
+		return sg:IsExists(s.filterchk,1,nil) end
+	return true
+end
+function s.fextra(e,tp,mg)
+	if mg:IsExists(s.filterchk,1,nil) then
+		local eg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_DECK,0,nil)
+		if eg and #eg>0 then
+			return eg,s.fcheck
+		end
+	end
+	return nil
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x3dd)*200
