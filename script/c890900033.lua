@@ -56,8 +56,8 @@ function s.fcheck(tp,sg,fc)
 		return sg:IsExists(s.filterchk,1,nil) end
 	return true
 end
-function s.tfilter1(e,tp,mg)
-	if mg:IsExists(s.filterchk,1,nil) then
+function s.tfilter1(e,tp,sg)
+	if sg:IsExists(s.filterchk,1,nil) then
 		local eg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_DECK,0,nil)
 		if eg and #eg>0 then
 			return eg,s.fcheck
