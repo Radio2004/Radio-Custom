@@ -14,12 +14,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
 	e2:SetValue(s.subval)
 	c:RegisterEffect(e2)
-	--synchro custom
-	local e3=Effect.CreateEffect(c)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_SYNCHRO_MAT_RESTRICTION)
-	c:RegisterEffect(e3)
 end
 s.listed_series={0x3dd}
 function s.subval(e,c)
