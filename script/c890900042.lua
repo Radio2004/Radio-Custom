@@ -90,7 +90,6 @@ end
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
 	e1:SetLabel(0)
-	e1:SetLabelObject(tc)
 	tc:RegisterEffect(e1)
 	end
 end
@@ -99,11 +98,10 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
-	local tc=e:GetLabelObject()
 	e:GetHandler():SetTurnCounter(ct+1)
 	if ct==1 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
 	else e:SetLabel(1) end
 end
