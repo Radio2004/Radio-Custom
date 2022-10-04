@@ -53,6 +53,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
+	e:SetLabel(op,Duel.AnnounceLevel(tp,1,7,lv),cg:GetFirst():GetCode())
 	if op==1 then
 		local lv=e:GetHandler():GetLevel()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
@@ -66,7 +67,6 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoGrave(cg,REASON_COST)
 		end
 	end
-	e:SetLabel(op,Duel.AnnounceLevel(tp,1,7,lv),cg:GetFirst():GetCode())
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
