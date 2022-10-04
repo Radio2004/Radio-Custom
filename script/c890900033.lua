@@ -46,7 +46,7 @@ function s.filterchk(c)
 end
 
 function s.sfilter(c,scard,sumtype,tp)
-	if sumtype:IsExists(s.filterchk,1,nil) then
+	if c:IsExists(s.filterchk,1,nil) then
 	return c:IsSummonCode(scard,sumtype,tp,890900036)
 	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
