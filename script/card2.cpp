@@ -1,9 +1,3 @@
-/*
- * card2.cpp
- *
- *  Created on: 2010-5-7
- *      Author: Argon
- */
 
 #include "card.h"
 #include "field.h"
