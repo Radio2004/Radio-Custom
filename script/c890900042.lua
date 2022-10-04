@@ -34,18 +34,17 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
-function s.filter1(c,tp)
+function s.filter1(c,e,tp)
 	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
 end
-function s.filter2(c,fc)
-	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToRemove()
+function s.filter2(c,e,tp,fc)
+	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToRemove() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=true
 	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,tp)
 	local b1=g1
 	local b2=g2
-	gc=0
 	vl=0
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
@@ -56,7 +55,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		vl=Duel.AnnounceLevel(tp,1,7,lv)
 	end
-	e:SetLabel(op,vl,gc)
+	e:SetLabel(op,vl)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
