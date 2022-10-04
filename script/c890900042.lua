@@ -39,7 +39,7 @@ function s.filter2(c,fc)
 	return c:IsCode(table.unpack(fc.material))
 end
 function s.filter1(c,tp)
-	return c.material and c:IsType(TYPE_FUSION) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
+	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=true
