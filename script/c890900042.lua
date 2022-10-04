@@ -34,9 +34,9 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
-function s.filter2(c,gg)
-	if not c:IsAbleToGraveAsCost() then return false end
-	return c:IsCode(table.unpack(gg.material))
+function s.filter2(c,fc)
+	if not c:IsAbleToRemove() then return false end
+	return c:IsCode(table.unpack(fc.material))
 end
 function s.filter1(c,tp)
 	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
@@ -59,23 +59,12 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local lv=e:GetHandler():GetLevel()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		vl=Duel.AnnounceLevel(tp,1,7,lv)
-	else
-		if e:GetLabel()==9 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,tp)
-		Duel.ConfirmCards(1-tp,g)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local cg=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,g:GetFirst())
-		Duel.SendtoGrave(cg,REASON_COST)
-		gc=cg:GetFirst():GetCode()
-		end
 	end
 	e:SetLabel(op,vl,gc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op,lv,cg=e:GetLabel()
-	local tc=Duel.GetFirstTarget()
 	if op==1 then
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
@@ -86,13 +75,33 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 end
 	else
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e1:SetValue(cg)
-	c:RegisterEffect(e1)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	Duel.ConfirmCards(1-tp,g)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local cg=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,g:GetFirst())
+	local tc=cg:GetFirst()
+	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetRange(LOCATION_REMOVED)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCountLimit(1)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+	e1:SetCondition(s.thcon)
+	e1:SetOperation(s.thop)
+	e1:SetLabel(0)
+	tc:RegisterEffect(e1)
 	end
+end
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetLabel()
+	e:GetHandler():SetTurnCounter(ct+1)
+	if ct==1 then
+		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,e:GetHandler())
+	else e:SetLabel(1) end
 end
