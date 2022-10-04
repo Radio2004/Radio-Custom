@@ -45,7 +45,7 @@ function s.sfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,890900036) 
 end
 function s.syncheck(g,sc,tp)
-	return g:IsHasEffect(890900042)~=1
+	return g:IsHasEffect(890900042)==1
 end
 
 function s.atkval(e,c)
