@@ -8,24 +8,24 @@ if not Synchro then
 end
 function Synchro.NonTuner(f,a,b,c)
 	return	function(target,scard,sumtype,tp)
-				return target:IsNotTuner(scard,tp) and (not f or f(target,a,b,c)) or (sub and c:CheckSynchroSubstitute(sc))
-			end
+				return target:IsNotTuner(scard,tp) and (not f or f(target,a,b,c)) 
+		end
 end
 function Synchro.NonTunerEx(f,val)
 	return	function(target,scard,sumtype,tp)
-				return target:IsNotTuner(scard,tp) and f(target,val,scard,sumtype,tp) or (sub and c:CheckSynchroSubstitute(sc))
+				return target:IsNotTuner(scard,tp) and f(target,val,scard,sumtype,tp) 
 			end
 end
 function Synchro.NonTunerEx2(f,...)
 	local params={...}
 	return	function(target,scard,sumtype,tp)
-				return target:IsNotTuner(scard,tp) and f(target,scard,sumtype,tp,table.unpack(params)) or (sub and c:CheckSynchroSubstitute(sc))
+				return target:IsNotTuner(scard,tp) and f(target,scard,sumtype,tp,table.unpack(params))
 			end
 end
 function Synchro.NonTunerCode(...)
 	local params={...}
 	return	function(target,scard,sumtype,tp)
-				return target:IsNotTuner(scard,tp) and target:IsSummonCode(scard,sumtype,tp,table.unpack(params)) or (sub and c:CheckSynchroSubstitute(sc))
+				return target:IsNotTuner(scard,tp) and target:IsSummonCode(scard,sumtype,tp,table.unpack(params))
 			end
 end
 Synchro.CheckAdditional=nil
@@ -177,7 +177,7 @@ function Synchro.CheckP31(c,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,re
 			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then return false end
 		end
 	end
-	if not mgchk then
+	if not mgchk thent
 		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
 			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
 			local hanchk=false
