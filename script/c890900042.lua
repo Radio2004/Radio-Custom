@@ -43,7 +43,7 @@ function s.filter1(c,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=true
-	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil)
+	local g2=true
 	local b1=g1
 	local b2=g2
 	vl=0
