@@ -35,7 +35,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.filter1(c,e,tp)
-	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
+	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function s.filter2(c,e,tp,fc)
 	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToRemove() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
