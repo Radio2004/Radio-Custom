@@ -101,7 +101,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	e:GetHandler():SetTurnCounter(ct+1)
 	if ct==1 then
-		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,e:GetHandler())
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		end
 	else e:SetLabel(1) end
 end
