@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1,nil,nil,nil,nil,nil)
+	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -42,6 +42,9 @@ function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,890900035) or c:IsHasEffect(890900042)
 end
 function s.sfilter(c,scard,sumtype,tp)
+	if s.tfilter(c,scard,sumtype,tp)==scard:IsHasEffect(890900042) then
+	return c:IsSummonCode(scard,sumtype,tp,890900036)
+	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
 end
 
