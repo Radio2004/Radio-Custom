@@ -38,7 +38,7 @@ function s.filter2(c,e,tp,sc)
 	if not c:IsAbleToRemove() then return false end
 	return c:IsCode(table.unpack(sc.material)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.filter1(c,e,tp,ft)
+function s.filter1(c,e,tp)
 	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -80,7 +80,7 @@ end
 	local cg=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,g:GetFirst())
 	local tc=cg:GetFirst()
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_REMOVED)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
