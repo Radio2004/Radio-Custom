@@ -34,9 +34,9 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
-function s.filter2(c,fc)
+function s.filter2(c,fc,sc)
 	if not c:IsAbleToGraveAsCost() then return false end
-	return c:IsCode(table.unpack(fc.material))
+	return c:IsCode(table.unpack(fc.material)) or c:IsCode(table.unpack(sc.material))
 end
 function s.filter1(c,tp)
 	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
