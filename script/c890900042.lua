@@ -49,8 +49,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local b1=g1
 	local b2=g2
-	gc=0
-	ff=0
+	gc=nil
+	vl=nil
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
@@ -58,7 +58,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if op==1 then
 		local lv=e:GetHandler():GetLevel()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-		ff=Duel.AnnounceLevel(tp,1,7,lv)
+		vl=Duel.AnnounceLevel(tp,1,7,lv)
 	else
 		if e:GetLabel()==9 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
