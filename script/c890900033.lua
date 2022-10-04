@@ -50,6 +50,7 @@ function s.sfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,890900036)
 	else
 	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
+	end
 end
 function s.syncheck(g,sc,tp)
 	return g:FilterCount(Card.IsHasEffect,nil,890900042)<=1
