@@ -34,16 +34,16 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
-function s.filter2(c,e,tp,sc,ft)
+function s.filter2(c,e,tp,sc)
 	if not c:IsAbleToRemove() then return false end
-	return c:IsCode(table.unpack(sc.material)) and ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(table.unpack(sc.material)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter1(c,e,tp,ft)
-	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c,ft)
+	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=true
-	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE))
+	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 	local b1=g1
 	local b2=g2
 	vl=0
@@ -56,8 +56,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		vl=Duel.AnnounceLevel(tp,1,7,lv)
 	else
-		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 	end
 	e:SetLabel(op,vl)
 end
