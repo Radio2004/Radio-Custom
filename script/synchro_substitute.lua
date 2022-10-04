@@ -8,7 +8,7 @@ if not Synchro then
 end
 function Synchro.NonTuner(f,a,b,c)
 	return	function(target,scard,sumtype,tp)
-				return target:IsNotTuner(scard,tp) and (not f or f(target,a,b,c)) or or (sub and c:CheckSynchroSubstitute(sc))
+				return target:IsNotTuner(scard,tp) and (not f or f(target,a,b,c)) or (sub and c:CheckSynchroSubstitute(sc))
 			end
 end
 function Synchro.NonTunerEx(f,val)
