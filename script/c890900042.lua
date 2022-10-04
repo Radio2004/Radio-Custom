@@ -35,7 +35,6 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.filter2(c,e,tp,sc)
-	if not c:IsAbleToRemove() then return false end
 	return c:IsCode(table.unpack(sc.material)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter1(c,e,tp)
