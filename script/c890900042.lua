@@ -34,16 +34,15 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
-function s.filter2(c,fc)
-	if not c:IsAbleToRemove() then return false end
-	return c:IsCode(table.unpack(fc.material))
-end
 function s.filter1(c,tp)
 	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
 end
+function s.filter2(c,fc)
+	return c:IsCode(table.unpack(fc.material)) and c:IsAbleToRemove()
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=true
-	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil)
+	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,tp)
 	local b1=g1
 	local b2=g2
 	gc=0
