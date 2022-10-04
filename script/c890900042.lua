@@ -1,10 +1,11 @@
 --Philosopher of Melirria - Yoko Hosino
+Duel.LoadScript("synchro_substitute.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(id)
+	e1:SetCode(EFFECT_SYNCHRO_SUBSTITUTE)
 	c:RegisterEffect(e1)
 	--fusion substitute
 	local e2=Effect.CreateEffect(c)
