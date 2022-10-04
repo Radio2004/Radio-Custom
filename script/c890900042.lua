@@ -34,16 +34,19 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
-function s.filter2(c,fc)
+function s.filter2(c,e,tp,sc,ft)
 	if not c:IsAbleToRemove() then return false end
-	return c:IsCode(table.unpack(fc.material))
+	return c:IsCode(table.unpack(sc.material)) and ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.filter1(c,tp)
-	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil)
+function s.filter1(c,e,tp,ft)
+	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c,ft)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=true
-	local g2=true
+	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE))
+	if e:GetLabel()==9 then
+		  g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,tp)
+	end
 	local b1=g1
 	local b2=g2
 	vl=0
@@ -55,14 +58,12 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local lv=e:GetHandler():GetLevel()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		vl=Duel.AnnounceLevel(tp,1,7,lv)
-	else
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 	end
 	e:SetLabel(op,vl)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local op,lv=e:GetLabel()
+	local op,lv,cg=e:GetLabel()
 	if op==1 then
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
@@ -80,7 +81,7 @@ end
 	local cg=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,g:GetFirst())
 	local tc=cg:GetFirst()
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-	local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_REMOVED)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
@@ -99,8 +100,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	e:GetHandler():SetTurnCounter(ct+1)
 	if ct==1 then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-		end
+		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,e:GetHandler())
 	else e:SetLabel(1) end
 end
