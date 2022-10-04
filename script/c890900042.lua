@@ -1,4 +1,5 @@
 --Philosopher of Melirria - Yoko Hosino
+-- c:IsHasEffect(890900042)
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
