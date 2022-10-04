@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1,nil,nil,nil,nil,s.syncheck)
+	Synchro.AddProcedure(c,s.tfilter,1,1,s.sfilter,1,1)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -41,8 +41,15 @@ s.listed_series={0x3dd}
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,890900035)
 end
+function s.filterchk(c)
+	return c:IsFaceup() and c:IsHasEffect(890900042) and c:IsOnField()
+end
+
 function s.sfilter(c,scard,sumtype,tp)
+	if sumtype:IsExists(s.filterchk,1,nil) then
 	return c:IsSummonCode(scard,sumtype,tp,890900036)
+	else
+	return c:IsSummonCode(scard,sumtype,tp,890900036) or c:IsHasEffect(890900042)
 end
 function s.syncheck(g,sc,tp)
 	return g:FilterCount(Card.IsHasEffect,nil,890900042)<=1
