@@ -49,6 +49,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local b1=g1
 	local b2=g2
+	local gc=0
+	local ff=0
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
@@ -56,6 +58,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if op==1 then
 		local lv=e:GetHandler():GetLevel()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+		local ff=Duel.AnnounceLevel(tp,1,7,lv)
 	else
 		if e:GetLabel()==9 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
@@ -64,9 +67,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local cg=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,g:GetFirst())
 		Duel.SendtoGrave(cg,REASON_COST)
+		local gc=cg:GetFirst():GetCode()
 		end
 	end
-	e:SetLabel(op,Duel.AnnounceLevel(tp,1,7,lv),cg:GetFirst():GetCode() || 0)
+	e:SetLabel(op,ff,gc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
