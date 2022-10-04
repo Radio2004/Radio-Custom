@@ -1,9 +1,3 @@
-/*
- * card.cpp
- *
- *  Created on: 2010-5-7
- *      Author: Argon
- */
 
 bool card_sort::operator()(void* const & p1, void* const & p2) const {
 	card* c1 = (card*)p1;
