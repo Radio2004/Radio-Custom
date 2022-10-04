@@ -49,8 +49,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local b1=g1
 	local b2=g2
-	gc=0
-	vl=0
+	gc=nil
+	vl=nil
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
@@ -70,7 +70,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		gc=cg:GetFirst():GetCode()
 		end
 	end
-	e:SetLabel(op,ff,gc)
+	e:SetLabel(op,vl,gc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
