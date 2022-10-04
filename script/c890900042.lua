@@ -34,22 +34,21 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(9)
 	return true
 end
-function s.filter2(c,fc)
+function s.filter2(c,e,tp,sc,ft)
 	if not c:IsAbleToRemove() then return false end
-	return c:IsCode(table.unpack(fc.material))
+	return c:IsCode(table.unpack(sc.material)) and ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.filter1(c,tp)
-	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
+function s.filter1(c,e,tp,ft)
+	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c,ft)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=true
-	local g2=nil
+	local g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if e:GetLabel()==9 then
 		  g2=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,tp)
 	end
 	local b1=g1
 	local b2=g2
-	gc=0
 	vl=0
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=aux.SelectEffect(tp,
@@ -59,8 +58,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local lv=e:GetHandler():GetLevel()
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		vl=Duel.AnnounceLevel(tp,1,7,lv)
+	else
+		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	end
-	e:SetLabel(op,vl,gc)
+	e:SetLabel(op,vl)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -91,6 +93,7 @@ end
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
 	e1:SetLabel(0)
+	e1:SetLabelObject(tc)
 	tc:RegisterEffect(e1)
 	end
 end
@@ -99,9 +102,11 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
+	local tc=e:GetLabelObject()
 	e:GetHandler():SetTurnCounter(ct+1)
 	if ct==1 then
-		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,e:GetHandler())
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		end
 	else e:SetLabel(1) end
 end
