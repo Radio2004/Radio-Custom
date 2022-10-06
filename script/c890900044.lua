@@ -19,6 +19,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.extracon)
 	e2:SetValue(s.extraval)
 	c:RegisterEffect(e2)
+	if s.flagmap==nil then
+		s.flagmap={}
+	end
+	if s.flagmap[c]==nil then
+		s.flagmap[c] = {}
+	end
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e3:SetRange(LOCATION_SZONE)
@@ -59,7 +65,7 @@ function s.extraval(chk,summon_type,e,...)
 		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(0x3dd) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
-			s.flagmap[c]=c:RegisterFlagEffect(id,0,0,1)
+			table.insert(s.flagmap[c],c:RegisterFlagEffect(id,0,0,1))
 			return Group.FromCards(c)
 		end
 	elseif chk==1 then
@@ -69,10 +75,10 @@ function s.extraval(chk,summon_type,e,...)
 			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		end
 	elseif chk==2 then
-	   if s.flagmap[c] then
-			s.flagmap[c]:Reset()
-			s.flagmap[c]=nil
+		for _,eff in ipairs(s.flagmap[c]) do
+			eff:Reset()
 		end
+		s.flagmap[c]={}
 	end
 end
 function s.eftg(e,c)
