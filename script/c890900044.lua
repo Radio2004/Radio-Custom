@@ -31,7 +31,6 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={0x22cd}
--- Infinitrack monster
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x22cd) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
@@ -59,7 +58,7 @@ function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if summon_type~=SUMMON_TYPE_LINK or not sc:IsRace(RACE_CYBERSE) or Duel.GetFlagEffect(tp,id)>0 then
+		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(0x3dd) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
 			s.flagmap[c]=c:RegisterFlagEffect(id,0,0,1)
@@ -79,5 +78,5 @@ function s.extraval(chk,summon_type,e,...)
 	end
 end
 function s.eftg(e,c)
-	return c:IsSetCard(0x3dd) and c:IsCanBeLinkMaterial()
+	return c:IsSetCard(0x3dd) and c:IsLevelBelow(4) and c:IsCanBeLinkMaterial()
 end
