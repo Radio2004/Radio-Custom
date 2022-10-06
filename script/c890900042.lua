@@ -21,7 +21,6 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,0})
-	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
@@ -29,10 +28,6 @@ end
 s.listed_series={0x3dd}
 function s.subval(e,c)
 	return c:IsSetCard(0x3dd)
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(9)
-	return true
 end
 function s.filter1(c,e,tp)
 	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c)
