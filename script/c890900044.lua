@@ -12,19 +12,13 @@ function s.initial_effect(c)
 	--Extra Material
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetRange(LOCATION_SZONE)
+	e2:SetRange(LOCATION_HAND)
 	e2:SetCode(EFFECT_EXTRA_MATERIAL)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
 	e2:SetOperation(s.extracon)
 	e2:SetValue(s.extraval)
 	c:RegisterEffect(e2)
-	if s.flagmap==nil then
-		s.flagmap={}
-	end
-	if s.flagmap[c]==nil then
-		s.flagmap[c] = {}
-	end
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e3:SetRange(LOCATION_SZONE)
@@ -75,10 +69,10 @@ function s.extraval(chk,summon_type,e,...)
 			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		end
 	elseif chk==2 then
-		for _,eff in ipairs(s.flagmap[c]) do
-			eff:Reset()
+		if s.flagmap[c] then
+			s.flagmap[c]:Reset()
+			s.flagmap[c]=nil
 		end
-		s.flagmap[c]={}
 	end
 end
 function s.eftg(e,c)
