@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
 end
+s.material_setcode=0x3dd+0x38d
 function s.ffilter1(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_WIND,fc,sumtype,tp) and c:IsSetCard(0x38d,fc,sumtype,tp)
 end
