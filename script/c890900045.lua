@@ -18,6 +18,17 @@ function s.initial_effect(c)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
+	--Special Summon or special summon
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCondition(s.applycon)
+	e3:SetTarget(s.applytg)
+	e3:SetOperation(s.applyop)
+	c:RegisterEffect(e3)
 end
 s.listed_names={id}
 s.listed_series={0x22cd+0x38d+0x22c3+0x1fa3+0x3dd}
@@ -57,4 +68,60 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
+end
+function s.applyfiler(c)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsType(TYPE_SYNCHRO)
+end
+
+function s.applycon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.applyfiler,1,nil)
+end
+function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ignorcond=s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
+	local spsummon=s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
+	if chk==0 then return ignorcond or spsummon end
+end
+function s.applyop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local ignorcond=s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
+	local spsummon=s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
+	local op=-1
+	if ignorcond and spsummon then
+		op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
+	elseif ignorcond then
+		op=0
+	elseif spsummon then
+		op=1
+	end
+	if op==0 then
+		s.drop(e,tp,eg,ep,ev,re,r,rp)
+	elseif op==1 then
+		s.spop(e,tp,eg,ep,ev,re,r,rp)
+	end
+end
+function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,id)==0 end
+end
+function s.drop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,id)>0 then return end
+	Duel.Draw(tp,1,REASON_EFFECT)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+end
+function s.spfilter(c,e,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_TUNER)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFlagEffect(tp,id+1)==0
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,id+1)>0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		if #g>0 then
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		end
+	end
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 end
