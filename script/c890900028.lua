@@ -39,6 +39,16 @@
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
+	--synchro level
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_SYNCHRO_LEVEL)
+	e4:SetValue(s.slevel)
+	c:RegisterEffect(e4)
+end
+function s.slevel(e,c)
+	local lv=e:GetHandler():GetLevel()
+	return 6*65536+lv
 end
 	function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x38d,lc,sumtype,tp)
