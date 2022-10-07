@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x22cd,0x3dd}
 function s.target(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and not c:IsType(TYPE_LINK) and (c:GetSummonLocation()&LOCATION_DECK+LOCATION_EXTRA)~=0
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and not c:IsType(TYPE_LINK) and (c:GetSummonLocation()&LOCATION_EXTRA)~=0
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x22cd) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
