@@ -26,11 +26,23 @@ function s.initial_effect(c)
 	e3:SetTarget(s.eftg)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e4:SetTargetRange(0xff,0xff)
+	e4:SetTarget(s.target)
+	e4:SetValue(LOCATION_REMOVED)
+	c:RegisterEffect(e4)
 	aux.GlobalCheck(s,function()
 		s.flagmap={}
 	end)
 end
-s.listed_series={0x22cd}
+s.listed_series={0x22cd,0x3dd}
+function s.target(e,c)
+	return c:IsFaceup() and c:IsSetCard(0x3dd) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and not c:IsType(TYPE_LINK) and (c:GetSummonLocation()&LOCATION_DECK+LOCATION_EXTRA)~=0
+end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x22cd) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
