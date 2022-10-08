@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(s.indtg)
@@ -34,14 +35,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x3dd,0x22cd}
+function s.filter(c)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x3dd)
 function s.indtg(e,c)
 	local tp=e:GetHandlerPlayer()
 	local tg=Group.CreateGroup()
-	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,0,nil)
+	local lg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(lg) do
 		tg:Merge(tc:GetLinkedGroup())
 	end
-	return c:IsFaceup() and tg:IsContains(c)
+	return c:IsFaceup() and tg:IsContains(c) and c:IsSetCard(0x3dd)
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
