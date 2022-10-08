@@ -34,9 +34,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x3dd,0x22cd}
+function s.lkfilter(c,oc)
+	return c:GetLinkedGroup():IsContains(oc)
+end
 function s.indtg(e,c)
-	local oc=e:GetHandler()
-	return c:IsSetCard(0x3dd) and oc:GetLinkedGroup():IsContains(c)
+	local oc=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
+	return c:IsSetCard(0x3dd) and oc
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
