@@ -35,8 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
-	local oc=c:IsLinkMonster()
-	return c:IsSetCard(0x3dd) and oc:GetLinkedGroup():IsContains(c)
+	return c:IsSetCard(0x3dd) and c:GetLinkedGroup():IsContains(c)
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
