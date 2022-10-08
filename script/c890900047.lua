@@ -36,7 +36,7 @@ end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
 	local oc=e:GetHandler()
-	return c:IsSetCard(0x3dd) and oc:GetLinkedGroup():IsContains(c))
+	return c:IsSetCard(0x3dd) and oc:GetLinkedGroup():IsContains(c)
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
