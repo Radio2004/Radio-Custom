@@ -34,9 +34,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x3dd,0x22cd}
+function s.desfilter(c,g)
+	return g:IsContains(c)
+end
 function s.indtg(e,c)
 	local tp=c:GetControler()
-	return aux.GetMMZonesPointedTo(tp,nil,LOCATION_MZONE,0,1-tp)
+	local tg=Group.CreateGroup()
+	local lg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	for tc in aux.Next(lg) do
+		tg:Merge(tc:GetLinkedGroup())
+	end
+	local ll=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil,tg) 
+	return ll
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
