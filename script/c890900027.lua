@@ -25,6 +25,12 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target2)
 	e3:SetOperation(s.operation2)
 	c:RegisterEffect(e3)
+	local e4=e2:Clone()
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetCondition(s.condition3)
+	e4:SetTarget(s.target3)
+	e4:SetOperation(s.operation3)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x3dd}
 function s.filter(c,tp)
@@ -85,6 +91,26 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+	end
+end
+function s.condition3(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,890900047),tp,LOCATION_FZONE,0,1,nil)
+end
+	function s.spfilter3(c,e,tp)
+	return (c:IsSetCard(0x270F) or c:IsSetCard(0x22cd)) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+end
+function s.target3(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter3,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+end
+function s.operation3(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter3,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end
