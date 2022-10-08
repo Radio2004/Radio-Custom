@@ -22,9 +22,5 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.limfilter,1,nil)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimitTillChainEnd(s.elimit)
+	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
-function s.elimit(re,rp,tp)
-	return not (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)) or re:IsActiveType(TYPE_MONSTER)
-end
-
