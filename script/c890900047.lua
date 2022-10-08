@@ -37,6 +37,7 @@ end
 s.listed_series={0x3dd,0x22cd}
 function s.filter(c)
 	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x3dd)
+end
 function s.indtg(e,c)
 	local tp=e:GetHandlerPlayer()
 	local tg=Group.CreateGroup()
