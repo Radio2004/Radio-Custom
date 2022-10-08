@@ -34,17 +34,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x3dd,0x22cd}
-function s.desfilter(c,g)
-	return g:IsContains(c)
-end
 function s.indtg(e,c)
-	local tp=c:GetControler()
+	local tp=e:GetHandlerPlayer()
 	local tg=Group.CreateGroup()
 	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(lg) do
 		tg:Merge(tc:GetLinkedGroup())
 	end
-	return Duel.GetMatchingGroupCount(s.desfilter,tp,LOCATION_MZONE,0,nil,tg) 
+	return c:IsFaceup() and tg:IsContains(c)
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
