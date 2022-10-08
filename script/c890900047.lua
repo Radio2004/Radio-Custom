@@ -35,7 +35,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
-	return c:IsSetCard(0x3dd) and c:GetLinkedGroup():IsContains(c)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsLink,LOCATION_MZONE,0,nil,2)
+	return c:IsSetCard(0x3dd) and c==zone
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
