@@ -38,7 +38,7 @@ function s.lkfilter(c,oc)
 	return c:GetLinkedGroup():IsContains(oc)
 end
 function s.indtg(e,c)
-	local oc=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
+	local oc=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c):GetFirst()
 	return c:IsSetCard(0x3dd) and oc
 end
 function s.limfilter(c)
