@@ -44,8 +44,7 @@ function s.indtg(e,c)
 	for tc in aux.Next(lg) do
 		tg:Merge(tc:GetLinkedGroup())
 	end
-	local ll=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil,tg) 
-	return ll
+	return Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil,tg) 
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
