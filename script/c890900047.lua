@@ -40,7 +40,7 @@ end
 function s.indtg(e,c)
 	local tp=c:GetControler()
 	local tg=Group.CreateGroup()
-	local lg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(lg) do
 		tg:Merge(tc:GetLinkedGroup())
 	end
