@@ -36,8 +36,7 @@ end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandler():GetControler(),LOCATION_MZONE,0,e:GetHandler())
-	local zone=aux.GetMMZonesPointedTo(tp,nil,LOCATION_MZONE,0,e:GetHandler():GetControler())
-	return c:IsSetCard(0x3dd) and zone
+	return c:IsSetCard(0x3dd) 
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
