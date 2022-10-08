@@ -35,7 +35,6 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
-	local g=Duel.GetMatchingGroup(s.lkfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil,c)
 	return aux.GetMMZonesPointedTo(e:GetHandler():GetControler())
 end
 function s.limfilter(c)
