@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
-	return aux.GetMMZonesPointedTo(e:GetHandler():GetControler())
+	return aux.GetMMZonesPointedTo(c:GetControler())
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
