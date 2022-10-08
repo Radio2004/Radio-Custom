@@ -28,14 +28,15 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e4:SetRange(LOCATION_FZONE)
-	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(s.indtg)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
-	return c:IsSetCard(0x3dd)
+	local oc=e:GetHandler()
+	return c:IsSetCard(0x3dd) and oc:GetLinkedGroup():IsContains(c))
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
