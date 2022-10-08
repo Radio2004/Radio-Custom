@@ -36,7 +36,7 @@ end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
 	local zone=aux.GetMMZonesPointedTo(tp,Card.IsLink,LOCATION_MZONE,0,nil,2)
-	return c:IsSetCard(0x3dd) and zone
+	return c:IsSetCard(0x3dd)
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
