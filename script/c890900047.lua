@@ -35,8 +35,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3dd,0x22cd}
 function s.indtg(e,c)
-	local zone=aux.GetMMZonesPointedTo(tp,nil,LOCATION_MZONE,0,1-tp)
-	return c:IsSetCard(0x3dd) and zone
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,e:GetHandler())
+	return c:IsSetCard(0x3dd) and g
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_LINK and c:IsSetCard(0x3dd)
