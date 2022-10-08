@@ -38,7 +38,7 @@ function s.lkfilter(c,oc)
 	return c:GetLinkedGroup():IsContains(oc)
 end
 function s.indtg(e,c)
-	local g=Duel.GetMatchingGroup(s.lkfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.lkfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
 	return g
 end
 function s.limfilter(c)
