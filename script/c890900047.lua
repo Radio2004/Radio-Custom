@@ -118,7 +118,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.atop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
 	elseif op==2 then
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -132,6 +131,7 @@ end
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #td>0 then
 		Duel.SendtoDeck(td,nil,2,REASON_EFFECT)
+		end
 	end
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
