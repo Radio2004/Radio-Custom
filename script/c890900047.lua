@@ -118,6 +118,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.atop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+end
 	elseif op==2 then
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
