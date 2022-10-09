@@ -140,11 +140,11 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	if not d then return end
 	if d:IsControler(tp) then
 		e:SetLabelObject(a)
-		return d:IsRace(RACE_ROCK) and d:IsAttribute(ATTRIBUTE_EARTH) and d:IsFaceup()
+		return d:IsSetCard(0x3dd) and d:IsFaceup()
 			and a:IsRelateToBattle() and a:IsLocation(LOCATION_ONFIELD)
 	elseif a:IsControler(tp) then
 		e:SetLabelObject(d)
-		return a:IsRace(RACE_ROCK) and a:IsAttribute(ATTRIBUTE_EARTH) and a:IsFaceup()
+		return a:IsSetCard(0x3dd) and a:IsFaceup()
 			and d:IsRelateToBattle() and d:IsLocation(LOCATION_ONFIELD)
 	end
 	return false
