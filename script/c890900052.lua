@@ -7,5 +7,5 @@ end
 function s.xyzcheck(g,tp,xyz)
 	local ct1=g:FilterCount(Card.IsSetCard,nil,0x3de)
 	local ct2=g:FilterCount(Card.IsHasEffect,nil,890900042)
-	return ct1>0 and ct2<=1
+	return ct1>=1 and ct2<=1
 end
