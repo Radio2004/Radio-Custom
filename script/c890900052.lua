@@ -5,5 +5,5 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(s.xyzfilter),7,2)
 end
 function s.xyzfilter(c,xyz,sumtype,tp,d,re)
-	return (c:IsSetCard(0x3de,xyz,sumtype,tp) or c:IsHasEffect(890900042))
+	return c:IsSetCard(0x3de,xyz,sumtype,tp) or c:IsHasEffect(890900042)<=1
 end
