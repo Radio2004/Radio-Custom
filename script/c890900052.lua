@@ -7,5 +7,5 @@ function s.initial_effect(c)
 	-- Must be Xyz Summoned using the correct materials
 end
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return (c:IsSetCard(0x3de,xyz,sumtype,tp) or c:IsHasEffect(890900042)==1) and c:IsLevel(7)
+	return (c:IsSetCard(0x3de,xyz,sumtype,tp) or c:IsHasEffect(890900042)<=1) and c:IsLevel(7)
 end
