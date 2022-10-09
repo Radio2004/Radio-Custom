@@ -44,10 +44,10 @@ function s.syncheck(g,sc,tp)
 end
 
 function s.tfilter(c,scard,sumtype,tp)
-	return c:IsSummonCode(scard,sumtype,tp,890900035) or (c:IsHasEffect(890900042) and c:IsType(TYPE_TUNER)) or (c:IsHasEffect(890900032) and c:IsType(TYPE_TUNER))
+	return c:IsSummonCode(scard,sumtype,tp,890900035) or (c:IsHasEffect(890900042)) or (c:IsHasEffect(890900032) and c:IsType(TYPE_TUNER))
 end
 function s.sfilter(c,scard,sumtype,tp)
-	return c:IsSummonCode(scard,sumtype,tp,890900036) or (c:IsHasEffect(890900042) and not c:IsType(TYPE_TUNER)) or (c:IsHasEffect(890900032) and not c:IsType(TYPE_TUNER))
+	return c:IsSummonCode(scard,sumtype,tp,890900036) or (c:IsHasEffect(890900042)) or (c:IsHasEffect(890900032) and not c:IsType(TYPE_TUNER))
 end
 --function s.syncheck(g,sc,tp)
 --  return g:FilterCount(Card.IsHasEffect,nil,890900042)<=1
