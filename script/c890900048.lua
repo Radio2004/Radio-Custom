@@ -29,7 +29,7 @@ function s.splimit(e,se,sp,st)
 	return sc:IsSetCard(0x3dd) or ((st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id+1),tp,LOCATION_ONFIELD,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id+1),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.rmfilter(c,e)
 	return c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
