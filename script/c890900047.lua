@@ -112,6 +112,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
+	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetRange(LOCATION_FZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.atcon)
@@ -154,6 +155,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=e:GetLabelObject()
 	if tc and tc:IsRelateToBattle() then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
