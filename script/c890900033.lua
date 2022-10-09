@@ -40,7 +40,7 @@ s.material_setcode=0x3dd
 s.listed_series={0x3dd}
 function s.syncheck(g,sc,tp)
 	local ct=g:FilterCount(Card.IsHasEffect,nil,890900042)
-	return ct<=1
+	return ct<=2
 end
 
 function s.tfilter(c,scard,sumtype,tp)
