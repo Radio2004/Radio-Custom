@@ -37,13 +37,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 
 	--Fusion summon
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsCode,444444469),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
+
 	local e7=Effect.CreateEffect(c)
 	e7:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e7:SetType(EFFECT_TYPE_IGNITION)
 	e7:SetRange(LOCATION_SZONE)
 	e7:SetCountLimit(1)
-	e7:SetTarget(s.fustg)
-	e7:SetOperation(s.fusop)
+	e7:SetTarget(Fusion.SummonEffTG(params))
+	e7:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e7)
 end
 s.listed_series={0x1bc}
@@ -157,6 +159,5 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
-local params={fusfilter=aux.FilterBoolFunction(Card.IsCode,444444469),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 s.fustg=Fusion.SummonEffTG(params)
 s.fusop=Fusion.SummonEffOP(params)
