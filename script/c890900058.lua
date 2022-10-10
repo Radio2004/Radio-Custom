@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.condition)
-	e2:SetCost(aux.StardustCost)
+	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -38,7 +38,7 @@ end
 s.listed_names={id-1}
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc:IsCode(id-1)
+	return sc:IsCode(id-1) or sc:IsCode(id)
 end
 function s.ngcfilter(c,tp)
 	return c:IsControler(tp) and c:IsOnField()
