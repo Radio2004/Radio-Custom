@@ -134,7 +134,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 		else
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
-		s.fustg(e,tp,eg,ep,ev,re,r,rp,0)
+		
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
