@@ -108,7 +108,7 @@ function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function s.filter1(c)
-	return c:IsFaceup()and c:IsSetCard(0x1BC)
+	return c:IsFaceup() and c:IsSetCard(0x1BC)
 end
 
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -166,7 +166,6 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
-local params ={fusfilter=aux.FilterBoolFunction(Card.IsCode,444444469),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
-					extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
+local params={fusfilter=aux.FilterBoolFunction(Card.IsCode,444444469),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 s.fustg=Fusion.SummonEffTG(params)
 s.fusop=Fusion.SummonEffOP(params)
