@@ -121,7 +121,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)
 	local g1=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,g,nil)
-	local g2=s.fustg(e,tp,eg,ep,ev,re,r,rp,0)
+	local g2=true
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -134,6 +134,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 		else
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
+		s.fustg(e,tp,eg,ep,ev,re,r,rp,0)
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
