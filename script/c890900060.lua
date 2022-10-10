@@ -42,9 +42,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 		local ac=Duel.AnnounceNumber(tp,table.unpack(ct))
 		Duel.DiscardDeck(tp,ac,REASON_COST)
-		local ct=ac:FilterCount(Card.IsSetCard,nil,0x3dd)
-		e:SetLabel(ct)
 	end
+	local g=Duel.GetOperatedGroup()
+	e:SetLabel(g:FilterCount(Card.IsSetCard,nil,0x3dd))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
