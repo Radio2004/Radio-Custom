@@ -27,6 +27,9 @@ function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
 	return sc:IsCode(id-1)
 end
+function s.filter(c)
+	return c:IsSetCard(0x3dd) and c:IsType(TYPE_MONSTER)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 	local ct={}
@@ -44,7 +47,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.DiscardDeck(tp,ac,REASON_COST)
 	end
 	local g=Duel.GetOperatedGroup()
-	e:SetLabel(g:FilterCount(Card.IsSetCard,nil,0x3dd))
+	e:SetLabel(g:FilterCount(s.filter,nil))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
