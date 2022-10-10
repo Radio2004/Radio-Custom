@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-	tc:CompleteProcedure()
+	Duel.SpecialSummonComplete()
 end
 function s.spfilter2(c,e,tp)
 	return c:IsSetCard(0x3de) and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
