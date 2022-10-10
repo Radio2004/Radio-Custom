@@ -38,7 +38,7 @@ end
 s.listed_names={id-1}
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc:IsCode(id-1)
+	return sc:IsCode(id-1) or se:GetHandler()
 end
 function s.ngcfilter(c,tp)
 	return c:IsControler(tp) and c:IsOnField()
@@ -61,7 +61,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) then
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
