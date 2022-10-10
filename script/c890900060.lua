@@ -42,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.DiscardDeck(tp,ct[1],REASON_COST)
 		e:SetLabel(1)
 	else
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(85087012,2))
 		local ac=Duel.AnnounceNumber(tp,table.unpack(ct))
 		Duel.DiscardDeck(tp,ac,REASON_COST)
 	end
