@@ -68,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,true,false) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
