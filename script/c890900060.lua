@@ -47,7 +47,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.DiscardDeck(tp,ac,REASON_COST)
 	end
 	local g=Duel.GetOperatedGroup()
-	e:SetLabel(g:FilterCount(s.filter))
+	e:SetLabel(g:FilterCount(s.filter,nil))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
