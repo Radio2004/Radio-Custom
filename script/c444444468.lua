@@ -107,16 +107,12 @@ function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false end
 end
 
-function s.filter1(c)
+function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1BC)
 end
 
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil)
-end
-
-function s.filter(c)
-	return c:IsSetCard(0x1bc) and c:IsAbleToDeck()
+	return eg:IsExists(s.filter,1,nil)
 end
 
 function s.spfilter(c,e,tp)
