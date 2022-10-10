@@ -172,5 +172,3 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
-s.fustg=Fusion.SummonEffTG(params)
-s.fusop=Fusion.SummonEffOP(params)
