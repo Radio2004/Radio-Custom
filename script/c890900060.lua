@@ -42,13 +42,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 		local ac=Duel.AnnounceNumber(tp,table.unpack(ct))
 		Duel.DiscardDeck(tp,ac,REASON_COST)
-		e:SetLabel(ac)
+		local ct=ac:FilterCount(Card.IsSetCard,nil,0x3dd)
+		e:SetLabel(ct)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=e:GetLabel()
-	local ct=g:FilterCount(Card.IsSetCard,nil,0x3dd)
+	local ct=e:GetLabel()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
