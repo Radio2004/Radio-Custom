@@ -55,10 +55,9 @@ end
 function s.fusfilter(c,code,fc,sumtype,tp)
 	return c:IsSummonCode(fc,sumtype,tp,code) and not c:IsHasEffect(511002961)
 end
-function s.ffilte2(c,fc,sumtype,tp)
+function s.ffilter2(c,fc,sumtype,tp)
 	return c:IsSetCard(0x1bc,fc,sumtype,tp) and c:IsType(TYPE_LINK,fc,sumtype,tp)
 end
-
 
 function s.val(e,c)
 	return Duel.GetFieldGroupCount(0,LOCATION_REMOVED,LOCATION_REMOVED)*(-100)
