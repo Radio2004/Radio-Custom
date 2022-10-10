@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-	Duel.SpecialSummonComplete()
+	tc:CompleteProcedure()
 end
 function s.spfilter2(c,e,tp)
 	return c:IsCode(890900050) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
