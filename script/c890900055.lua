@@ -1,8 +1,8 @@
---Melirria, Clear Mind - Sagiri
+--Melirria, Clear Mind - Iori
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3dd),1,1,s.sfilter,1,99)
+	Synchro.AddProcedure(c,s.tfilter,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x3dd),1,99)
 	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -28,11 +28,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-function s.sfilter(c,scard,sumtype,tp)
-	return c:IsSummonCode(scard,sumtype,tp,890900001) or c:IsHasEffect(890900042) or c:IsHasEffect(890900032) 
+function s.tfilter(c,scard,sumtype,tp)
+	return c:IsSummonCode(scard,sumtype,tp,890900024) or (c:IsHasEffect(890900042) and c:IsType(TYPE_TUNER)) or (c:IsHasEffect(890900032) and c:IsType(TYPE_TUNER))
 end
 s.listed_series={0x3de}
-s.listed_names={id+1}
+s.listed_names={id+1,890900050}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x3de) and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(890900050) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
