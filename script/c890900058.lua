@@ -3,6 +3,13 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,1,id)
+	--Special summon condition
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(s.splimit)
+	c:RegisterEffect(e1)
 	--Negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -31,7 +38,7 @@ end
 s.listed_names={id-1}
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc:IsCode(id-1)
+	return sc:IsCode(id-1) or sc:IsCode(id)
 end
 function s.ngcfilter(c,tp)
 	return c:IsControler(tp) and c:IsOnField()
@@ -61,12 +68,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:GetFlagEffect(id)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
