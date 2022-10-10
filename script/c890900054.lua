@@ -25,7 +25,7 @@ end
 s.listed_names={id-1}
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc:IsCode(id-1) and se:IsLocation(LOCATION_EXTRA)
+	return sc:IsCode(id-1)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) and chkc:IsAbleToDeck() end
