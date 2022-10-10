@@ -35,18 +35,21 @@ function s.initial_effect(c)
 	e4:SetTarget(s.reptg2)
 	e4:SetValue(s.repval)
 	c:RegisterEffect(e4)
-
-	--Fusion summon
-	local params={fusfilter=aux.FilterBoolFunction(Card.IsCode,444444469),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
-
-	local e7=Effect.CreateEffect(c)
-	e7:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
-	e7:SetType(EFFECT_TYPE_IGNITION)
-	e7:SetRange(LOCATION_SZONE)
-	e7:SetCountLimit(1)
-	e7:SetTarget(Fusion.SummonEffTG(params))
-	e7:SetOperation(Fusion.SummonEffOP(params))
-	c:RegisterEffect(e7)
+	 --effects
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,4))
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
+	e5:SetCode(EVENT_SUMMON_SUCCESS)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCountLimit(1,{id,1})
+	e5:SetCondition(s.spcon)
+	e5:SetTarget(s.sptg)
+	e5:SetOperation(s.spop)
+	c:RegisterEffect(e5)
+	local e6=e5:Clone()
+	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e6)
 end
 s.listed_series={0x1bc}
 s.listed_names={444444469}
@@ -115,7 +118,9 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1bc) and not c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-
+local params={fusfilter=aux.FilterBoolFunction(Card.IsCode,444444469),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
+s.fustg=Fusion.SummonEffTG(params)
+s.fusop=Fusion.SummonEffOP(params)
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)
 	local g1=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,g,nil)
@@ -159,5 +164,3 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
-s.fustg=Fusion.SummonEffTG(params)
-s.fusop=Fusion.SummonEffOP(params)
