@@ -118,19 +118,6 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1bc) and not c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-   function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
-	end
-	return nil
-end
-function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
-end
-local params={fusfilter=aux.FilterBoolFunction(Card.IsCode,444444469),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
-s.fustg=Fusion.SummonEffTG(params)
-s.fusop=Fusion.SummonEffOP(params)
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)
 	local g1=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,g,nil)
@@ -163,3 +150,16 @@ end
 	s.fusop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
+function s.fextra(e,tp,mg)
+	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
+	end
+	return nil
+end
+function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
+end
+local params={fusfilter=aux.FilterBoolFunction(Card.IsCode,15661378),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
+s.fustg=Fusion.SummonEffTG(params)
+s.fusop=Fusion.SummonEffOP(params)
