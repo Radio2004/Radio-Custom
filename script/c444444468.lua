@@ -42,8 +42,8 @@ function s.initial_effect(c)
 	e7:SetType(EFFECT_TYPE_IGNITION)
 	e7:SetRange(LOCATION_SZONE)
 	e7:SetCountLimit(1)
-	e7:SetTarget(Fusion.SummonEffTG(params))
-	e7:SetOperation(Fusion.SummonEffOP(params))
+	e7:SetTarget(s.fustg)
+	e7:SetOperation(s.fusop)
 	c:RegisterEffect(e7)
 end
 s.listed_series={0x1bc}
