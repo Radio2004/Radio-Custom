@@ -1,4 +1,4 @@
---Melirria, Clear Mind - Sagiri
+--Melirria, Clear Mind - Felix
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sfilter(c,scard,sumtype,tp)
-	return c:IsSummonCode(scard,sumtype,tp,890900001) or (c:IsHasEffect(890900042) and not c:IsType(TYPE_TUNER)) or (c:IsHasEffect(890900032) and not c:IsType(TYPE_TUNER))
+	return c:IsSummonCode(scard,sumtype,tp,890900005) or (c:IsHasEffect(890900042) and not c:IsType(TYPE_TUNER)) or (c:IsHasEffect(890900032) and not c:IsType(TYPE_TUNER))
 end
 s.listed_series={0x3de}
 s.listed_names={id+1}
@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x3de) and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x3de) and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
