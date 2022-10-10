@@ -38,7 +38,7 @@ end
 s.listed_names={id-1}
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc:IsCode(id-1) or sc:IsCode(id)
+	return sc:IsCode(id-1) 
 end
 function s.ngcfilter(c,tp)
 	return c:IsControler(tp) and c:IsOnField()
