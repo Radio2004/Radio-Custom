@@ -98,7 +98,7 @@ end
 		tc:RegisterEffect(e1)
 		--Destroy
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 		e2:SetCode(EVENT_CHANGE_POS)
 		e2:SetOperation(s.desop)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -116,5 +116,7 @@ end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.Destroy(c,REASON_EFFECT)
+	if (c:IsAttackPos() or c:IsDefensePos()) then
+		Duel.Destroy(c,REASON_EFFECT)
+	end
 end
