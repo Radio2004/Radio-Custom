@@ -116,8 +116,8 @@ end
 end
    function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (c:IsAttackPos() or c:IsDefensePos()) and c:IsRelateToEffect()~=1 then
+	if (c:IsAttackPos() or c:IsDefensePos()) and c:IsRelateToEffect(e)~=1 then
 		Duel.Destroy(c,REASON_EFFECT)
-		c:IsRelateToEffect()
+		c:IsRelateToEffect(e)
 	end
 end
