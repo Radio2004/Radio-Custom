@@ -100,8 +100,8 @@ end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.IsAttackCostPaid()~=1 then
+	if c:GetFlagEffect(id)~=1 then
 		Duel.Destroy(c,REASON_EFFECT)
-		Duel.AttackCostPaid()
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 	end
 end
