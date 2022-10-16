@@ -98,23 +98,23 @@ end
 		tc:RegisterEffect(e1)
 		--Destroy
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EVENT_CHANGE_POS)
 		e2:SetOperation(s.desop)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end
-	function s.atcost(e,c,tp)
+function s.atcost(e,c,tp)
 	return Duel.CheckLPCost(tp,500)
 end
-	function s.atop(e,tp,eg,ep,ev,re,r,rp)
+function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsAttackCostPaid()~=1 and e:GetHandler():IsLocation(LOCATION_MZONE) then
 		Duel.PayLPCost(tp,500)
 		Duel.AttackCostPaid()
 	end
 end
-   function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.IsAttackCostPaid()~=1 then
 		Duel.Destroy(c,REASON_EFFECT)
