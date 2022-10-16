@@ -119,8 +119,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if c:GetFlagEffect(id)~=1 then
 		Duel.Destroy(c,REASON_EFFECT)
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
-	end
-	if not Duel.Destroy(c,REASON_EFFECT) then
-	c:ResetFlagEffect(id)
+		c:ResetFlagEffect(id)
 	end
 end
