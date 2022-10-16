@@ -21,7 +21,6 @@
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLED)
-	e3:SetCondition(s.statcon)
 	e3:SetOperation(s.statop)
 	c:RegisterEffect(e3)
 	--All Melirria gain ATK
@@ -82,7 +81,7 @@ end
 	function s.statop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToBattle() and c:IsFaceup() then
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
