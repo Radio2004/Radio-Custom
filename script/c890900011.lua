@@ -21,6 +21,7 @@
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLED)
+	e3:SetCondition(s.statcon)
 	e3:SetOperation(s.statop)
 	c:RegisterEffect(e3)
 	--All Melirria gain ATK
@@ -73,10 +74,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 	end
 end
-	function s.statcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL)
-		and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
+function s.statcon(e)
+	return Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
 end
 	function s.statop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
