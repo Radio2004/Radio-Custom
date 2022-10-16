@@ -107,10 +107,11 @@ end
 		tc:RegisterEffect(e1)
 	end
 end
-   function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsAttackPos() or c:IsDefensePos() then
+	if Duel.IsAttackCostPaid()~=1 then
 		Duel.Destroy(c,REASON_EFFECT)
+		Duel.AttackCostPaid()
 	end
 end
  function s.valcon(e,re,r,rp)
