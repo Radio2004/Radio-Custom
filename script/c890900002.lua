@@ -121,9 +121,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 	end
 end
-function s.check(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:GetFlagEffect(id)==1 then
-	c:ResetFlagEffect(id)
-	end
-end
