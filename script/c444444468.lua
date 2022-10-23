@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
-	e2:SetTarget(s.tg)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1bc))
 	e2:SetValue(ATTRIBUTE_FIRE)
 	c:RegisterEffect(e2)
 	--destruction replacement
@@ -53,25 +53,6 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1bc}
 s.listed_names={444444469}
-	function s.tg(e,c,tp)
-	if not c:IsSetCard(0x1BC) then return false end
-	if c:GetFlagEffect(1)==0 then
-		c:RegisterFlagEffect(1,0,0,0)
-		local eff
-		if c:IsLocation(LOCATION_MZONE) then
-			eff={Duel.GetPlayerEffect(c:GetControler(),EFFECT_NECRO_VALLEY)}
-		else
-			eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
-		end
-		c:ResetFlagEffect(1)
-		for _,te in ipairs(eff) do
-			local op=te:GetOperation()
-			if not op or op(e,c) then return false end
-		end
-	end
-	return true
-end
-
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1bc) and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
