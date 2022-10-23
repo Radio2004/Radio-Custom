@@ -68,7 +68,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetType()==TYPE_SPELL+TYPE_CONTINUOUS 
 end
 function s.filter(c,e,tp)
-	return c:IsRace(RACE_ROCK and c:IsCanBeSpecialSummoned(e,0,tp,false,false)and c:IsLevelAbove(8)
+	return c:IsRace(RACE_ROCK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)and c:IsLevelAbove(8)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
