@@ -74,5 +74,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local sp=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if #sp>0 then
 		Duel.SpecialSummon(sp,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end
