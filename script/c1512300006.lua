@@ -31,7 +31,7 @@ function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,1512300002)
 end
 function s.filter(c,tp)
-	return c:IsRace(RACE_ROCK) and c:IsFaceup()
+	return c:IsRace(RACE_ROCK) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.filter(chkc,tp) and chkc~=e:GetHandler() end
