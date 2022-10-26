@@ -20,7 +20,7 @@ function s.cfilter(c)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and not Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.nttg(e,c)
 	return c:IsSetCard(0x3b13) and c:IsLevelAbove(5)
