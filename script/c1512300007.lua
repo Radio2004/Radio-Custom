@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.recop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x3b13}
 function s.filter(c)
 	return c:IsSetCard(0x3b13) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
 end
