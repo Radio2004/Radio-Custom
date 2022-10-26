@@ -15,9 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x3b13}
+function s.cfilter(c)
+	return c:IsFacedown() or not c:IsRace(RACE_ROCK)
+end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
+	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.nttg(e,c)
 	return c:IsSetCard(0x3b13) and c:IsLevelAbove(5)
