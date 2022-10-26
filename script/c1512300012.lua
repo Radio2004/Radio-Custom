@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,8,5,s.ovfilter,aux.Stringid(id,0))
 	c:EnableReviveLimit()
 	--Fusion summon 1 Rock monster
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_ROCK),matfilter=s.mfilter,extrafil=s.fextra}
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_ROCK),matfilter=s.mfilter,extrafil=s.fextra,extraop=s.extraop,extratg=s.extratarget}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -37,6 +37,18 @@ end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,nil),s.checkmat
 end
+function s.extraop(e,tc,tp,sg)
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	if #rg>0 then
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+		sg:Sub(rg)
+	end
+end
+function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_GRAVE)
+end
+
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,1512300003)
 end
