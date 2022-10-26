@@ -70,7 +70,7 @@ function s.val(e,c,re,chk)
 	return RACE_ROCK 
 end
 function s.filter(c,tp)
-	return c:IsRace(RACE_ROCK)
+	return c:IsRace(RACE_ROCK) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.filter(chkc,tp) and chkc~=e:GetHandler() end
