@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.filter(c)
-	return c:IsSetCard(0x3b13) and not c:IsForbidden()
+	return c:IsSetCard(0x3b13) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND,0,1,nil)
@@ -83,7 +83,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetType()==TYPE_SPELL+TYPE_CONTINUOUS 
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x3b13) and c:IsAbleToHand()
+	return c:IsSetCard(0x3b13) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
