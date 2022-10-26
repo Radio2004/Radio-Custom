@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,8,5,s.ovfilter,aux.Stringid(id,0))
 	c:EnableReviveLimit()
 	--Fusion summon 1 Rock monster
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_ROCK),matfilter=aux.FALSE,extrafil=s.fextra,extraop=s.extraop,extratg=s.extratarget}
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_ROCK),matfilter=s.mfilter,extrafil=s.fextra}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -27,25 +27,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x3b13}
+function s.mfilter(c)
+	return (c:IsLocation(LOCATION_GRAVE) and c:IsAbleToRemove())
+		or (c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsAbleToGrave())
+end
 function s.checkmat(tp,sg,fc)
 	return fc:IsSetCard(0x3b13) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE+LOCATION_HAND)
 end
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_MZONE+LOCATION_HAND,0,nil),s.checkmat
-	end
-	return nil
-end
-function s.extraop(e,tc,tp,sg)
-	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_MZONE+LOCATION_HAND)
-	if #rg>0 then
-		Duel.SendtoGrave(rg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-		sg:Sub(rg)
-	end
-end
-function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_MZONE+LOCATION_HAND)
+	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,nil),s.checkmat
 end
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,1512300003)
