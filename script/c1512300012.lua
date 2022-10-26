@@ -37,7 +37,7 @@ function s.fextra(e,tp,mg)
 	return nil
 end
 function s.extraop(e,tc,tp,sg)
-	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_MZONE+LOCATION_HAND)
 	if #rg>0 then
 		Duel.SendtoGrave(rg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 		sg:Sub(rg)
@@ -45,7 +45,7 @@ function s.extraop(e,tc,tp,sg)
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_MZONE+LOCATION_HAND)
 end
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,1512300003)
