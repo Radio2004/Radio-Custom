@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,8,5,s.ovfilter,aux.Stringid(id,0))
 	c:EnableReviveLimit()
 	--Fusion summon 1 Rock monster
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_ROCK),matfilter=Fusion.BanishMaterial,extrafil=s.fextra,extraop=s.extraop,extratg=s.extratarget}
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_ROCK),matfilter=aux.FALSE,extrafil=s.fextra,extraop=s.extraop,extratg=s.extratarget}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -37,7 +37,7 @@ function s.fextra(e,tp,mg)
 	return nil
 end
 function s.extraop(e,tc,tp,sg)
-	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_MZONE+LOCATION_HAND)
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 	if #rg>0 then
 		Duel.SendtoGrave(rg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 		sg:Sub(rg)
