@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x3b13}
-function s.filter(c)
+function s.filter(c,tp)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsRace(RACE_ROCK)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
