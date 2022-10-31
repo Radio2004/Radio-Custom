@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x3b13}
-function s.filter(c,tp)
+function s.filter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsRace(RACE_ROCK)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -25,13 +25,13 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local attr=e:GetLabel()
-	--This turn, all face-up monsters on the field become that Attribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-	e1:SetTargetRange(LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE)
-	e1:SetValue(attr)
-	e1:SetTarget(s.filter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	Duel.RegisterEffect(e1,tp)
+	ocal g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	for tc in g:Iter() do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+		e1:SetValue(att)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
+	end
 end
