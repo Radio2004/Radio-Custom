@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--fusion from the pendulum zone
 	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x3b13),extrafil=s.fextra,extraop=s.extraop}
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
