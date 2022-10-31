@@ -32,7 +32,7 @@ end
 function s.fextra(e,tp,mg)
 	local sg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 	if #sg>0 then
-		return sg,s.fcheck
+		return sg
 	end
 	return nil
 end
