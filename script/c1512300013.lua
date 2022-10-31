@@ -30,11 +30,7 @@ function s.mfilter(c)
 		or (c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsAbleToGrave())
 end
 function s.fextra(e,tp,mg)
-	local sg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
-	if #sg>0 then
-		return sg
-	end
-	return nil
+	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,nil)
 end
 function s.extraop(e,tc,tp,sg)
 	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
