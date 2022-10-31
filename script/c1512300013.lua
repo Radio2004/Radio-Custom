@@ -20,8 +20,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e2:SetTarget(Fusion.SummonEffTG(params))
+	e2:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x3b13}
