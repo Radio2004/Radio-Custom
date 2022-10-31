@@ -12,8 +12,33 @@ function s.initial_effect(c)
 	e1:SetTarget(s.attg)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
+	--fusion from the pendulum zone
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x3b13),extrafil=s.fextra,extraop=s.extraop}
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,{id,1})
+	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
+	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x3b13}
+function s.fextra(e,tp,mg)
+	local sg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
+	if #sg>0 then
+		return sg,s.fcheck
+	end
+	return nil
+end
+function s.extraop(e,tc,tp,sg)
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	if #rg>0 then
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+		sg:Sub(rg)
+	end
+end
 function s.filter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsRace(RACE_ROCK)
 end
