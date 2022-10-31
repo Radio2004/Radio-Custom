@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
 	--fusion from the pendulum zone
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x3b13),extrafil=s.fextra,extraop=s.extraop}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x3b13),matfilter=s.mfilter,extrafil=s.fextra,extraop=s.extraop}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -25,6 +25,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x3b13}
+function s.mfilter(c)
+	return (c:IsLocation(LOCATION_GRAVE) and c:IsAbleToRemove())
+		or (c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsAbleToGrave())
+end
 function s.fextra(e,tp,mg)
 	local sg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 	if #sg>0 then
