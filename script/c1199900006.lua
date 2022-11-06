@@ -9,16 +9,15 @@ function s.initial_effect(c)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCondition(s.regcon2)
-	e2:SetOperation(s.regop2)
-	c:RegisterEffect(e2)
 end
 s.listed_series={0x132}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x14f1)
+	if not re then return false end
+	local rc=re:GetHandler()
+	return re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x14f1)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local rc=re:GetHandler()
 	local c=e:GetHandler()
 	--Double damage
 	local e1=Effect.CreateEffect(c)
@@ -26,6 +25,16 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e1)
+	if rc:IsSummonLocation(LOCATION_EXTRA) then
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_IMMUNE_EFFECT)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetValue(s.efilter)
+	c:RegisterEffect(e2)
+	end
 end
 function s.regcon2(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
