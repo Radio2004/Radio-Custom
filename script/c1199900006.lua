@@ -9,13 +9,6 @@ function s.initial_effect(c)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--Double damage
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
-	e2:SetCondition(s.dcon)
-	e2:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
-	c:RegisterEffect(e2)
 end
 s.listed_series={0x132}
 function s.econ(e)
