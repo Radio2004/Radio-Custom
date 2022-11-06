@@ -28,7 +28,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.regcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x14f1) 
+	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x14f1) and re:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
