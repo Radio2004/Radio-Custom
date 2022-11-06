@@ -41,5 +41,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		c:RegisterEffect(e3)
-	end
 end
