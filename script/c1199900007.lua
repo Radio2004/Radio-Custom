@@ -56,7 +56,7 @@ function s.atktarget(e,c)
 	return c:GetLevel()<5 and c:IsFaceup()
 end
 function s.atktarget2(e,c)
-	return c:IsSetCard(0x14f1) and c:IsFaceup()
+	return c:IsSetCard(0x14f1) and c:IsFaceup() and c:GetLevel()<5
 end
 function s.atkval(e,c)
 	return c:GetAttack()*2
