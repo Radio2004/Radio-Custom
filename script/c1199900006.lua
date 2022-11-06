@@ -9,18 +9,28 @@ function s.initial_effect(c)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCondition(s.regcon2)
+	e2:SetOperation(s.regop2)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x132}
-function s.econ(e)
-	return e:GetHandler():IsInExtraMZone()
-end
-function s.efilter(e,te)
-	return not te:GetOwner():IsSetCard(0x14f1)
-end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x14f1)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	--Double damage
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
+	c:RegisterEffect(e1)
+end
+function s.regcon2(e,tp,eg,ep,ev,re,r,rp)
+	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x14f1) and re:IsSummonLocation(LOCATION_EXTRA)
+end
+function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -28,13 +38,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetCondition(s.econ)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--Double damage
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
-	e2:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
-	c:RegisterEffect(e2)
+end
+function s.efilter(e,te)
+	return not te:GetOwner():IsSetCard(0x14f1)
 end
