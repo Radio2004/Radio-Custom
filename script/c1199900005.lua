@@ -74,12 +74,13 @@ function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetFirst():GetAttack()//1000)
+	local mtgc=g:GetAttack()//1000
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,mtgc*500)
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local mtgc=tc:GetAttack()//1000
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.Damage(1-tp,mtgc,REASON_EFFECT)
+		Duel.Damage(1-tp,mtgc*500,REASON_EFFECT)
 	end
 end
