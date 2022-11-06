@@ -26,5 +26,5 @@ function s.efilter(e,te)
 	return not te:GetOwner():IsSetCard(0x14f1)
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattleTarget()~=nil and re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x14f1)
+	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x14f1)
 end
