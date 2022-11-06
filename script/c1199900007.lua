@@ -29,6 +29,17 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sg=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
+	local tc=sg:GetFirst()
+		--ATK becomes doubled of its current ATK
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetRange(LOCATION_SZONE)
+		e1:SetTarget(s.atkfilter)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetValue(tc:GetAttack()*2)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		c:RegisterEffect(e1)
 		--Pos Change
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
