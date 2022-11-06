@@ -78,7 +78,7 @@ function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local mtgc=tc:GetFirst():GetAttack()//1000
+	local mtgc=tc:GetAttack()//1000
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Damage(1-tp,mtgc,REASON_EFFECT)
 	end
