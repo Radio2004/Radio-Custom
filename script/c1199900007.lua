@@ -34,7 +34,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 		--ATK becomes doubled of its current ATK
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetTarget(s.atkdeftarget2)
@@ -64,15 +64,15 @@ end
 function s.atkval(e,c)
 	return c:GetAttack()*2
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local sg=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,sg,#sg,0,0)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-		--ATK becomes doubled of its current ATK
-		local e1=Effect.CreateEffect(e:GetHandler())
+		--DEF becomes doubled of its current DEF
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetTarget(s.atktarget2)
