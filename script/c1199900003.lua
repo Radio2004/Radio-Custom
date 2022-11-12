@@ -66,7 +66,7 @@ function s.cannottgeff(e,c)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x14f1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,1199900000),tp,LOCATION_ONFIELD,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,1199900000),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(1199900000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
