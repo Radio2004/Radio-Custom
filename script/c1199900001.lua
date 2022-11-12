@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x14f1),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x14f1),tp,LOCATION_MZONE,0,nil)
 	return ct==Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
 function s.filter(c,e,tp)

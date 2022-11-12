@@ -1,7 +1,7 @@
 --Attackers and Blockers - Strategist
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Rescue-ACE" Trap card to the hand
+	--Add 1 "Attackers and Blockers" card to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
