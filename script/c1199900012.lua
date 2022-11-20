@@ -60,8 +60,11 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-		e1:SetValue(c:GetBaseDefense()*2)
+		e1:SetValue(s.defval)
 		tc:RegisterEffect(e1)
 		end
 	end
+end
+function s.defval(e,c)
+	return c:GetBaseDefense()*2
 end
