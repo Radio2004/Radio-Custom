@@ -42,11 +42,9 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local dam=math.abs(c:GetAttack()-c:GetBaseAttack())
-	local dif=math.max(c:GetAttack(),c:GetDefense())
-	if dif==c:GetDefense() then
-		atk=math.abs(c:GetDefense()-c:GetBaseDefense())
-	end
+	local atk=math.abs(c:GetAttack()-c:GetBaseAttack())
+	local def=math.abs(c:GetDefense()-c:GetBaseDefense())
+	local dam=math.max(atk,def)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
