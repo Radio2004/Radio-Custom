@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetValue(1199900007)
 	c:RegisterEffect(e2)
-	--Change opponent's attack position monsters to defense position
+	--Change attack position monsters to defense position
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_POSITION)
+	e3:SetCategory(CATEGORY_POSITION+CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_SZONE)
@@ -51,6 +51,17 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
+	local tc=g:GetFirst()
+	if Duel.ChangePosition(g,POS_FACEUP_DEFENSE)>0 then
+		for tc in aux.Next(g) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetValue(c:GetBaseDefense()*2)
+		tc:RegisterEffect(e1)
+		end
+	end
 end
