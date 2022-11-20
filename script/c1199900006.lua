@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x132}
+s.listed_series={0x14f1}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x132}
+s.listed_series={0x14f1}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
@@ -41,12 +41,14 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetAttack()~=c:GetBaseAttack() or c:GetDefense()~=c:GetBaseDefense()
 end
-function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x14f1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ((c:IsLevelBelow(5) and c:IsLocation(LOCATION_DECK)) or (c:IsLevelAbove(6) and c:IsLocation(LOCATION_HAND)))
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local dam=math.abs(c:GetAttack()-c:GetBaseAttack())
+	local dif=math.max(c:GetAttack(),c:GetDefense())
+	if dif==c:GetDefense() then
+		atk=math.abs(c:GetDefense()-c:GetBaseDefense())
+	end
 	if chk==0 then return true end
-	local dam=e:GetHandler():GetDefense()/2
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
