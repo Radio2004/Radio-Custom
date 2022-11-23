@@ -17,7 +17,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Change attack position monsters to defense position
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_POSITION+CATEGORY_ATKCHANGE)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_POSITION+CATEGORY_DEFCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_SZONE)
@@ -25,6 +26,17 @@ function s.initial_effect(c)
 	e3:SetTarget(s.postg)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
+	--from def to atack
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetCategory(CATEGORY_POSITION+CATEGORY_ATKCHANGE)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(s.tdcon)
+	e4:SetTarget(s.tdtg)
+	e4:SetOperation(s.tdop)
+	c:RegisterEffect(e4)
 end
 s.listed_names={1199900007}
 function s.costfilter(c)
@@ -44,6 +56,9 @@ function s.postcond(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
+end
+function s.filter2(c)
+	return c:IsCanChangePosition()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -67,4 +82,30 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.defval(e,c)
 	return c:GetBaseDefense()*2
+end
+function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp and not Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,LOCATION_MZONE,0,1,nil)
+end
+function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,0,nil)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
+end
+function s.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,0,nil)
+	local tc=g:GetFirst()
+	if Duel.ChangePosition(g,POS_FACEUP_ATTACK)>0 then
+		for tc in aux.Next(g) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(s.atkval)
+		tc:RegisterEffect(e1)
+		end
+	end
+end
+function s.atkval(e,c)
+	return c:GetBaseAttack()*2
 end
