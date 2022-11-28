@@ -85,7 +85,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.copfilter(c)
-	return c:IsAbleToGraveAsCost() and c:IsCode(1199900000) and c:CheckActivateEffect(true,true,false)~=nil 
+	return c:IsAbleToGraveAsCost() and c:IsCode(1199900000) and c:GetType()==TYPE_SPELL and c:CheckActivateEffect(true,true,false)~=nil 
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.copfilter,tp,LOCATION_DECK,0,1,nil) end
