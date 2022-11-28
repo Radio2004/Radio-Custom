@@ -56,7 +56,7 @@ function s.cfilter(c)
 	return c:IsCode(1199900000) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND||LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
