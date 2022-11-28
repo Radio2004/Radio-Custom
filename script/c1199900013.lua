@@ -89,7 +89,7 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.copfilter,tp,LOCATION_DECK,0,1,nil) end
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		local te=e:GetLabelObject()
 		return tg and tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)
@@ -109,7 +109,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabelObject(te)
 	Duel.ClearOperationInfo(0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local te=e:GetLabelObject()
 	if te then
 		e:SetLabel(te:GetLabel())
