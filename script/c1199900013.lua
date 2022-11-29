@@ -34,8 +34,21 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
+	--cannot be destroyed
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(s.indcon)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x14f1}
+function s.indcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetAttack()~=c:GetBaseAttack() or c:GetDefense()~=c:GetBaseDefense()
+end
 function s.thfilter(c)
 	return c:IsSetCard(0x14f1) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
