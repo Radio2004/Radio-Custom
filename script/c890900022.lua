@@ -28,7 +28,7 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return (Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x38d),tp,LOCATION_MZONE,0,1,nil) or Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x38d),tp,LOCATION_MZONE,0,1,nil) or Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x3dd) and c:IsAbleToHand()
