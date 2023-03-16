@@ -60,7 +60,7 @@ end
 	local b2=g2
 	local b3=g3 
 	if chk==0 then return b1 or b2 or b3 end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})

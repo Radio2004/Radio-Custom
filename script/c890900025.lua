@@ -49,7 +49,7 @@ end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,890900037),tp,LOCATION_ONFIELD,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,890900037),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(890900037) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
