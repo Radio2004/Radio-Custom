@@ -79,7 +79,7 @@ end
 
 
 	function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
+	local g1=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
 	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)
 	local b1=g1
 	local b2=g2
@@ -105,7 +105,7 @@ end
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
-	local rec=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)*300
+	local rec=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x1bc),tp,LOCATION_MZONE,0,nil)*300
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Recover(p,rec,REASON_EFFECT)
 	else

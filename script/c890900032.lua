@@ -115,7 +115,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dircon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,890900001),tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,890900001),tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,id),tp,LOCATION_ONFIELD,0,1,nil)
 end
 
 function s.subfilter(c)

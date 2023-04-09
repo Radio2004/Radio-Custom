@@ -112,29 +112,29 @@ end
 	return eg:IsExists(s.spfilter,1,nil,tp) 
 end
 	function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(s.damfiler),tp,LOCATION_MZONE,0,nil)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct*200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(s.damfiler),tp,LOCATION_MZONE,0,nil)
 	Duel.Damage(p,ct*200,REASON_EFFECT)
 end
 	function s.recon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.recfilter,1,nil,tp)
 end
 	function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(s.damfiler),tp,LOCATION_MZONE,0,1,nil) end
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(s.damfiler),tp,LOCATION_MZONE,0,nil)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(ct*300)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,ct*300)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(s.damfiler),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(s.damfiler),tp,LOCATION_MZONE,0,nil)
 	Duel.Recover(p,ct*300,REASON_EFFECT)
 end

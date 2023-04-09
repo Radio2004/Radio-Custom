@@ -62,7 +62,7 @@ end
 
 
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g1=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
+	local g1=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
 	local g2=Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil)and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil,e,tp)
 	local b1=g1
 	local b2=g2
@@ -73,7 +73,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(op)
    if op==1 then
 	e:SetCategory(CATEGORY_DAMAGE)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct)
@@ -89,7 +89,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then 
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,nil)*300
 	Duel.Damage(p,ct,REASON_EFFECT)
 	else
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

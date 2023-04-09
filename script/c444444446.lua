@@ -33,7 +33,7 @@ end
 s.listed_series={0x1BC}
 s.listed_names={444444447}
 	function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev) and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
+	return ep~=tp and re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev) and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1BC),tp,LOCATION_MZONE,0,1,nil)
  end
 
    function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
