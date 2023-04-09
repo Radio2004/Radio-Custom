@@ -106,7 +106,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)

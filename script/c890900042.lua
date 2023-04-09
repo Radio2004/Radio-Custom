@@ -42,7 +42,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=g2
 	vl=0
 	if chk==0 then return b1 or b2 end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	if op==1 then

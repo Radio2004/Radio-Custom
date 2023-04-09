@@ -49,7 +49,7 @@ end
 	local b1=Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil)
 	local b2=Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if chk==0 then return b1 or b2 end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)

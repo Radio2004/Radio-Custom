@@ -75,7 +75,7 @@ end
 		  b2=Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x1bc)
 	end
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	if op==1 then
