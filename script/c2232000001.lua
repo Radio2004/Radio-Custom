@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	return (re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_NEGATE)) and r:IsMonster()
+	return (re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_NEGATE)) and eg:IsMonster()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
