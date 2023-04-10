@@ -46,10 +46,9 @@ end
 
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x8b8) end
+	  end
 	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x8b8)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-	Duel.Release(sg,REASON_COST)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()
