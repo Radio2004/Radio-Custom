@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	local g=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON)
+	local g=Duel.GetChainInfo(ev)
 	if not g then return false end
 	local tc=g:GetFirst()
 	return (re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_NEGATE)) and tc:IsFaceup() and tc:IsMonster() and tc:IsLocation(LOCATION_MZONE)
