@@ -20,7 +20,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON)
    -- if not g then return false end
    local tc=g:GetFirst()
-	return (re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_NEGATE)) and g:GetHandler():IsType(TYPE_MONSTER)
+	return (re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_NEGATE)) and tc:GetHandler():IsType(TYPE_MONSTER)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
