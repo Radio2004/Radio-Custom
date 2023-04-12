@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x8b8}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
 	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
