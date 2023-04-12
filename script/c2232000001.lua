@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetCategory(CATEGORY_NEGATE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
@@ -29,7 +29,7 @@ end
 s.listed_series={0x8b8}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
+	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -39,7 +39,7 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
