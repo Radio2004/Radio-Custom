@@ -40,7 +40,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	   e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)  
 	   e1:SetRange(LOCATION_MZONE)
 	   e1:SetValue(1)
-	   e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	   e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,3)
 	   oc:RegisterEffect(e1)
 		--atk
 		local e2=Effect.CreateEffect(c)
@@ -48,7 +48,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,3)
 		oc:RegisterEffect(e2)
 	end
 end
