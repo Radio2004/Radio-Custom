@@ -28,7 +28,9 @@ end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
+	Duel.Draw(tp,1,REASON_EFFECT)
 end
