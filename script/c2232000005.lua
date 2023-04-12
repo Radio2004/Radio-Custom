@@ -32,7 +32,25 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.ChangePosition(eg,POS_FACEDOWN_DEFENSE)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.ChangePosition(eg,POS_FACEDOWN_DEFENSE) ~= 0 then
+	   local oc=Duel.GetOperatedGroup():GetFirst()
+	   local c=e:GetHandler()
+	   local e1=Effect.CreateEffect(c)
+	   e1:SetType(EFFECT_TYPE_SINGLE)
+	   e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	   e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	   e1:SetRange(LOCATION_MZONE)
+	   e1:SetValue(1)
+	   e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	   oc:RegisterEffect(e1)
+		--atk
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetValue(1)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		oc:RegisterEffect(e2)
 	end
 end
