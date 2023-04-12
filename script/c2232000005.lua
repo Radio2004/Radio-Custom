@@ -37,16 +37,14 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	   local c=e:GetHandler()
 	   local e1=Effect.CreateEffect(c)
 	   e1:SetType(EFFECT_TYPE_SINGLE)
-	   e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	  
+	   e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)  
 	   e1:SetRange(LOCATION_MZONE)
 	   e1:SetValue(1)
 	   e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	   oc:RegisterEffect(e1)
 		--atk
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-	 
+		e2:SetType(EFFECT_TYPE_SINGLE) 
 		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetValue(1)
