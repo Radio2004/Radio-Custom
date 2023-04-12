@@ -29,7 +29,7 @@ end
 s.listed_series={0x8b8}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE) || Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE) or Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
