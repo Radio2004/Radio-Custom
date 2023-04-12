@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x8b8}
 function s.hspcfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x8b8) and c:IsDiscardable()
+	return c:IsSetCard(0x8b8) and c:IsDiscardable()
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.hspcfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
