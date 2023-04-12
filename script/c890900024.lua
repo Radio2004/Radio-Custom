@@ -66,20 +66,20 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		--Can attack directly this turn
-		local e1=Effect.CreateEffect(c)
+		local e4=Effect.CreateEffect(c)
 		e4:SetDescription(aux.Stringid(id,0))
 		e4:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_DIRECT_ATTACK)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
+		tc:RegisterEffect(e4)
 		--Reduce damage
-		local e3=Effect.CreateEffect(c)
+		local e5=Effect.CreateEffect(c)
 		e5:SetType(EFFECT_TYPE_SINGLE)
 		e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e5:SetCondition(s.rdcon)
 		e5:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
-		tc:RegisterEffect(e3)
+		tc:RegisterEffect(e5)
 	end
 end
 
