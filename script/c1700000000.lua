@@ -41,7 +41,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_OVERLAY) and re:IsType(TYPE_XYZ)
+	return c:IsPreviousLocation(LOCATION_OVERLAY) 
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsFacedown() end
