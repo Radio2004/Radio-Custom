@@ -44,7 +44,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	local c=e:GetHandler()
-	return ph==PHASE_DAMAGE and (c==Duel.GetAttacker() or c==Duel.GetAttackTarget())
+	return ph==PHASE_DAMAGE and c==Duel.GetAttackTarget()
 		and not Duel.IsDamageCalculated()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
