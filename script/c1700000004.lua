@@ -67,13 +67,13 @@ function s.mtfilter(c,e)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
-		and Duel.IsExistingMatchingCard(s.mtfilter,tp,LOCATION_MZONE,0,1,nil,e) end
+		and Duel.IsExistingMatchingCard(s.mtfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),e) end
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local tc=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_MZONE,0,1,1,nil,e):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler(),e):GetFirst()
 	if tc then
 		Duel.Overlay(c,tc,true)
 	end
