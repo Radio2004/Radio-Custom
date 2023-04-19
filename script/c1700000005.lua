@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-
+end
 s.listed_names={id+1}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,id+1),tp,LOCATION_MZONE,0,1,nil)
