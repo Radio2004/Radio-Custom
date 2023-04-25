@@ -57,8 +57,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
-		e4:SetValue(d*500)
+		e4:SetValue(d*-500)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-		c:RegisterEffect(e4)
+		tc:RegisterEffect(e4)
 	 end
 end
