@@ -28,7 +28,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
-	local d=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local d=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #g>0 then
 		--Negate effects of a monster
 		local tc=g:GetFirst()
