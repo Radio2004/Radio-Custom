@@ -44,6 +44,8 @@ function s.initial_effect(c)
 	--Register Attributes used
 	aux.GlobalCheck(s,function()
 		s.attr_list={}
+		s.attr_list[0]=0
+		s.attr_list[1]=0
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_PHASE+PHASE_END)
