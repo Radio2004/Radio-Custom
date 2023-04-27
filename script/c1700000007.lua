@@ -41,12 +41,34 @@ function s.initial_effect(c)
 	e3:SetTarget(s.mttg)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
+	--Register Attributes used
+	aux.GlobalCheck(s,function()
+		s.attr_list={}
+		s.attr_list[0]=0
+		s.attr_list[1]=0
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_PHASE+PHASE_END)
+		ge1:SetCountLimit(1)
+		ge1:SetCondition(s.resetop)
+		Duel.RegisterEffect(ge1,0)
+	end)
+end
+function s.resetop(e,tp,eg,ep,ev,re,r,rp)
+	s.attr_list[0]=0
+	s.attr_list[1]=0
+	return false
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local att=e:GetLabel()
+	s.attr_list[tp]=s.attr_list[tp]|att
+	for _,str in aux.GetAttributeStrings(att) do
+		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+	end
 	return c:GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,e:GetLabel()) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.filter(c)
