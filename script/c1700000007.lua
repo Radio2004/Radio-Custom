@@ -55,6 +55,15 @@ function s.valcon(e,re,r,rp)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local att=0
+	local og=e:GetHandler():GetOverlayGroup()
+	for tc in aux.Next(og) do
+		att=att|tc:GetAttribute():GetLabel()
+	end
+	s.attr_list[tp]=s.attr_list[tp]|att
+	for _,str in aux.GetAttributeStrings(att) do
+		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+	end
 	return c:GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,e:GetLabel()) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.filter(c)
