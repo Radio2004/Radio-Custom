@@ -48,7 +48,6 @@ function s.initial_effect(c)
 		s.attr_list[1]=0
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_PHASE+PHASE_END)
 		ge1:SetCountLimit(1)
 		ge1:SetCondition(s.resetop)
 		Duel.RegisterEffect(ge1,0)
