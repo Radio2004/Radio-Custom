@@ -58,7 +58,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local att=0
 	local og=e:GetHandler():GetOverlayGroup()
 	for tc in aux.Next(og) do
-		att=att|tc:GetAttribute():GetLabel()
+		att=att|tc:GetAttribute()
 	end
 	s.attr_list[tp]=s.attr_list[tp]|att
 	for _,str in aux.GetAttributeStrings(att) do
