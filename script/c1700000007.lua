@@ -50,6 +50,7 @@ function s.initial_effect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCountLimit(1)
 		ge1:SetCondition(s.resetop)
+		ge1:SetOperation(s.resetop)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
@@ -58,18 +59,18 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	s.attr_list[1]=0
 	return false
 end
+function s.resetop(e,tp,eg,ep,ev,re,r,rp)
+	local att=e:GetLabel()
+	s.attr_list[tp]=s.attr_list[tp]|att
+	for _,str in aux.GetAttributeStrings(att) do
+		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+		end
+end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local att=e:GetLabel()
-	if c:GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,e:GetLabel()) then
-	s.attr_list[tp]=s.attr_list[tp]|att
-	for _,str in aux.GetAttributeStrings(att) do
-		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,str)
-		end
-	end
 	return c:GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,e:GetLabel()) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.filter(c)
