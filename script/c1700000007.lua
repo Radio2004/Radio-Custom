@@ -44,11 +44,19 @@ function s.initial_effect(c)
 	--Register Attributes used
 	aux.GlobalCheck(s,function()
 		s.attr_list={}
+		s.attr_list[0]=0
+		s.attr_list[1]=0
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCountLimit(1)
+		ge1:SetCondition(s.resetop)
 		Duel.RegisterEffect(ge1,0)
 	end)
+end
+function s.resetop(e,tp,eg,ep,ev,re,r,rp)
+	s.attr_list[0]=0
+	s.attr_list[1]=0
+	return false
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
@@ -58,7 +66,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local att=0
 	local og=e:GetHandler():GetOverlayGroup()
 	for tc in aux.Next(og) do
-		att=att|tc:GetAttribute()
+		att=att|tc:GetAttribute():GetLabel()
 	end
 	s.attr_list[tp]=s.attr_list[tp]|att
 	for _,str in aux.GetAttributeStrings(att) do
