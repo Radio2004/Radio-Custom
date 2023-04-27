@@ -10,10 +10,10 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e1:SetLabel(ATTRIBUTE_WIND)
 	e1:SetCountLimit(1)
 	e1:SetValue(s.valcon)
 	e1:SetCondition(s.effcon)
-	e1:SetLabel(ATTRIBUTE_WIND)
 	c:RegisterEffect(e1)
 	--Dark
 	local e2=Effect.CreateEffect(c)
@@ -63,7 +63,7 @@ function s.valcon(e,re,r,rp)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local att=c:GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,e:GetLabel())
+	local att=e:GetLabel()
 	s.attr_list[tp]=s.attr_list[tp]|att
 	for _,str in aux.GetAttributeStrings(att) do
 		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,str)
