@@ -46,7 +46,7 @@ end
 end
 
 	function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil)
+	local b1=Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil)
 	local b2=Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
@@ -56,7 +56,7 @@ end
 	if op==1 then
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-		local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	else
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
