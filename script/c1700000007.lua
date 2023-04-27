@@ -50,7 +50,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,e:GetLabel()) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.filter(c)
-	return  c:IsMonster() and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
