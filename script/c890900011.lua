@@ -53,10 +53,10 @@ end
 	e:SetLabel(e:GetHandler():GetPreviousAttackOnField())
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
-	function s.atkfil(c)
+function s.atkfil(c)
 	return c:IsFaceup() and c:IsSetCard(0x3dd)
 end
-	function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfil,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
