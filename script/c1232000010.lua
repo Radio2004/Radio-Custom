@@ -87,7 +87,31 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_REMOVED,0,1,1,nil,e,tp)
-		if #g==0 then return end
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		local tg=g:GetFirst()
+		if tg then
+			Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+			local fid=e:GetHandler():GetFieldID()
+			tg:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_PHASE+PHASE_END)
+			e1:SetCountLimit(1)
+			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+			e1:SetLabel(fid)
+			e1:SetLabelObject(tg)
+			e1:SetCondition(s.thcon)
+			e1:SetOperation(s.thop)
+			Duel.RegisterEffect(e1,tp)
+		end
 	end
+end
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+		e:Reset()
+		return false
+	else return Duel.GetTurnPlayer()==tp end
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
 end
