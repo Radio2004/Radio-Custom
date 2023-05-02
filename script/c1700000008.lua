@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	--Light
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
