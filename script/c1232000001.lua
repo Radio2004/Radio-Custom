@@ -37,18 +37,24 @@ s.listed_series={0x8b8}
 --	return (ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0) or (ex2 and tg2~=nil and tc2+tg2:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg2:GetCount()>0)
 --end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
+	if not Duel.IsChainNegatable(ev) then return false end
 	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
 	if not tex or ttg==nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg<=0 then return false end
-	return true
+	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev-1,CATEGORY_)
+	if ex and (cp~=tp or cp==PLAYER_ALL) then return true end
+	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev-1,CATEGORY_RECOVER)
+	return ex and (cp~=tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_REVERSE_RECOVER)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
+	if not Duel.IsChainNegatable(ev) then return false end
 	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
 	if not tex or ttg==nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg<=0 then return false end
-	return true
+	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev-1,CATEGORY_DAMAGE)
+	if ex and (cp~=tp or cp==PLAYER_ALL) then return true end
+	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev-1,CATEGORY_RECOVER)
+	return ex and (cp~=tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_REVERSE_RECOVER)
 end
 
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
