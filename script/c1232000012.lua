@@ -17,11 +17,13 @@ s.listed_series={0x8b8}
 function s.cfilter(c)
 	return c:IsSetCard(0x8b8) and c:IsAbleToRemoveAsCost()
 end
+function s.filter(c,p)
+	return c:IsOnField() and c:IsControler(p)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE)
+	return g and g:IsExists(s.filter,1,nil,tp)
 		and Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
