@@ -32,7 +32,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) or not (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	--local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
 	--local ex2,tg2,tc2=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
-	local ex,tg,ct=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	local ex,tg,ct=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
 	if not ex then return false end
 	if ct>1 then
 		for i=1,ev-1 do
