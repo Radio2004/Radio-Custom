@@ -28,10 +28,24 @@ function s.initial_effect(c)
 end
 s.listed_series={0x8b8}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
-	ex2,tg2,tc2=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
-	return (ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0) or (ex2 and tg2~=nil and tc2+tg2:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg2:GetCount()>0)
+	--if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
+	if not Duel.IsChainNegatable(ev) or not (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
+	--local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
+	--local ex2,tg2,tc2=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	local ex,tg,ct=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	if not ex then return false end
+	if ct>1 then
+		for i=1,ev-1 do
+			local ce=Duel.GetChainInfo(ev-i,CHAININFO_TRIGGERING_EFFECT)
+			if ce and ce:IsActiveType(TYPE_MONSTER) then
+				return true
+			end
+		end
+	elseif ct==1 then
+		local ce=Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT)
+		return ce and ce:IsActiveType(TYPE_MONSTER)
+	end
+	--return (ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0) or (ex2 and tg2~=nil and tc2+tg2:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg2:GetCount()>0)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
