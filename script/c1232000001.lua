@@ -37,8 +37,12 @@ s.listed_series={0x8b8}
 --	return (ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0) or (ex2 and tg2~=nil and tc2+tg2:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg2:GetCount()>0)
 --end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tex,ttg,ttc=Duel.GetOperationInfo(ev-1,CATEGORY_NEGATE)
-	return tex and ttg~=nil and ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg>0
+	if not Duel.IsChainNegatable(ev) then return false end
+	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
+	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	if not tex or ttg==nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg<=0 then return false end
+	if re:IsActiveType(TYPE_MONSTER) then return true end
+	return re:IsActiveType(TYPE_MONSTER)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
