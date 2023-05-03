@@ -37,7 +37,7 @@ s.listed_series={0x8b8}
 --	return (ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0) or (ex2 and tg2~=nil and tc2+tg2:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg2:GetCount()>0)
 --end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	local tex,ttg,ttc=Duel.GetOperationInfo(ev-1,CATEGORY_NEGATE)
 	return tex and ttg~=nil and ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg>0
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
