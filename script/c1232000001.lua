@@ -40,7 +40,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
 	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
-	if not tex or ttg==nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg<=0 then return false end
 	return tex or ttg~=nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg>0
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
