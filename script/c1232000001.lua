@@ -27,11 +27,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x8b8}
+function s.filter(c,p)
+	return c:IsOnField() and c:IsControler(p)
+end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
-	ex2,tg2,tc2=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
-	return (ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0) or (ex2 and tg2~=nil and tc2+tg2:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg2:GetCount()>0)
+	--ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
+   -- ex2,tg2,tc2=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	local g=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
+	local g1=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	return (g or g1) and (g:IsExists(s.filter,1,nil,tp) or g1:IsExists(s.filter,1,nil,tp)) and Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	--return (ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg:GetCount()>0) or (ex2 and tg2~=nil and tc2+tg2:FilterCount(Card.IsType,nil,TYPE_MONSTER)-tg2:GetCount()>0)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
