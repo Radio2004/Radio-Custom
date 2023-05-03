@@ -29,7 +29,6 @@ end
 s.listed_series={0x8b8}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	--if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	if not Duel.IsChainNegatable(ev) or not (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	--local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
 	--local ex2,tg2,tc2=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
 	local ex,tg,ct=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
