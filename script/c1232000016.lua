@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--attach 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DECKDES)
+	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(s.xyzcon)
@@ -26,8 +26,8 @@ function s.cfilter(c)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) and Duel.IsPlayerCanDiscardDeck(tp,ct) end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,ct,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,ct,1-tp,LOCATION_DECK)
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -38,7 +38,10 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		local og=g:Select(tp,1,1,nil)
 		if Duel.Overlay(c,og)~=0 then
 			local ct1=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-			Duel.DiscardDeck(tp,ct1,REASON_EFFECT)
+			local ct2=Duel.GetDecktopGroup(1-tp,ct1)
+			if #ct2==0 then return end
+			Duel.DisableShuffleCheck()
+			Duel.Remove(ct2,POS_FACEUP,REASON_EFFECT)
 		end
 	end
 end
