@@ -112,7 +112,6 @@ end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_EFFECT)~=1 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
-	if #tc==0 then return end
 	if tc:IsMonster() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
