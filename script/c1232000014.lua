@@ -53,7 +53,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
    if tc then
-		Duel.SSet(tp,tc)>0
+		Duel.SSet(tp,tc)
 		if tc:IsTrap() then
 		--Can be activated this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
