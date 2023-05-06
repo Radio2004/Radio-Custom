@@ -37,6 +37,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8b8) and c:IsType(TYPE_XYZ)
 end
 function s.efcon(e,c)
+	if c==nil then return true end
 	return Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,2,nil)
 end
 function s.efilter(e,te)
