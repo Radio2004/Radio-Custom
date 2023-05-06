@@ -36,8 +36,8 @@ s.listed_names={id-1}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8b8) and c:IsType(TYPE_XYZ)
 end
-function s.efcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,2,nil)
+function s.efcon(e,c)
+	return Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,2,nil)
 end
 function s.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
