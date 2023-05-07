@@ -55,14 +55,14 @@ end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(xyzfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,c,tp) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,ct,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,c,tp) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,ct,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,ct,1-tp,LOCATION_DECK)
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c,c,tp)
+	local g=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c,c,tp)
 	if #g>0 and Duel.Overlay(c,g)~=0 then  
 			local ct1=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 			local ct2=Duel.GetDecktopGroup(1-tp,ct1)
