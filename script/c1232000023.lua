@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.spcon)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
+	e1:SetCondition(s.spcon1)
+	e1:SetTarget(s.sptg1)
+	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
@@ -32,31 +32,31 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
-	e3:SetCondition(s.spcon)
-	e3:SetTarget(s.sptg)
-	e3:SetOperation(s.spop)
+	e3:SetCondition(s.spcon2)
+	e3:SetTarget(s.sptg2)
+	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xcf,0x8b8a}
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
-function s.spfilter(c,e,tp)
+function s.spfilter1(c,e,tp)
 	return c:IsSetCard(0xcf) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if ft>2 then ft=2 end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter1,tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
 	if #g~=0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
@@ -76,32 +76,32 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetLabel(Duel.GetTurnCount())
-	e1:SetCondition(s.spcon1)
-	e1:SetOperation(s.spop1)
+	e1:SetCondition(s.spcon3)
+	e1:SetOperation(s.spop3)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CONTROL-RESET_TOFIELD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e1,tp)
 end
 
-function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
+function s.spcon3(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.filter(c,e,tp)
 	return (c:IsSetCard(0xcf) or c:IsSetCard(0x8b8a)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.spop1(e,tp,eg,ep,ev,re,r,rp)
+function s.spop3(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
