@@ -58,14 +58,12 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_REMOVED,0,nil)
-	if chk==0 then return ct>1 and Duel.IsPlayerCanDraw(tp,math.floor(ct/2)) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,ct//2) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(math.floor(ct/2))
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,math.floor(ct/2))
+	Duel.SetTargetParam(ct//2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct//2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if d>1 then
-		Duel.Draw(p,d,REASON_EFFECT)
-	end
+	Duel.Draw(p,d,REASON_EFFECT)
 end
