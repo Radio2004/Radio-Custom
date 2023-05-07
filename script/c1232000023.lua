@@ -4,6 +4,8 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xcf),1,1,Synchro.NonTunerEx(Card.IsSetCard,0xcf),1,99)
 	c:EnableReviveLimit()
+	--Can only be 1 copy of this card on the field
+	c:SetUniqueOnField(1,1,id)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
