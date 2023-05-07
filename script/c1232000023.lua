@@ -91,11 +91,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetCondition(s.spcon1)
 	e1:SetOperation(s.spop1)
-	if Duel.IsTurnPlayer(tp) then
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
-	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
-	end
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CONTROL-RESET_TOFIELD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e1,tp)
 end
 
