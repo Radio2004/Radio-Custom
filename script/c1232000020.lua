@@ -57,7 +57,7 @@ function s.filter(c)
 	return c:IsSetCard(0x8b8) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,2,nil)
+	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_REMOVED,0,nil)
 	if chk==0 then return Duel.IsPlayerCanDraw(math.floor(ct/2)) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(math.floor(ct/2))
