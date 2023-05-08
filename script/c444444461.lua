@@ -32,7 +32,7 @@ end
 
 
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return true end --Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
@@ -62,7 +62,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
 	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	local g2=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g)
-	and Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_MZONE,1,nil)
+	and Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil)
 	local b1=g1
 	local b2=g2
 	if chk==0 then return b1 or b2 end
@@ -78,7 +78,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 		local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,g)
-		local tc=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_MZONE,1,ct,nil)
+		local tc=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,ct,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,#tc,0,0)
 	end
 end
