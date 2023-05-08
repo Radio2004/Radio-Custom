@@ -76,7 +76,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_HAND,0,1,1,nil,,c,tp)
+	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_HAND,0,1,1,nil,c,tp)
 	if #g>0 then
 		Duel.Overlay(c,g)
 	end
