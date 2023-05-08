@@ -34,7 +34,7 @@ end
 
 
 function s.cfilter3(c)
-	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsLinkMonster() and c:IsLinkAbove(0) 
+	return c:IsFaceup() and c:IsSetCard(0x1BC) and c:IsLinkMonster() and c:IsLinkAbove(1)
 end
 
 
@@ -55,7 +55,7 @@ local g4=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIB
 local b1=g1  
 local b2=g2
 local b3=g3
-local b4=g4		   
+local b4=g4		
 	if chk==0 then return b1 or b2 or b3 or b4 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
@@ -68,8 +68,7 @@ local b4=g4
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectTarget(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_MZONE,0,1,1,nil)
 	elseif op==2 then
-		local g=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE,nil)
-		local ct=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetLink)
+		e:SetCategory(CATEGORY_ATKCHANGE)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_POSITION)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -101,12 +100,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 elseif op==2 then
 	local g=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE,nil)
-	local ct=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetLink)
+	local lk=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_MZONE,0,nil)
+	local sg=lk:GetMaxGroup(Card.GetLink)
+	if #sg>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		sg=sg:Select(tp,1,1,nil)
+	end
+	local ct=sg:GetFirst()
 	for tg in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-500*ct)
+		e1:SetValue(-500*ct:GetLink())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tg:RegisterEffect(e1)
 end
