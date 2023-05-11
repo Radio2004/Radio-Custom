@@ -8,4 +8,3 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x7cc}
-end
