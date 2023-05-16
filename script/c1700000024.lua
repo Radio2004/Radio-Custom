@@ -54,7 +54,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 	and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	local g2=Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
-	local g3=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_EARTH) and Duel.IsPlayerCanDraw(tp,1) and
+	local g3=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_EARTH) and Duel.IsPlayerCanDraw(tp,1)
 	local g4=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WATER) and #g>0
 	local g5=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_FIRE)
 	local g6=Duel.IsExistingTarget(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
