@@ -109,8 +109,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b5=s.rmfilter(tc,tp)
 	local b6=s.sfilter(tc,tp)
 	local b7= b1 and b2 and b3 and b4 and b5 and b6
-	if #b7>1 then
-		Duel.Draw(1-tp,3,REASON_EFFECT)
+	if b7>1 then
+		Duel.Draw(tp,3,REASON_EFFECT)
 	end
 	if b1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
