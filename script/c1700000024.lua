@@ -45,7 +45,7 @@ function s.desfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and #g>0
 end
 function s.drawfilter(c,tp)
-	Duel.IsPlayerCanDraw(tp,1) and c:IsAttribute(ATTRIBUTE_EARTH)
+   return Duel.IsPlayerCanDraw(tp,1) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function s.spfilter(c,e,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.nvfilter(c)
