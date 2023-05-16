@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7cc}
 function s.tgfilter(c,e,tp,tc)
-	return c:IsMonster() and c:IsSetCard(0x7cc) and (s.addfilter(c,tc) or s.spfilter(c,e,tp) or s.drawfilter(c,tp) or s.desfilter(c,tp))
+	return c:IsMonster() and c:IsSetCard(0x7cc) and (s.addfilter(c,tc) or s.spfilter(c,e,tp) or s.drawfilter(c,tp) or s.desfilter(c,tp) or s.rmfilter(c,tp))
 end
 function s.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
@@ -52,6 +52,10 @@ function s.spfilter(c,e,tp)
 		and c:IsAttribute(ATTRIBUTE_DARK)
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
+function s.rmfilter(c,tp)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	return #g>0 and c:IsAttribute(ATTRIBUTE_FIRE)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tgfilter(chkc,e,tp,c) end
@@ -66,6 +70,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetTargetParam(1)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
+	if tc:IsAttribute(ATTRIBUTE_WATER) then
+		local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
+	end
+	if tc:IsAttribute(ATTRIBUTE_FIRE) then
+		local tg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,1,0,LOCATION_ONFIELD)
+	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -74,6 +86,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc and tc:IsRelateToEffect(e)) then return end
 	local b1=s.addfilter(tc,c)
 	local b2=s.spfilter(tc,e,tp)
+	local b3=s.drawfilter(tc,tp)
+	local b4=s.desfilter(tc,tp)
+	local b5=s.rmfilter(tc,tp)
 	if tc:IsAttribute(ATTRIBUTE_LIGHT) and b1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
@@ -84,8 +99,21 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif tc:IsAttribute(ATTRIBUTE_DARK) and b2 then
 		--Special Summon
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	elseif tc:IsAttribute(ATTRIBUTE_EARTH) then
+	elseif tc:IsAttribute(ATTRIBUTE_EARTH) and b3 then
 			local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 			Duel.Draw(p,d,REASON_EFFECT)
+	elseif tc:IsAttribute(ATTRIBUTE_WATER) and b4 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+		if #g>0 then
+			Duel.HintSelection(g)
+			Duel.Destroy(g,REASON_EFFECT)
+		end
+	elseif tc:IsAttribute(ATTRIBUTE_FIRE) and b5 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+		if #g>0 then
+			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		end
 	end
 end
