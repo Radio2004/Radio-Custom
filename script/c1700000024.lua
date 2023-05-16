@@ -38,11 +38,11 @@ function s.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end
 function s.addfilter(c,tc)
-	return Duel.IsExistingMatchingCard(s.thfilter,0,LOCATION_DECK,0,1,c,tc:GetCode()) and c:IsAttribute(ATTRIBUTE_LIGHT)
+	return Duel.IsExistingMatchingCard(s.thfilter,0,LOCATION_DECK,0,1,tc,c:GetCode()) and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function s.spfilter(c,e,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.nvfilter(c)
-		and c:IsAttribute(ATTRIBUTE_LIGHT) 
+		and c:IsAttribute(ATTRIBUTE_DARK)
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
