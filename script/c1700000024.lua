@@ -32,13 +32,20 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7cc}
 function s.tgfilter(c,e,tp,tc)
-	return c:IsMonster() and c:IsSetCard(0x7cc) and (s.addfilter(c,tc) or s.spfilter(c,e,tp))
+	return c:IsMonster() and c:IsSetCard(0x7cc) and (s.addfilter(c,tc) or s.spfilter(c,e,tp) or s.drawfilter(c,tp) or s.desfilter(c,tp))
 end
 function s.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end
 function s.addfilter(c,tc)
 	return Duel.IsExistingMatchingCard(s.thfilter,0,LOCATION_DECK,0,1,tc,c:GetCode()) and c:IsAttribute(ATTRIBUTE_LIGHT)
+end
+function s.desfilter(c,tp)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return c:IsAttribute(ATTRIBUTE_WATER) and #g>0
+end
+function s.drawfilter(c,tp)
+	Duel.IsPlayerCanDraw(tp,1) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function s.spfilter(c,e,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.nvfilter(c)
@@ -51,6 +58,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c)
+	local tc=g:GetFirstCardTarget()
+	if tc:IsAttribute(ATTRIBUTE_WATER) then
+		e:SetCategory(CATEGORY_DRAW)
+		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		Duel.SetTargetPlayer(tp)
+		Duel.SetTargetParam(1)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -59,18 +74,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc and tc:IsRelateToEffect(e)) then return end
 	local b1=s.addfilter(tc,c)
 	local b2=s.spfilter(tc,e,tp)
-	local op=Duel.SelectEffect(tp,
-		{b1,aux.Stringid(id,2)},
-		{b2,aux.Stringid(id,3)})
-	if op==1 then
+	if tc:IsAttribute(ATTRIBUTE_LIGHT) and b1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
 		if #sg>0 then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end
-	elseif op==2 then
+	elseif tc:IsAttribute(ATTRIBUTE_DARK) and b2 then
 		--Special Summon
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	elseif tc:IsAttribute(ATTRIBUTE_WATER) then
+			local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+			Duel.Draw(p,d,REASON_EFFECT)
 	end
 end
