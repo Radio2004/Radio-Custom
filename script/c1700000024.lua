@@ -103,27 +103,27 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b4=s.desfilter(tc,tp)
 	local b5=s.rmfilter(tc,tp)
 	local b6=s.sfilter(tc,tp)
-	if tc:IsAttribute(ATTRIBUTE_LIGHT) and b1 then
+	if b1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
 		if #sg>0 then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end
-	elseif tc:IsAttribute(ATTRIBUTE_DARK) and b2 then
+	elseif b2 then
 		--Special Summon
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	elseif tc:IsAttribute(ATTRIBUTE_EARTH) and b3 then
+	elseif  b3 then
 			local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 			Duel.Draw(p,d,REASON_EFFECT)
-	elseif tc:IsAttribute(ATTRIBUTE_WATER) and b4 then
+	elseif b4 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
 			Duel.Destroy(g,REASON_EFFECT)
 		end
-	elseif tc:IsAttribute(ATTRIBUTE_FIRE) and b5 then
+	elseif b5 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		if #g>0 then
