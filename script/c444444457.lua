@@ -44,7 +44,7 @@ function s.filter1(c)
 
 
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-local g1=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WIND)
+local g1=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WIND)
 local g2=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WATER)
 		and Duel.IsExistingMatchingCard(s.cfilter3,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
@@ -55,7 +55,7 @@ local g4=Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIB
 local b1=g1  
 local b2=g2
 local b3=g3
-local b4=g4		
+local b4=g4	 
 	if chk==0 then return b1 or b2 or b3 or b4 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
