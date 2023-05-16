@@ -98,7 +98,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif op==6 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local tg=Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
-		local ct=tg:GetLevel()
+		local ct=tg:GetFirst():GetLevel()
 		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
 	end
 end
