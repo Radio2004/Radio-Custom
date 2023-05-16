@@ -58,7 +58,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c)
-	local tc=g:GetFirstCardTarget()
+	local tc=g:GetFirst()
 	if tc:IsAttribute(ATTRIBUTE_WATER) then
 		e:SetCategory(CATEGORY_DRAW)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
