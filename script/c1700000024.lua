@@ -51,7 +51,7 @@ end
 function s.drawfilter(c,tp)
    return Duel.IsPlayerCanDraw(tp,1) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
-function ts.spfilter(c,e,p)
+function s.spfilter(c,e,p)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.nvfilter(c)
 		and c:IsAttribute(ATTRIBUTE_DARK)
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
