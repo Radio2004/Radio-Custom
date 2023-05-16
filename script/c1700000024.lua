@@ -59,7 +59,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c)
 	local tc=g:GetFirst()
-	if tc:IsAttribute(ATTRIBUTE_WATER) then
+	if tc:IsAttribute(ATTRIBUTE_EARTH) then
 		e:SetCategory(CATEGORY_DRAW)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		Duel.SetTargetPlayer(tp)
@@ -84,7 +84,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif tc:IsAttribute(ATTRIBUTE_DARK) and b2 then
 		--Special Summon
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	elseif tc:IsAttribute(ATTRIBUTE_WATER) then
+	elseif tc:IsAttribute(ATTRIBUTE_EARTH) then
 			local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 			Duel.Draw(p,d,REASON_EFFECT)
 	end
