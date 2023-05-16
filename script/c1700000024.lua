@@ -91,6 +91,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if tc:IsAttribute(ATTRIBUTE_WIND) then
 		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,tc:GetLevel())
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,1,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,1,1,0,LOCATION_ONFIELD)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,tc:GetLevel())
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
