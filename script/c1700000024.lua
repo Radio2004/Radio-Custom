@@ -108,9 +108,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b4=s.desfilter(tc,tp)
 	local b5=s.rmfilter(tc,tp)
 	local b6=s.sfilter(tc,tp)
-	if tc:GetAttribute()>1 then
-		Duel.Draw(tp,3,REASON_EFFECT)
-	end
 	if b1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
