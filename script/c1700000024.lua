@@ -32,18 +32,53 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7cc}
 function s.thfilter(c,e,tp)
-	return c:IsSetCard(0x7cc) and aux.nvfilter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsSetCard(0x7cc) and aux.nvfilter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsAttribute(ATTRIBUTE_DARK)
 end
-
+function s.tgfilter(c,tp)
+	return c:IsSetCard(0x7cc) and c:IsAttribute(ATTRIBUTE_LIGHT) and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+end
+function s.thfilter2(c,code)
+	return c:IsCode(code) and c:IsAbleToHand()
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 	and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-	if chk==0 then return  end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,1,1,0,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,1,1,0,LOCATION_ONFIELD)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,tc:GetLevel())
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
+	local g2=Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
+	local b1=g1  
+	local b2=g2
+	if chk==0 then return b1 or b2 or b3 or b4 end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)},
+		{b4,aux.Stringid(id,3)})
+		e:SetLabel(op)
+	if op==1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	elseif op==2 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,0)
+	end
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local op=e:GetLabel()
+	local tc=Duel.GetFirstTarget()
+	if op==1 then
+		if tc and tc:IsRelateToEffect(e) then
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		end
+	elseif op==2 then
+		if not tc:IsRelateToEffect(e) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
+		if #g>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
+	end
 end
