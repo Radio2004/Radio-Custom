@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7cc}
 function s.tgfilter(c,e,tp,tc)
-	return c:IsMonster() and c:IsSetCard(0x7cc) and (s.addfilter(c,tc) or s.spfilter(c,e,tp) or s.drawfilter(c,tp) or s.desfilter(c,tp) or s.rmfilter(c,tp))
+	return c:IsMonster() and c:IsSetCard(0x7cc) and (s.addfilter(c,tc) or s.spfilter(c,e,tp) or s.drawfilter(c,tp) or s.desfilter(c,tp) or s.rmfilter(c,tp) or s.sfilter(c,tp))
 end
 function s.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
@@ -44,10 +44,14 @@ function s.desfilter(c,tp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	return c:IsAttribute(ATTRIBUTE_WATER) and #g>0
 end
+function s.sfilter(c,tp)
+	local ct=c:GetLevel()
+   return c:IsAttribute(ATTRIBUTE_WIND) and Duel.IsPlayerCanDiscardDeck(tp,ct)
+end
 function s.drawfilter(c,tp)
    return Duel.IsPlayerCanDraw(tp,1) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
-function s.spfilter(c,e,tp)
+function ts.spfilter(c,e,p)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.nvfilter(c)
 		and c:IsAttribute(ATTRIBUTE_DARK)
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -78,6 +82,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local tg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,1,0,LOCATION_ONFIELD)
 	end
+	if tc:IsAttribute(ATTRIBUTE_WIND) then
+		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,tc:GetLevel())
+	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -89,6 +96,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b3=s.drawfilter(tc,tp)
 	local b4=s.desfilter(tc,tp)
 	local b5=s.rmfilter(tc,tp)
+	local b6=s.sfilter(tc,tp)
 	if tc:IsAttribute(ATTRIBUTE_LIGHT) and b1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
@@ -114,6 +122,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		if #g>0 then
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		end
+	elseif tc:IsAttribute(ATTRIBUTE_WIND) and b6 then
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		local lv=tc:GetLevel()
+		if tc:IsRelateToEffect(e) and lv>0 then
+			Duel.DiscardDeck(tp,lv,REASON_EFFECT)
 		end
 	end
 end
