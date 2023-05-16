@@ -47,12 +47,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
 	local b1=g1  
 	local b2=g2
-	if chk==0 then return b1 or b2 or b3 or b4 end
+	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,1)},
-		{b3,aux.Stringid(id,2)},
-		{b4,aux.Stringid(id,3)})
+		{b2,aux.Stringid(id,1)})
 		e:SetLabel(op)
 	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
