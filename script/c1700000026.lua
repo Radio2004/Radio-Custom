@@ -35,10 +35,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ct=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	if #ct<2 then return end
-	Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if #g>0 then
+	if #g>0 and #ct>1 then
+		Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
