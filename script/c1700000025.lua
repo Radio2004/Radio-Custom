@@ -55,7 +55,7 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.Overlay(c,tc,true)
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-		if #dg>0 then --Destroy 1 of your opponent's cards
+		if #dg>0 then --Destroy 1 spell/Trap on the field
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=dg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg,true)
