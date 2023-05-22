@@ -15,13 +15,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--pos Change
+	--attach and destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_POSITION)
+	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e3:SetOperation(s.posop)
+	e3:SetCountLimit(2,{id,1})
+	e3:SetOperation(s.attop)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id+1}
@@ -48,7 +49,13 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local tc=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_HAND,0,1,1,nil,e):GetFirst()
-	if tc then
-		Duel.Overlay(c,tc,true)
+	if tc and Duel.Overlay(c,tc,true)>0 then
+		local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
+		if #dg>0 then --Destroy 1 of your opponent's cards
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local sg=dg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg,true)
+			Duel.Destroy(sg,REASON_EFFECT)
+		end
 	end
 end
