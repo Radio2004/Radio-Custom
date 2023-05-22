@@ -45,7 +45,7 @@ function s.attfilter(c,e)
 	return not c:IsImmuneToEffect(e)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
