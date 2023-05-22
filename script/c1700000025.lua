@@ -52,7 +52,8 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local tc=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_HAND,0,1,1,nil,e):GetFirst()
-	if tc and Duel.Overlay(c,tc,true)>0 then
+	if tc then
+		Duel.Overlay(c,tc,true)
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		if #dg>0 then --Destroy 1 of your opponent's cards
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
