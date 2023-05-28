@@ -16,6 +16,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
+	--500 ATK
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_ATKCHANGE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1,{id,1})
+	e2:SetCondition(s.descon)
+	e2:SetOperation(s.desop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x7cc}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
@@ -38,4 +49,23 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end
 end
+function s.descfilter(c,lg)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x7cc) and lg:IsContains(c) and c:IsSummonType(SUMMON_TYPE_XYZ)
 
+end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	local lg=e:GetHandler():GetLinkedGroup()
+	return eg:IsExists(s.descfilter,1,nil,lg)
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(500)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e1)
+	end
+end
