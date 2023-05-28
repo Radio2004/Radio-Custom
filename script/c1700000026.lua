@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id-1,id+1}
+s.listed_names={id-1,id+1,1700000029}
 function s.filter(c)
 	return c:IsCode(id+1) and c:IsAbleToHand()
 end
@@ -49,7 +49,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsCode(id-1)
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and (tc:IsCode(id-1) or tc:IsCode(1700000029))
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end --Duel.IsPlayerCanDraw(tp,1)
