@@ -12,6 +12,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	--add code
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2:SetCode(EFFECT_ADD_CODE)
+	e2:SetValue(10000050)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x10a2}
 function s.tgfilter(c,e,tp)
