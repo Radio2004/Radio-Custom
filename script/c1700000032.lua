@@ -43,5 +43,8 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetOriginalAttribute()
 end
 
-
+function s.xyzcon(e)
+	local c=e:GetHandler()
+	return c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_XYZ)
+end
 
