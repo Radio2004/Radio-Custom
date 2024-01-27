@@ -41,25 +41,24 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.attfilter(c,e)
-	return not c:IsImmuneToEffect(e)
-end
+
 function s.desfilter(c)
 	return c:IsSpellTrap()
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local tc=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_HAND,0,1,1,nil,e):GetFirst()
-	if tc then
-		Duel.Overlay(c,tc,true)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND+LOCATION_GRAVE,0)
+	if #g>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+		local sg=g:Select(tp,1,2,nil)
+		Duel.Overlay(c,sg,true)
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		if #dg>0 then --Destroy 1 spell/Trap on the field
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=dg:Select(tp,1,1,nil)
-			Duel.HintSelection(sg,true)
-			Duel.Destroy(sg,REASON_EFFECT)
+			local sg2=dg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg2,true)
+			Duel.Destroy(sg2,REASON_EFFECT)
 		end
 	end
 end
