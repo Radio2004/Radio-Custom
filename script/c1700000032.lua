@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e4:SetValue(ATTRIBUTE_EARTH)
-	e4:SetCondition(s.xyzcon)
+	e4:SetRange(LOCATION_OVERLAY)
 	e4:SetOperation(s.xyzop)
 	c:RegisterEffect(e4)
 end
