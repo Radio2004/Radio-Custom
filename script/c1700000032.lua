@@ -10,12 +10,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	-- Attribute change
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_EQUIP)
-	e3:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-	e3:SetValue(ATTRIBUTE_EARTH)
-	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_ADD_ATTRIBUTE)
+	e4:SetValue(ATTRIBUTE_EARTH)
+	e4:SetOperation(s.xyzop)
+	c:RegisterEffect(e4)
 end
 
 function s.filter(c)
@@ -37,4 +37,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(tc,c)
 	end
 end
+
+function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetOriginalAttribute()
+end
+
+
 
