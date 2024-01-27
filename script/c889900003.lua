@@ -52,8 +52,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function s.filter(c,e)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable(e)
+function s.filter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
 end
 	
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
