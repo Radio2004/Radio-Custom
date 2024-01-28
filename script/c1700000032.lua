@@ -15,8 +15,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(LOCATION_OVERLAY,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
+	e2:SetTargetRange(LOCATION_OVERLAY,LOCATION_OVERLAY)
+	e2:SetTarget(s.xyzfilter)
 	e2:SetValue(ATTRIBUTE_EARTH)
 	c:RegisterEffect(e2)
 end
@@ -41,4 +41,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-
+function s.xyzfilter(c)
+	return c:GetControler()==e:GetHandlerPlayer()
+end
