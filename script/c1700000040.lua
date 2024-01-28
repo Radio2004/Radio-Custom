@@ -1,7 +1,8 @@
 --Virtuality Elemental Sword
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,s.filter)
+	local e1=aux.AddEquipProcedure(c,nil,s.filter)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
   --Atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
