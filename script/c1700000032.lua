@@ -41,5 +41,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.xyzfilter(c)
-	return c==e:GetHandler()
+	return c
 end
