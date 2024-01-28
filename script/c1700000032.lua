@@ -1,23 +1,27 @@
 -- Virtuality Force - Earth
 local s,id=GetID()
 function s.initial_effect(c)
---Activate
+	-- Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
+	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_ACTIVATE)
-	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetCode(EFFECT_ADD_TYPE)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetValue(s.monval)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetCode(EFFECT_ADD_TYPE)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetValue(TYPE_EFFECT+TYPE_MONSTER)
-	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetValue(ATTRIBUTE_EARTH)
-	e4:SetRange(LOCATION_SZONE)
+	e4:SetRange(LOCATION_OVERLAY)
 	c:RegisterEffect(e4)
 end
 
@@ -41,13 +45,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:GetOriginalAttribute()
-end
-
 function s.xyzcon(e)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_XYZ)
 end
+
+function s.monval(e,c)
+	if c:IsLocation(LOCATION_OVERLAY) then
+		return TYPE_MONSTER
+	else
+		return 0
+	end
+end
+
 
