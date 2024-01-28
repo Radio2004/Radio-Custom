@@ -1,7 +1,6 @@
 -- Virtuality Force - Earth
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
 	-- Overley
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -16,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_OVERLAY,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
+	e2:SetTarget(s.tg)
 	e2:SetValue(ATTRIBUTE_EARTH)
 	c:RegisterEffect(e2)
 end
@@ -41,4 +40,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-
+function s.tg(e,c)
+	return c:GetOverlayGroup():IsContains(e:GetHandler())
+end
