@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 
 function s.filter(c)
-	return c:IsSpellTrap()
+	return c:IsSpellTrap() and c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
