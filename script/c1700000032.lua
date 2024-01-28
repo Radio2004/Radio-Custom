@@ -42,6 +42,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.xyzfilter(e,c)
-	local c=e:GetHandler()
-	return aux.TargetBoolFunction(Card.IsCode,id) and c:IsControler(c:GetHandlerPlayer())
+	return e:GetHandler():GetOverlayGroup():IsContains(c)
 end
