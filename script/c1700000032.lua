@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,LOCATION_OVERLAY)
-	e2:SetTarget(s.xyzfilter)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,id))
 	e2:SetValue(ATTRIBUTE_EARTH)
 	c:RegisterEffect(e2)
 end
@@ -39,9 +39,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:CancelToGrave()
 		Duel.Overlay(tc,c)
 	end
-end
-
-function s.xyzfilter(e,c)
-	local c=e:GetHandler()
-	return aux.TargetBoolFunction(Card.IsCode,id)
 end
