@@ -42,5 +42,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.xyzfilter(c)
-	return aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK) and aux.TargetBoolFunction(Card.GetControler,0)
+	return aux.TargetBoolFunction(Card.IsCode,id) 
 end
