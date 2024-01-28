@@ -48,10 +48,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.xyzcon(e)
-	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_XYZ)
-end
 
 function s.monval(e,c)
 	if c:IsLocation(LOCATION_OVERLAY) then
