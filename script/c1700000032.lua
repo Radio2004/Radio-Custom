@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_OVERLAY,0)
 	e2:SetValue(ATTRIBUTE_EARTH)
+	c:RegisterEffect(e2)
 end
 
 function s.filter(c)
