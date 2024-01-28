@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TRUE)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,1700000000))
 	e2:SetValue(ATTRIBUTE_EARTH)
 	c:RegisterEffect(e2)
 end
