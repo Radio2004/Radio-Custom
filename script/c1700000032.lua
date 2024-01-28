@@ -2,6 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Activate
+	-- Overley
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -10,12 +11,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	-- Add type monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetCode(EFFECT_ADD_TYPE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetValue(s.monval)
 	c:RegisterEffect(e2)
+	-- Add attribute earth
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_ADD_ATTRIBUTE)
