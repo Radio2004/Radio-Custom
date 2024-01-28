@@ -43,5 +43,5 @@ end
 
 function s.xyzfilter(e,c)
 	local c=e:GetHandler()
-	return aux.TargetBoolFunction(Card.IsCode,id) and c:IsControler(e:GetHandlerPlayer())
+	return aux.TargetBoolFunction(Card.IsCode,id) and c:IsControler(c:GetHandlerPlayer())
 end
