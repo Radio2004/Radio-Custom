@@ -42,5 +42,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.xyzfilter(c,e)
-	return aux.TargetBoolFunction(Card.IsCode,id) and c:GetControler()==e:GetHandlerPlayer()
+	return aux.TargetBoolFunction(Card.IsCode,id) and aux.TargetBoolFunction(Card.IsControler,c:GetControler())
 end
