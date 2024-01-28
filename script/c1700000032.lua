@@ -25,7 +25,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EFFECT_ADD_ATTRIBUTE)
 		ge2:SetTarget(aux.TargetBoolFunction(Card.IsCode,1700000032))
 		ge2:SetValue(ATTRIBUTE_EARTH)
-		ge2:SetRange(LOCATION_ALL,LOCATION_ALL)
+		ge2:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
 		c:RegisterEffect(ge2,0)
 	end)
 end
