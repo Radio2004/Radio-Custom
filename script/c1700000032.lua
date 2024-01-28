@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetValue(ATTRIBUTE_EARTH)
-	e4:SetRange(LOCATION_OVERLAY)
+	e4:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e4)
 end
 
