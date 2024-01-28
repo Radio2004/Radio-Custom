@@ -23,11 +23,11 @@ function s.initial_effect(c)
 		local ge2=Effect.GlobalEffect()
 		ge2:SetType(EFFECT_TYPE_FIELD)
 		ge2:SetCode(EFFECT_ADD_ATTRIBUTE)
-		ge2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		ge2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge2:SetTarget(aux.TargetBoolFunction(Card.IsCode,1700000032))
 		ge2:SetValue(ATTRIBUTE_EARTH)
 		ge2:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
-		c:RegisterEffect(ge2,0)
+		Duel.RegisterEffect(ge2,0)
 	end)
 end
 
