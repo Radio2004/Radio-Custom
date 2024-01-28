@@ -14,9 +14,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7cc}
 
-function s.filter1(c,e,tp)
+function s.filter1(c,e,tp,tid)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsSetCard(0x7cc) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetTurnID()==tid and (c:GetReason()&REASON_DESTROY)~=0 and #pg<=1 and c:IsSetCard(0x7cc) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetRank()+2,pg)
 end
 function s.filter2(c,e,tp,mc,rk,pg)
