@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_OVERLAY,0)
-	e2:SetTarget(aux.TargetBoolFunction(s.tg)
+	e2:SetTarget(aux.TargetBoolFunction(s.tg))
 	e2:SetValue(ATTRIBUTE_EARTH)
 	c:RegisterEffect(e2)
 end
