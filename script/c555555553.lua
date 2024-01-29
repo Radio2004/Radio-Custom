@@ -33,10 +33,10 @@ end
 		local c=e:GetHandler()
 		local lc=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if lc<=0 then return end
-		if c:GetSequence()>4 and lc>2 then lc=2 end
+		if c:GetSequence()>4 and lc>2 then lc=2 else lc=1 end
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then lc=1 end
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,lc,nil,e,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)	
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)   
 		if #g~=0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
