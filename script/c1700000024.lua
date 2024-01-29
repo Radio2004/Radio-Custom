@@ -30,11 +30,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x7cc}
-function s.cfilter2(c,att)
+function s.cfilter(c,att)
 	return c:IsAttribute(att) and c:IsSetCard(0x7cc)
-end
-function s.ctfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSetCard(0x7cc)
 end
 function s.thfilter(c,e,tp)
 	return c:IsSetCard(0x7cc) and aux.nvfilter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -56,17 +53,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 	and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	local g2=Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
-	local g3=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_EARTH) and Duel.IsPlayerCanDraw(tp,1)
-	local g4=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WATER) and #g>0
-	local g5=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_FIRE)
-	local g6=Duel.IsExistingTarget(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5
+	local g3=Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_EARTH) and Duel.IsPlayerCanDraw(tp,1)
+	local g4=Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WATER) and #g>0
+	local g5=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_FIRE)
+	local g6=Duel.IsExistingTarget(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WIND) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5
 	local b1=g1  
 	local b2=g2
 	local b3=g3
 	local b4=g4
 	local b5=g5
 	local b6=g6
-	if chk==0 then return b1 or b2 or b3 or b4 or b5 end
+	if chk==0 then return b1 or b2 or b3 or b4 or b5 or b6 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)},
@@ -88,19 +85,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_DRAW)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		Duel.SelectTarget(tp,s.cfilter2,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_EARTH)
+		Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_EARTH)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetTargetParam(1)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	elseif op==4 then
 		e:SetCategory(CATEGORY_DESTROY)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		Duel.SelectTarget(tp,s.cfilter2,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_WATER)
+		Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_WATER)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	elseif op==5 then
 		e:SetCategory(CATEGORY_REMOVE)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		Duel.SelectTarget(tp,s.cfilter2,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_FIRE)
+		Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_FIRE)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,remove,1,0,0)
 	elseif op==6 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
