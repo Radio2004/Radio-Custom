@@ -24,16 +24,21 @@ function s.initial_effect(c)
 	return c:IsFaceup() and c:IsCode(id) and c:GetSequence()>4
 end
 	function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp)
-	 end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+end
+
 	function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=1
-	if Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_MZONE,0,1,nil) then ct=2 end
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,ct,nil,e,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)	 
-	if #g~=0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		local c=e:GetHandler()
+		local lc=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if lc<=0 then return end
+		if c:GetSequence()>4 and lc>2 then lc=2 end
+		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then lc=1 end
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,lc,nil,e,tp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)	
+		if #g~=0 then
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
-		end
+end
 	
