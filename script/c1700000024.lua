@@ -41,10 +41,10 @@ function s.thfilter(c,e,tp)
 	return c:IsSetCard(0x7cc) and aux.nvfilter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.tgfilter(c,tp)
-	return c:IsSetCard(0x7cc) and c:IsAttribute(ATTRIBUTE_LIGHT) and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+	return c:IsSetCard(0x7cc) and c:IsAttribute(ATTRIBUTE_LIGHT) and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil)
 end
-function s.thfilter2(c,code)
-	return c:IsCode(code) and c:IsAbleToHand()
+function s.thfilter2(c)
+	return c:IsSetCard(0x7cc) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
