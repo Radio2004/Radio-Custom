@@ -34,8 +34,7 @@ function s.cfilter2(c,att)
 	return c:IsAttribute(att) and c:IsSetCard(0x7cc)
 end
 function s.ctfilter(c,tp)
-	local ct=c:GetLevel()
-	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSetCard(0x7cc) and Duel.IsPlayerCanDiscardDeck(tp,ct)
+	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSetCard(0x7cc)
 end
 function s.thfilter(c,e,tp)
 	return c:IsSetCard(0x7cc) and aux.nvfilter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -46,6 +45,10 @@ end
 function s.thfilter2(c)
 	return c:IsSetCard(0x7cc) and c:IsMonster() and c:IsAbleToHand()
 end
+function s.spfilter(c)
+	return c:IsSetCard(0x7cc) and c:IsSpellTrap() and c:IsAbleToHand()
+end
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
@@ -56,7 +59,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g3=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_EARTH) and Duel.IsPlayerCanDraw(tp,1)
 	local g4=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WATER) and #g>0
 	local g5=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_FIRE)
-	local g6=Duel.IsExistingTarget(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
+	local g6=Duel.IsExistingTarget(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5
 	local b1=g1  
 	local b2=g2
 	local b3=g3
@@ -100,11 +103,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SelectTarget(tp,s.cfilter2,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_FIRE)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,remove,1,0,0)
 	elseif op==6 then
-		e:SetCategory(CATEGORY_DECKDES)
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local tg=Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
-		local ct=tg:GetFirst():GetLevel()
-		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
+		Duel.SetTargetPlayer(tp)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -140,7 +143,22 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	elseif op==6 then
-		local ct=tc:GetLevel()
-		Duel.DiscardDeck(tp,ct,REASON_EFFECT)
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		local ac=5
+		Duel.ConfirmDecktop(p,ac)
+		local g=Duel.GetDecktopGroup(p,ac)
+		if #g>0 and g:IsExists(s.spfilter,1,nil) then
+			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
+			local sg=g:FilterSelect(p,s.spfilter,1,1,nil)
+			Duel.DisableShuffleCheck()
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-p,sg)
+			Duel.ShuffleHand(p)
+			ac=ac-1
+		end
+		if ac>0 then
+			Duel.MoveToDeckBottom(ac,tp)
+			Duel.SortDeckbottom(tp,tp,ac)
+		end
 	end
 end
