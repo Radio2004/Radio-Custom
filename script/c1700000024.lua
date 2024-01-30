@@ -102,7 +102,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif op==6 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local tg=Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
+		local tg=Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_GRAVE,0,1,1,nil,ATTRIBUTE_WIND)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
