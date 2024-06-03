@@ -18,7 +18,6 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	Debug.Message(Duel.GetFlagEffect(tp,2232000024))
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
